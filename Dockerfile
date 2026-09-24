@@ -1,12 +1,12 @@
-﻿# Stage 1: Build mã nguồn React/Vite
-FROM node:18-alpine AS builder
+﻿# Stage 1: Build mã nguồn React/Vite bằng Node 20
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package.json từ thư mục con tmdtwed vào container
+# Copy khai báo thư viện và cài đặt
 COPY tmdtwed/package*.json ./
 RUN npm install
 
-# Copy toàn bộ code từ thư mục tmdtwed vào container để build
+# Copy toàn bộ mã nguồn vào và build
 COPY tmdtwed/ ./
 RUN npm run build
 
