@@ -1,7 +1,7 @@
 // Ảnh minh hoạ dùng Unsplash source theo chủ đề thời trang
 const img = (seed) => `https://images.unsplash.com/${seed}?auto=format&fit=crop&w=800&q=80`
 
-export const products = [
+const rawProducts = [
   {
     id: 'p01',
     name: 'Áo khoác dạ dáng dài',
@@ -363,4 +363,43 @@ export const products = [
   },
 ]
 
-export const getProductById = (id) => products.find((p) => p.id === id)
+// --- DONG BO SAN PHAM ADMIN VOI HE THONG ---
+function formatAdminItems(list) {
+  return list.map((item) => ({
+    id: String(item.id),
+    name: item.name,
+    category: item.category === 'Áo khoác' ? 'ao-khoac' :
+              item.category === 'Áo sơ mi' ? 'ao-so-mi' :
+              item.category === 'Áo thun' ? 'ao-thun' :
+              item.category === 'Quần' ? 'quan' :
+              item.category === 'Váy & Đầm' ? 'vay' : (item.category || 'ao-so-mi'),
+    price: Number(item.price) || 0,
+    oldPrice: Number(item.price) ? Math.round(Number(item.price) * 1.15) : 0,
+    colors: ['den', 'trang'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    rating: 5.0,
+    reviewsCount: 1,
+    images: [item.image || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500'],
+    description: item.description || 'Sản phẩm mới bổ sung từ ban quản trị.',
+    isNew: true,
+    isFeatured: true,
+  }))
+}
+
+function loadAllProducts() {
+  if (typeof window === 'undefined') return rawProducts
+  try {
+    const adminSaved = JSON.parse(localStorage.getItem('tmdtwed-products') || '[]')
+    return [...formatAdminItems(adminSaved), ...rawProducts]
+  } catch (e) {
+    return rawProducts
+  }
+}
+
+export const products = loadAllProducts()
+
+export const getProductById = (id) => {
+  return loadAllProducts().find((p) => String(p.id) === String(id))
+}
+
+export default products
