@@ -1,3 +1,4 @@
+import Admin from './pages/Admin'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import ProtectedRoute from './components/layout/ProtectedRoute'
@@ -20,6 +21,7 @@ export default function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
+        <Route path="/admin" element={<Admin />} />
           <Route element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
