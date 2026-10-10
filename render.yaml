@@ -58,7 +58,7 @@ services:
         fromService:
           type: web
           name: sttn-backend
-          property: host
+          property: url
     routes:
       - type: rewrite
         source: /*
