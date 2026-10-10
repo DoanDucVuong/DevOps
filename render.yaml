@@ -2,7 +2,7 @@ services:
   # 1. ML Service (Python/FastAPI)
   - type: web
     name: sttn-ml-service
-    runtime: docker
+    env: docker
     dockerfilePath: ./ml-service/Dockerfile
     dockerContext: ./ml-service
     plan: free
@@ -12,14 +12,14 @@ services:
         fromService:
           type: web
           name: sttn-backend
-          property: url
+          property: host
       - key: INTERNAL_API_KEY
         generateValue: true
 
   # 2. Backend Service (Node.js/Express)
   - type: web
     name: sttn-backend
-    runtime: docker
+    env: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
@@ -40,7 +40,7 @@ services:
         fromService:
           type: web
           name: sttn-ml-service
-          property: url
+          property: host
       - key: ADMIN_PASSWORD
         value: admin123
       - key: CORS_ORIGIN
@@ -48,8 +48,8 @@ services:
 
   # 3. Frontend Static Site (React/Vite)
   - type: web
+    env: static
     name: sttn-frontend
-    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
@@ -58,8 +58,7 @@ services:
         fromService:
           type: web
           name: sttn-backend
-          property: url
-          suffix: /api
+          property: host
     routes:
       - type: rewrite
         source: /*
