@@ -21,7 +21,7 @@ if (usePg) {
   types.setTypeParser(1700, (v) => parseFloat(v))
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
+    ssl: process.env.DATABASE_SSL === 'false' ? false : { rejectUnauthorized: false },
   })
 } else {
   const Database = require('better-sqlite3')
