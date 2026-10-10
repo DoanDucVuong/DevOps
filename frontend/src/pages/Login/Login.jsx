@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 import { useToast } from '../../components/common/Toast'
+import { IS_BACKEND } from '../../api/client'
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
@@ -63,9 +64,11 @@ export default function Login() {
         Chưa có tài khoản?{' '}
         <Link to="/register" className="text-clay hover:underline">Đăng ký ngay</Link>
       </p>
-      <p className="text-xs text-ink-soft/70 mt-4 text-center">
-        * Đây là hệ thống đăng nhập giả lập lưu trên LocalStorage, không kết nối máy chủ thật.
-      </p>
+      {!IS_BACKEND && (
+        <p className="text-xs text-ink-soft/70 mt-4 text-center">
+          * Đây là hệ thống đăng nhập giả lập lưu trên LocalStorage, không kết nối máy chủ thật.
+        </p>
+      )}
     </div>
   )
 }

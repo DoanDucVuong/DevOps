@@ -1,11 +1,19 @@
 import axios from 'axios'
 
-// Có VITE_API_URL -> chạy với Backend thật. Không có -> frontend độc lập (mock/LocalStorage),
-// mọi hàm gọi API bên dưới sẽ KHÔNG phát request nào để tránh lỗi mạng vô ích.
-export const IS_BACKEND = Boolean(import.meta.env.VITE_API_URL)
+let rawUrl = import.meta.env.VITE_API_URL
+if (rawUrl) {
+  if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
+    rawUrl = 'https://' + rawUrl
+  }
+  if (!rawUrl.endsWith('/api')) {
+    rawUrl = rawUrl.replace(/\/+$/, '') + '/api'
+  }
+}
+
+export const IS_BACKEND = Boolean(rawUrl)
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
+  baseURL: rawUrl || 'http://localhost:4000/api',
   timeout: 15000,
 })
 
