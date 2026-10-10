@@ -4,7 +4,9 @@ const cors = require('cors')
 const db = require('./db')
 
 const app = express()
-app.use(cors({ origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : true }))
+const corsOrigin = process.env.CORS_ORIGIN
+const originConfig = (!corsOrigin || corsOrigin === '*') ? true : corsOrigin.split(',').map((s) => s.trim())
+app.use(cors({ origin: originConfig }))
 app.use(express.json({ limit: '1mb' }))
 
 app.get('/health', (req, res) => res.json({ status: 'ok', service: 'backend', database: db.usePg ? 'postgresql' : 'sqlite' }))
