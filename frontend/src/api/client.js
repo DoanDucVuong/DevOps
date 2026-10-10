@@ -5,6 +5,15 @@ if (rawUrl) {
   if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
     rawUrl = 'https://' + rawUrl
   }
+  try {
+    const parsed = new URL(rawUrl)
+    if (parsed.hostname === 'sttn-backend') {
+      parsed.hostname = 'sttn-backend.onrender.com'
+      rawUrl = parsed.toString()
+    }
+  } catch (e) {
+    // fallback
+  }
   if (!rawUrl.endsWith('/api')) {
     rawUrl = rawUrl.replace(/\/+$/, '') + '/api'
   }
