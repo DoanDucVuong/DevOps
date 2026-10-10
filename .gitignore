@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+.env
+*.db
+*.db-shm
+*.db-wal
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+models/*.joblib
+models/*.npy

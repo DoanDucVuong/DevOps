@@ -1,0 +1,73 @@
+services:
+  # 1. ML Service (Python/FastAPI)
+  - type: web
+    name: sttn-ml-service
+    runtime: docker
+    dockerfilePath: ./ml-service/Dockerfile
+    dockerContext: ./ml-service
+    plan: free
+    region: singapore
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: sttn-backend
+          property: url
+      - key: INTERNAL_API_KEY
+        generateValue: true
+
+  # 2. Backend Service (Node.js/Express)
+  - type: web
+    name: sttn-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: singapore
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sttn-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: INTERNAL_API_KEY
+        fromService:
+          type: web
+          name: sttn-ml-service
+          envVarKey: INTERNAL_API_KEY
+      - key: ML_SERVICE_URL
+        fromService:
+          type: web
+          name: sttn-ml-service
+          property: url
+      - key: ADMIN_PASSWORD
+        value: admin123
+      - key: CORS_ORIGIN
+        value: "*"
+
+  # 3. Frontend Static Site (React/Vite)
+  - type: web
+    name: sttn-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: sttn-backend
+          property: url
+          suffix: /api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  - name: sttn-db
+    databaseName: sttn
+    user: sttn_user
+    plan: free
+    region: singapore

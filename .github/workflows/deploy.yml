@@ -1,0 +1,65 @@
+name: CI/CD - Docker Build & Push
+
+# Trigger: chạy mỗi khi có code được push vào nhánh main (theo tài liệu hướng dẫn)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - { name: ml-service, context: ./ml-service, image: sttn-ml-service }
+          - { name: backend, context: ./backend, image: sttn-backend }
+          - { name: frontend, context: ./frontend, image: sttn-frontend }
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache-${{ matrix.service.name }}
+          key: ${{ runner.os }}-buildx-${{ matrix.service.name }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ matrix.service.name }}-
+
+      # Build & push từng service - tag :latest và :<git-sha> để dễ rollback
+      - name: Build and push ${{ matrix.service.name }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.service.context }}
+          push: true
+          # Chỉ frontend dùng build-arg này (Vite nhúng URL Backend vào bundle lúc build)
+          build-args: VITE_API_URL=${{ vars.VITE_API_URL }}
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service.image }}:latest
+            ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service.image }}:${{ github.sha }}
+          cache-from: type=local,src=/tmp/.buildx-cache-${{ matrix.service.name }}
+          cache-to: type=local,dest=/tmp/.buildx-cache-${{ matrix.service.name }},mode=max
+
+      - name: Cleanup
+        if: always()
+        run: docker logout
+
+  # Sau khi cả 3 image được push lên Docker Hub, Render sẽ tự động pull image mới
+  # (nếu bạn bật "Auto-Deploy" trên mỗi Web Service trỏ tới image tương ứng — xem README).
+  notify:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build & push hoàn tất
+        run: echo "Đã push 3 image (ml-service, backend, frontend) lên Docker Hub. Render sẽ tự deploy nếu bật Auto-Deploy."
