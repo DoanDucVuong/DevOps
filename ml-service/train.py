@@ -39,11 +39,16 @@ INTERACTION_COLUMNS = ["user_id", "product_id", "interaction_type", "rating_valu
 
 def fetch_real_data():
     """Lấy sản phẩm + tương tác thật từ Backend. Trả về None nếu chưa cấu hình / không kết nối được."""
-    base = os.getenv("BACKEND_URL", "").rstrip("/")
+    base = os.getenv("BACKEND_URL", "").strip()
     key = os.getenv("INTERNAL_API_KEY", "")
     if not base or not key:
         print("[Data] Chưa cấu hình BACKEND_URL / INTERNAL_API_KEY -> bỏ qua dữ liệu thật")
         return None
+    if not base.startswith("http://") and not base.startswith("https://"):
+        base = "https://" + base
+    if "sttn-backend" in base and ".onrender.com" not in base:
+        base = base.replace("sttn-backend", "sttn-backend.onrender.com")
+    base = base.rstrip("/")
     req = urllib.request.Request(f"{base}/api/internal/export", headers={"x-internal-key": key})
     try:
         with urllib.request.urlopen(req, timeout=60) as resp:

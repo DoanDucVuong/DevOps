@@ -30,6 +30,7 @@ const PORT = process.env.PORT || 4000
 db.init()
   .then(() => app.listen(PORT, () => {
     console.log(`Backend Service đang chạy tại http://localhost:${PORT}`)
-    console.log(`ML_SERVICE_URL = ${process.env.ML_SERVICE_URL || 'http://localhost:8001'}`)
+    const { getMlServiceUrl } = require('./mlConfig')
+    console.log(`ML_SERVICE_URL = ${getMlServiceUrl()}`)
   }))
   .catch((err) => { console.error('Không khởi tạo được database:', err); process.exit(1) })

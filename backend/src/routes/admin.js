@@ -3,9 +3,9 @@ const axios = require('axios')
 const { query, one } = require('../db')
 const { requireAdmin } = require('../middleware/auth')
 const { parseOrder } = require('./orders')
+const { getMlServiceUrl } = require('../mlConfig')
 
 const router = express.Router()
-const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8001'
 const INTERNAL_API_KEY = process.env.INTERNAL_API_KEY || ''
 const STATUSES = ['pending', 'paid', 'shipped', 'completed', 'cancelled']
 
@@ -78,22 +78,26 @@ const mlHeaders = () => (INTERNAL_API_KEY ? { 'x-internal-key': INTERNAL_API_KEY
 
 // GET /api/admin/ml/status -> chỉ số mô hình + trạng thái huấn luyện
 router.get('/ml/status', requireAdmin, async (req, res) => {
+  const mlUrl = getMlServiceUrl()
   try {
-    const { data } = await axios.get(`${ML_SERVICE_URL}/health`, { timeout: 8000 })
+    const { data } = await axios.get(`${mlUrl}/health`, { timeout: 35000 })
     res.json(data)
   } catch (err) {
-    res.status(502).json({ message: 'Không kết nối được ML service.', detail: err.message })
+    console.error(`[admin/ml/status] Lỗi kết nối tới ML (${mlUrl}):`, err.message)
+    res.status(502).json({ message: 'Không kết nối được ML service.', detail: err.message, mlUrl })
   }
 })
 
 // POST /api/admin/ml/retrain -> huấn luyện lại từ dữ liệu thật (chạy nền trong ML service)
 router.post('/ml/retrain', requireAdmin, async (req, res) => {
+  const mlUrl = getMlServiceUrl()
   try {
-    const { data } = await axios.post(`${ML_SERVICE_URL}/retrain`, {}, { headers: mlHeaders(), timeout: 10000 })
+    const { data } = await axios.post(`${mlUrl}/retrain`, {}, { headers: mlHeaders(), timeout: 35000 })
     res.status(202).json(data)
   } catch (err) {
+    console.error(`[admin/ml/retrain] Lỗi retrain (${mlUrl}):`, err.message)
     const status = err.response?.status === 409 ? 409 : 502
-    res.status(status).json({ message: err.response?.data?.detail || 'Retrain thất bại', detail: err.message })
+    res.status(status).json({ message: err.response?.data?.detail || 'Retrain thất bại', detail: err.message, mlUrl })
   }
 })
 

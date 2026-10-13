@@ -1,9 +1,9 @@
 const express = require('express')
 const axios = require('axios')
 const { query } = require('../db')
+const { getMlServiceUrl } = require('../mlConfig')
 
 const router = express.Router()
-const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8001'
 
 // POST /api/recommendations/click  { userId, productId } -> đánh dấu is_clicked (đo CTR)
 router.post('/click', async (req, res) => {
@@ -24,9 +24,10 @@ router.post('/click', async (req, res) => {
 // GET /api/recommendations/:userId -> "Gợi ý dành cho bạn"
 router.get('/:userId', async (req, res) => {
   const topK = Number(req.query.top_k) || 8
+  const mlUrl = getMlServiceUrl()
   try {
-    const { data } = await axios.get(`${ML_SERVICE_URL}/recommendations/${encodeURIComponent(req.params.userId)}`, {
-      params: { top_k: topK }, timeout: 5000,
+    const { data } = await axios.get(`${mlUrl}/recommendations/${encodeURIComponent(req.params.userId)}`, {
+      params: { top_k: topK }, timeout: 10000,
     })
     const ids = data.items.map((i) => i.product_id)
     let items = []

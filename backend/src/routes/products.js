@@ -1,9 +1,9 @@
 const express = require('express')
 const axios = require('axios')
 const { query, one } = require('../db')
+const { getMlServiceUrl } = require('../mlConfig')
 
 const router = express.Router()
-const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8001'
 
 const byIds = async (ids) => {
   if (ids.length === 0) return []
@@ -37,9 +37,10 @@ router.get('/', async (req, res) => {
 // GET /api/products/:id/similar -> Content-based Filtering từ ML Service
 router.get('/:id/similar', async (req, res) => {
   const topK = Number(req.query.top_k) || 4
+  const mlUrl = getMlServiceUrl()
   try {
-    const { data } = await axios.get(`${ML_SERVICE_URL}/products/${req.params.id}/similar`, {
-      params: { top_k: topK }, timeout: 5000,
+    const { data } = await axios.get(`${mlUrl}/products/${req.params.id}/similar`, {
+      params: { top_k: topK }, timeout: 10000,
     })
     const items = await byIds(data.items.map((i) => i.product_id))
     res.json({ items, algorithm: data.algorithm_used })

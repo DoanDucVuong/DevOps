@@ -12,7 +12,7 @@ services:
         fromService:
           type: web
           name: sttn-backend
-          property: host
+          property: url
       - key: INTERNAL_API_KEY
         generateValue: true
 
@@ -40,7 +40,7 @@ services:
         fromService:
           type: web
           name: sttn-ml-service
-          property: host
+          property: url
       - key: ADMIN_PASSWORD
         value: admin123
       - key: CORS_ORIGIN
