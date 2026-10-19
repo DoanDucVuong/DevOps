@@ -107,7 +107,17 @@ Giới hạn gói Free: service ngủ khi không có truy cập (lần đầu m�
 
 Sau mỗi lần huấn luyện, xem `ml-service/models/training_summary.json` (hoặc trang Admin): RMSE/MAE 5-fold, số tương tác thật, số người dùng, thời điểm huấn luyện. Chỉ số CTR theo thuật toán lấy ở trang Admin (cần có lượt hiển thị và click thật).
 
-## 8. Giới hạn đã biết
+## 8. Tích hợp Jenkins CI/CD Pipeline
+
+Dự án đã tích hợp sẵn tệp [`Jenkinsfile`](./Jenkinsfile) Declarative Pipeline tự động hoá:
+- **Kiểm tra cú pháp & chất lượng code** (Node.js, React, Python).
+- **Đóng gói Docker Images** cho cả 3 microservices (Backend, Frontend, ML Service).
+- **Đẩy ảnh lên Docker Hub** (tuỳ chọn).
+- **Triển khai tự động (Continuous Deployment)** bằng Docker Compose và kiểm tra sức khoẻ (Smoke Test).
+
+Chi tiết cài đặt máy chủ Jenkins và kích hoạt Pipeline xem tại: [jenkins/README_JENKINS.md](./jenkins/README_JENKINS.md).
+
+## 9. Giới hạn đã biết
 
 - Giỏ hàng và wishlist vẫn lưu trong trình duyệt (chưa đồng bộ lên Backend).
 - Tìm kiếm không phân biệt dấu/hoa-thường cho tiếng Việt chỉ đúng với ký tự ASCII (hạn chế của `LOWER` trong SQLite); trang Products hiện lọc ở phía frontend nên không bị ảnh hưởng.
