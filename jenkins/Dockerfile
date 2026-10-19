@@ -3,14 +3,13 @@ FROM jenkins/jenkins:lts-jdk17
 USER root
 
 # Cài đặt Docker CLI, Docker Compose plugin, curl, git trong container Jenkins
+# Lưu ý: software-properties-common không có trên Debian Trixie, bỏ qua nó
 RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg2 \
-    software-properties-common \
     git \
-    nodejs \
     python3 \
     && install -m 0755 -d /etc/apt/keyrings \
     && curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc \
