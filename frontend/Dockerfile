@@ -1,6 +1,6 @@
 # Frontend — ReactJS/Vite (mục 3.2.2 báo cáo)
 # Stage 1: Build
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
