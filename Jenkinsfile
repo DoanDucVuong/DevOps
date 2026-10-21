@@ -11,6 +11,7 @@ pipeline {
 
     environment {
         APP_VERSION = "${env.BUILD_NUMBER}"
+        DOCKER_USERNAME = "${params.DOCKER_USER}"
         BACKEND_IMAGE = "${params.DOCKER_USER}/sttn-backend"
         ML_IMAGE = "${params.DOCKER_USER}/sttn-ml-service"
         FRONTEND_IMAGE = "${params.DOCKER_USER}/sttn-frontend"
@@ -69,16 +70,16 @@ pipeline {
                 echo ">>> BƯỚC 3: Đóng gói Docker Images <<<"
                 echo "=========================================="
                 echo "1. Build ML Service (Python/FastAPI)..."
-                sh 'docker build -t ${ML_IMAGE}:${APP_VERSION} -t ${ML_IMAGE}:latest ./ml-service'
+                sh 'docker build -t ${ML_IMAGE}:${APP_VERSION} -t ${ML_IMAGE}:latest -t sttn/sttn-ml-service:latest ./ml-service'
 
                 echo "2. Build Backend (Node.js/Express)..."
-                sh 'docker build -t ${BACKEND_IMAGE}:${APP_VERSION} -t ${BACKEND_IMAGE}:latest ./backend'
+                sh 'docker build -t ${BACKEND_IMAGE}:${APP_VERSION} -t ${BACKEND_IMAGE}:latest -t sttn/sttn-backend:latest ./backend'
 
                 echo "3. Build Frontend (React/Vite/Nginx)..."
-                sh 'docker build --build-arg VITE_API_URL=http://localhost:4000/api -t ${FRONTEND_IMAGE}:${APP_VERSION} -t ${FRONTEND_IMAGE}:latest ./frontend'
+                sh 'docker build --build-arg VITE_API_URL=http://localhost:4000/api -t ${FRONTEND_IMAGE}:${APP_VERSION} -t ${FRONTEND_IMAGE}:latest -t sttn/sttn-frontend:latest ./frontend'
 
                 echo "Danh sách Docker images vừa tạo:"
-                sh 'docker images | grep ${params.DOCKER_USER} || true'
+                sh 'docker images | grep -E "sttn|${DOCKER_USERNAME}" || true'
             }
         }
 
@@ -113,8 +114,9 @@ pipeline {
                 echo "=========================================="
                 sh '''
                     echo "Dừng phiên bản cũ và khởi chạy phiên bản mới..."
+                    export DOCKER_USERNAME="${DOCKER_USERNAME}"
                     docker compose down || true
-                    docker compose up -d
+                    docker compose up -d --no-build
                 '''
             }
         }
@@ -133,13 +135,13 @@ pipeline {
                     docker compose ps
 
                     echo "--- Kiểm tra Backend Health ---"
-                    curl -s -o /dev/null -w "Backend HTTP status: %{http_code}\\n" http://localhost:4000/health || true
+                    curl -s -o /dev/null -w "Backend HTTP status: %{http_code}\\n" http://host.docker.internal:4000/health || curl -s -o /dev/null -w "Backend HTTP status: %{http_code}\\n" http://localhost:4000/health || true
 
                     echo "--- Kiểm tra ML Service Health ---"
-                    curl -s -o /dev/null -w "ML Service HTTP status: %{http_code}\\n" http://localhost:8001/health || true
+                    curl -s -o /dev/null -w "ML Service HTTP status: %{http_code}\\n" http://host.docker.internal:8001/health || curl -s -o /dev/null -w "ML Service HTTP status: %{http_code}\\n" http://localhost:8001/health || true
 
                     echo "--- Kiểm tra Frontend Web ---"
-                    curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://localhost:8080 || true
+                    curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://host.docker.internal:8080 || curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://localhost:8080 || true
                 '''
             }
         }
