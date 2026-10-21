@@ -44,6 +44,7 @@ services:
       - ML_SERVICE_URL=http://ml-service:8001
       - INTERNAL_API_KEY=${INTERNAL_API_KEY:-dev-internal-key}
       - DATABASE_URL=postgresql://sttn:${POSTGRES_PASSWORD:-sttn_dev_password}@postgres:5432/sttn
+      - DATABASE_SSL=false
     depends_on:
       postgres:
         condition: service_healthy
