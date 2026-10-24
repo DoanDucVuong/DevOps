@@ -4,6 +4,7 @@ const { query, one } = require('../db')
 const { requireAdmin } = require('../middleware/auth')
 const { parseOrder } = require('./orders')
 const { getMlServiceUrl } = require('../mlConfig')
+const { syncAllProductData } = require('../services/syncService')
 
 const router = express.Router()
 const INTERNAL_API_KEY = process.env.INTERNAL_API_KEY || ''
@@ -194,6 +195,9 @@ router.post('/products', requireAdmin, async (req, res) => {
 
   const created = rows[0] || { id: cleanId, name, description, category, gender, brand, price: numPrice, image_url }
   res.status(201).json({ message: 'Thêm sản phẩm thành công!', product: created })
+
+  // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
+  syncAllProductData().catch((err) => console.error('[admin/create] Lỗi auto-sync:', err))
 })
 
 // PUT /api/admin/products/:id
@@ -218,6 +222,9 @@ router.put('/products/:id', requireAdmin, async (req, res) => {
 
   const updated = rows[0] || { id, name, description, category, gender, brand, price: numPrice, image_url }
   res.json({ message: 'Cập nhật sản phẩm thành công!', product: updated })
+
+  // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
+  syncAllProductData().catch((err) => console.error('[admin/update] Lỗi auto-sync:', err))
 })
 
 // DELETE /api/admin/products/:id
@@ -233,6 +240,9 @@ router.delete('/products/:id', requireAdmin, async (req, res) => {
   await query('DELETE FROM products WHERE id = ?', [id])
 
   res.json({ message: 'Đã xóa sản phẩm thành công!', id })
+
+  // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
+  syncAllProductData().catch((err) => console.error('[admin/delete] Lỗi auto-sync:', err))
 })
 
 module.exports = router

@@ -30,6 +30,7 @@ services:
       - "8001:8001"
     volumes:
       - ml-models:/app/models   # giữ mô hình đã học từ dữ liệu thật qua các lần restart
+      - ./ml-service/data:/app/data
     restart: always
 
   backend:
@@ -47,6 +48,10 @@ services:
       - INTERNAL_API_KEY=${INTERNAL_API_KEY:-dev-internal-key}
       - DATABASE_URL=postgresql://sttn:${POSTGRES_PASSWORD:-sttn_dev_password}@postgres:5432/sttn
       - DATABASE_SSL=false
+    volumes:
+      - ./backend/src/db:/app/src/db
+      - ./frontend/src/data:/app/frontend-data
+      - ./ml-service/data:/app/ml-data
     depends_on:
       postgres:
         condition: service_healthy

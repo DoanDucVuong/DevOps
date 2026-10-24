@@ -1,5 +1,6 @@
 
-DELETE FROM products;
+-- Safe Seeding: Tuyệt đối không xóa dữ liệu người dùng
+-- DELETE FROM products;
 INSERT INTO products (id, name, gender, category, brand, price, stock, image_url, description, avg_rating)
 VALUES
 ('p01', 'Áo Thun Nam Basic Trắng', 'Nam', 'ao-thun', 'Maison', 320000, 100, 'https://placehold.co/400x600?text=Ao+Thun+Nam+Basic+Trang', 'Chất liệu 100% cotton thoáng mát, form regular fit dễ phối đồ hàng ngày.', 4.8),
@@ -51,4 +52,5 @@ VALUES
 ('p47', 'Quần Tây Nữ Baggy Công Sở', 'Nữ', 'quan', 'Maison', 590000, 100, 'https://placehold.co/400x600?text=Quan+Tay+Nu+Baggy+Cong+So', 'Form baggy rộng ở hông và bóp nhẹ gấu, che khuyết điểm chân to hiệu quả.', 4.7),
 ('p48', 'Quần Nữ Ống Loe Co Giãn', 'Nữ', 'quan', 'Maison', 640000, 100, 'https://placehold.co/400x600?text=Quan+Nu+Ong+Loe+Co+Gian', 'Đáy cạp cao ôm sát đùi và xòe nhẹ từ đầu gối, tạo tỷ lệ cơ thể chữ S chuẩn mực.', 4.8),
 ('p49', 'Quần Short Nữ Kaki Lưng Thun', 'Nữ', 'quan', 'Maison', 350000, 100, 'https://placehold.co/400x600?text=Quan+Short+Nu+Kaki+Lung+Thun', 'Cạp chun thoải mái với túi 2 bên tiện lợi, cực kỳ mát mẻ khi ở nhà hoặc dạo phố.', 4.5),
-('p50', 'Set Bộ Nữ Áo Vest Va Chân Váy', 'Nữ', 'vay', 'Maison', 1350000, 100, 'https://placehold.co/400x600?text=Set+Bo+Nu+Ao+Vest+Va+Chan+Vay', 'Set bộ đồng màu cao cấp gồm áo vest ngắn tay và chân váy chữ A sành điệu.', 4.9);
+('p50', 'Set Bộ Nữ Áo Vest Va Chân Váy', 'Nữ', 'vay', 'Maison', 1350000, 100, 'https://placehold.co/400x600?text=Set+Bo+Nu+Ao+Vest+Va+Chan+Vay', 'Set bộ đồng màu cao cấp gồm áo vest ngắn tay và chân váy chữ A sành điệu.', 4.9)
+ON CONFLICT (id) DO NOTHING;

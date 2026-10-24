@@ -46,16 +46,40 @@ export const useProductStore = create((set, get) => ({
     return list.find((p) => p.id === id) || defaultGetProductById(id)
   },
 
-  // Cập nhật optimistic tại client ngay khi Admin sửa
-  syncProductUpdate: (updatedProd) => {
-    set((state) => ({
-      products: state.products.map((p) => (p.id === updatedProd.id ? { ...p, ...updatedProd, images: [updatedProd.image_url || p.image_url] } : p))
-    }))
+  // Cập nhật optimistic tại client ngay lập tức khi Admin thêm / sửa / xóa
+  syncProductUpdate: (prod) => {
+    set((state) => {
+      const exists = state.products.some((p) => p.id === prod.id)
+      const newImg = prod.image_url || ''
+      const mapped = {
+        id: prod.id,
+        name: prod.name,
+        price: Number(prod.price),
+        category: prod.category,
+        gender: prod.gender || 'Nam',
+        brand: prod.brand || 'Maison',
+        description: prod.description || '',
+        image_url: newImg,
+        images: newImg ? [newImg] : [],
+        colors: prod.colors || ['den', 'trang', 'be'],
+        sizes: prod.sizes || ['S', 'M', 'L', 'XL'],
+        avgRating: Number(prod.avg_rating || 4.8),
+        stock: Number(prod.stock || 100),
+      }
+      if (exists) {
+        return {
+          products: state.products.map((p) => (p.id === prod.id ? { ...p, ...mapped } : p)),
+        }
+      }
+      return {
+        products: [mapped, ...state.products],
+      }
+    })
   },
 
   syncProductDelete: (id) => {
     set((state) => ({
-      products: state.products.filter((p) => p.id !== id)
+      products: state.products.filter((p) => p.id !== id),
     }))
   },
 }))

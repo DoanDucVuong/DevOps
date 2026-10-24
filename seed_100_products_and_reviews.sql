@@ -1,7 +1,7 @@
 
--- Xoá dữ liệu cũ
-DELETE FROM reviews;
-DELETE FROM products;
+-- Safe Seeding: Giữ nguyên dữ liệu hiện có, chỉ bổ sung nếu chưa tồn tại
+-- KHÔNG xóa dữ liệu người dùng đã chỉnh sửa
+
 
 -- Nạp 100 sản phẩm mới
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)

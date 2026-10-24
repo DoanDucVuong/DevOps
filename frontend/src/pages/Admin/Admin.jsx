@@ -53,6 +53,8 @@ export default function Admin() {
   const navigate = useNavigate()
   const refreshStoreCategories = useCategoryStore((s) => s.fetchCategories)
   const refreshStoreProducts = useProductStore((s) => s.fetchProducts)
+  const syncProductUpdate = useProductStore((s) => s.syncProductUpdate)
+  const syncProductDelete = useProductStore((s) => s.syncProductDelete)
 
   // Determine active tab from URL path
   const getTabFromPath = () => {
@@ -441,11 +443,17 @@ export default function Admin() {
     setSavingProduct(true)
     try {
       if (editingProduct) {
-        await updateAdminProduct(editingProduct.id, productForm)
+        const res = await updateAdminProduct(editingProduct.id, productForm)
         showToast('Cập nhật sản phẩm thành công!')
+        if (res?.product) {
+          syncProductUpdate(res.product)
+        }
       } else {
-        await createAdminProduct(productForm)
+        const res = await createAdminProduct(productForm)
         showToast('Thêm sản phẩm mới thành công!')
+        if (res?.product) {
+          syncProductUpdate(res.product)
+        }
       }
       setProductModalOpen(false)
       loadAdminProducts()
@@ -464,6 +472,7 @@ export default function Admin() {
     }
     try {
       await deleteAdminProduct(prod.id)
+      syncProductDelete(prod.id)
       showToast('Đã xóa sản phẩm thành công!')
       loadAdminProducts()
       loadCategories() // Refresh category product counts

@@ -29,6 +29,14 @@ export const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('sttn-token')
   if (token) config.headers.Authorization = `Bearer ${token}`
+  // Đảm bảo dữ liệu luôn thời gian thực (Real-time), chống cache cũ
+  config.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+  config.headers['Pragma'] = 'no-cache'
+  config.headers['Expires'] = '0'
+
+  if (config.method === 'get') {
+    config.params = { _t: Date.now(), ...(config.params || {}) }
+  }
   return config
 })
 
