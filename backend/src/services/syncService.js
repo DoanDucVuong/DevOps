@@ -102,6 +102,58 @@ async function syncAllProductData() {
       } catch (e) {}
     }
 
+    // 2.5 Đồng bộ sang Database PostgreSQL phụ (postgres hoặc sttn) nếu dùng PG
+    if (usePg && process.env.DATABASE_URL) {
+      try {
+        const { Pool } = require('pg')
+        const currentDb = process.env.DATABASE_URL.includes('/sttn') ? 'sttn' : 'postgres'
+        const targetDb = currentDb === 'sttn' ? 'postgres' : 'sttn'
+        const targetUrl = process.env.DATABASE_URL.replace(`/${currentDb}`, `/${targetDb}`)
+        const companionPool = new Pool({ connectionString: targetUrl })
+        
+        await companionPool.query(`
+          CREATE TABLE IF NOT EXISTS products (
+            id VARCHAR(50) PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            category VARCHAR(100),
+            gender VARCHAR(20) DEFAULT 'Nam',
+            brand VARCHAR(100),
+            price NUMERIC NOT NULL,
+            stock INTEGER DEFAULT 100,
+            image_url TEXT,
+            avg_rating NUMERIC DEFAULT 4.5,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+        `)
+
+        for (const r of rows) {
+          await companionPool.query(`
+            INSERT INTO products (id, name, description, category, gender, brand, price, stock, image_url, avg_rating)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            ON CONFLICT (id) DO UPDATE SET
+              name = EXCLUDED.name,
+              description = EXCLUDED.description,
+              category = EXCLUDED.category,
+              gender = EXCLUDED.gender,
+              brand = EXCLUDED.brand,
+              price = EXCLUDED.price,
+              stock = EXCLUDED.stock,
+              image_url = EXCLUDED.image_url,
+              avg_rating = EXCLUDED.avg_rating
+          `, [
+            r.id, r.name, r.description || '', r.category, r.gender || 'Nam',
+            r.brand || 'Maison', Number(r.price), Number(r.stock ?? 100),
+            r.image_url || '', Number(r.avg_rating ?? 4.5)
+          ])
+        }
+        await companionPool.end()
+        console.log(`[syncService] Đã đồng bộ sang PostgreSQL database [${targetDb}]`)
+      } catch (pgSyncErr) {
+        console.warn('[syncService] Không thể đồng bộ PG phụ:', pgSyncErr.message)
+      }
+    }
+
     // 3. Đồng bộ vào SQLite sttn.db (cho Database Client extension trong IDE)
     const sqlitePaths = [
       path.join(__dirname, '../db/sttn.db'),

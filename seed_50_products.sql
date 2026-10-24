@@ -3,8 +3,8 @@
 -- DELETE FROM products;
 INSERT INTO products (id, name, gender, category, brand, price, stock, image_url, description, avg_rating)
 VALUES
-('p01', 'Áo Thun Nam Basic Trắng', 'Nam', 'ao-thun', 'Maison', 320000, 100, 'https://placehold.co/400x600?text=Ao+Thun+Nam+Basic+Trang', 'Chất liệu 100% cotton thoáng mát, form regular fit dễ phối đồ hàng ngày.', 4.8),
-('p02', 'Áo Thun Nam Polo Cổ Bẻ', 'Nam', 'ao-thun', 'Maison', 450000, 100, 'https://placehold.co/400x600?text=Ao+Thun+Nam+Polo+Co+Be', 'Áo polo nam dệt tổ ong dày dặn, lịch thiệp khi đi làm hoặc dạo phố.', 4.7),
+('p01', 'Áo Thun Cổ Tròn Big Size Navy BS2763', 'Nam', 'ao-thun', 'Maison', 270000, 100, 'https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2763.jpg', 'Chất liệu 100% cotton thoáng mát, form regular fit dễ phối đồ hàng ngày.', 4.8),
+('p02', 'Áo Thun Cổ Tròn Big Size Navy BS2763', 'Nam', 'ao-thun', 'Maison', 300000, 100, 'https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2764.jpg', 'Áo polo nam dệt tổ ong dày dặn, lịch thiệp khi đi làm hoặc dạo phố.', 4.7),
 ('p03', 'Áo Thun Nam Oversize Graphic', 'Nam', 'ao-thun', 'Maison', 380000, 100, 'https://placehold.co/400x600?text=Ao+Thun+Nam+Oversize+Graphic', 'Kiểu dáng unisex rộng rãi đường phố phong cách streetwear trẻ trung.', 4.6),
 ('p04', 'Áo Thun Nam Henley Cổ V', 'Nam', 'ao-thun', 'Maison', 350000, 100, 'https://placehold.co/400x600?text=Ao+Thun+Nam+Henley+Co+V', 'Áo thun nam cổ gài nút nam tính, tôn dáng ngực và bắp tay.', 4.5),
 ('p05', 'Áo Thun Nam Cotton Thoáng Khí', 'Nam', 'ao-thun', 'Maison', 310000, 100, 'https://placehold.co/400x600?text=Ao+Thun+Nam+Cotton+Thoang+Khi', 'Công nghệ sợi làm mát co giãn 4 chiều chuyên dụng cho vận động.', 4.9),

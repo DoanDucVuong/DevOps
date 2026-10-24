@@ -13,96 +13,100 @@ console.log('========================================================');
 console.log('🚀 BẮT ĐẦU FIX VÀ ĐỒNG BỘ TOÀN DIỆN DATABASE & FILE TĨNH');
 console.log('========================================================');
 
-const P01_DATA = {
-  id: 'p01',
-  name: 'Áo Thun Cổ Tròn Big Size Navy BS2763',
-  price: 270000,
-  image_url: 'https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2763.jpg',
-  category: 'ao-thun',
-  gender: 'Nam',
-};
+// 1. KẾT NỐI VÀO POSTGRESQL sttn ĐỂ LẤY SOURCE OF TRUTH MỚI NHẤT
+const pgSttnUrl = 'postgresql://sttn:sttn_dev_password@localhost:5432/sttn';
+let masterProducts = [];
 
-const P02_DATA = {
-  id: 'p02',
-  name: 'Đoàn Đức Vương',
-  price: 300000,
-  image_url: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80',
-  category: 'ao-thun',
-  gender: 'Nam',
-};
+try {
+  const pool = new Pool({ connectionString: pgSttnUrl, connectionTimeoutMillis: 3000 });
+  const client = await pool.connect();
+  console.log('[PostgreSQL] Đã kết nối tới DB sttn chính.');
 
-// 1. CẬP NHẬT CẢ HAI DATABASE POSTGRESQL (sttn VÀ postgres)
-const pgUrls = [
-  'postgresql://sttn:sttn_dev_password@localhost:5432/sttn',
+  // Đảm bảo p01 và p02 có giá trị đúng từ lần sửa mới nhất của user
+  await client.query(`
+    UPDATE products SET
+      name = 'Áo Thun Cổ Tròn Big Size Navy BS2763',
+      price = 270000,
+      image_url = 'https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2763.jpg'
+    WHERE id = 'p01';
+  `);
+
+  await client.query(`
+    UPDATE products SET
+      name = 'Áo Thun Cổ Tròn Big Size Navy BS2763',
+      price = 300000,
+      image_url = 'https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2764.jpg'
+    WHERE id = 'p02';
+  `);
+
+  const res = await client.query('SELECT * FROM products ORDER BY id ASC');
+  masterProducts = res.rows;
+  console.log(`[PostgreSQL] Lấy được ${masterProducts.length} sản phẩm từ PG sttn.`);
+  client.release();
+  await pool.end();
+} catch (err) {
+  console.warn('[PostgreSQL sttn error]:', err.message);
+}
+
+// 2. ĐỒNG BỘ SANG POSTGRESQL DATABASE postgres (TRÊN CÙNG PORT 5432)
+const pgPostgresUrls = [
   'postgresql://sttn:sttn_dev_password@localhost:5432/postgres',
   'postgresql://postgres:postgres@localhost:5432/postgres',
   'postgresql://postgres:sttn_dev_password@localhost:5432/postgres',
 ];
 
-for (const url of pgUrls) {
+for (const url of pgPostgresUrls) {
   try {
     const pool = new Pool({ connectionString: url, connectionTimeoutMillis: 3000 });
     const client = await pool.connect();
-    const cleanUrl = url.replace(/:[^:]*@/, ':***@');
-    console.log(`\n[PostgreSQL] Đang cập nhật CSDL: ${cleanUrl}`);
+    console.log(`[PostgreSQL] Đang đồng bộ sang DB phụ: ${url.replace(/:[^:]*@/, ':***@')}`);
 
-    // Đảm bảo bảng products tồn tại và có đủ cột
     await client.query(`
       CREATE TABLE IF NOT EXISTS products (
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         description TEXT,
         category TEXT,
-        gender TEXT DEFAULT 'Unisex',
+        gender TEXT DEFAULT 'Nam',
         brand TEXT,
         price DOUBLE PRECISION NOT NULL,
         stock INTEGER DEFAULT 100,
         image_url TEXT,
-        avg_rating DOUBLE PRECISION DEFAULT 0,
+        avg_rating DOUBLE PRECISION DEFAULT 4.5,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
 
-    // Thêm cột image_url nếu thiếu
-    await client.query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='image_url') THEN
-          ALTER TABLE products ADD COLUMN image_url TEXT;
-        END IF;
-      END $$;
-    `).catch(() => {});
-
-    // Cập nhật p01
-    await client.query(`
-      INSERT INTO products (id, name, price, image_url, category, gender, brand)
-      VALUES ($1, $2, $3, $4, $5, $6, 'Maison')
-      ON CONFLICT (id) DO UPDATE SET
-        name = EXCLUDED.name,
-        price = EXCLUDED.price,
-        image_url = EXCLUDED.image_url;
-    `, [P01_DATA.id, P01_DATA.name, P01_DATA.price, P01_DATA.image_url, P01_DATA.category, P01_DATA.gender]);
-    console.log(`  ✓ Đã cập nhật p01: ${P01_DATA.name} | ${P01_DATA.image_url}`);
-
-    // Cập nhật p02
-    await client.query(`
-      INSERT INTO products (id, name, price, image_url, category, gender, brand)
-      VALUES ($1, $2, $3, $4, $5, $6, 'Maison')
-      ON CONFLICT (id) DO UPDATE SET
-        name = EXCLUDED.name,
-        price = EXCLUDED.price,
-        image_url = EXCLUDED.image_url;
-    `, [P02_DATA.id, P02_DATA.name, P02_DATA.price, P02_DATA.image_url, P02_DATA.category, P02_DATA.gender]);
-    console.log(`  ✓ Đã cập nhật p02: ${P02_DATA.name} | ${P02_DATA.image_url}`);
-
+    for (const p of masterProducts) {
+      await client.query(`
+        INSERT INTO products (id, name, description, category, gender, brand, price, stock, image_url, avg_rating)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        ON CONFLICT (id) DO UPDATE SET
+          name = EXCLUDED.name,
+          description = EXCLUDED.description,
+          category = EXCLUDED.category,
+          gender = EXCLUDED.gender,
+          brand = EXCLUDED.brand,
+          price = EXCLUDED.price,
+          stock = EXCLUDED.stock,
+          image_url = EXCLUDED.image_url,
+          avg_rating = EXCLUDED.avg_rating;
+      `, [
+        p.id, p.name, p.description || '', p.category, p.gender || 'Nam',
+        p.brand || 'Maison', Number(p.price), Number(p.stock ?? 100),
+        p.image_url || '', Number(p.avg_rating ?? 4.5)
+      ]);
+    }
+    console.log(`  ✓ Đã đồng bộ ${masterProducts.length} sản phẩm sang PG postgres DB!`);
     client.release();
     await pool.end();
-  } catch (err) {
-    // URL nào không kết nối được thì bỏ qua
+    break;
+  } catch (e) {
+    // try next url
   }
 }
 
-// 2. CẬP NHẬT SQLITE sttn.db TRÊN Ổ ĐĨA D:\
+// 3. ĐỒNG BỘ SANG SQLITE sttn.db TRÊN Ổ ĐĨA D:\ (CHO DATABASE CLIENT EXTENSION TRONG IDE)
 const sqlitePath = path.join(__dirname, 'backend/src/db/sttn.db');
 console.log(`\n[SQLite] Đang cập nhật file SQLite tại: ${sqlitePath}`);
 const db = new Database(sqlitePath);
@@ -123,33 +127,45 @@ db.exec(`
   );
 `);
 
-// Cập nhật p01
-db.prepare(`
-  INSERT INTO products (id, name, price, image_url, category, gender, brand)
-  VALUES (?, ?, ?, ?, ?, ?, 'Maison')
+const insertSqlite = db.prepare(`
+  INSERT INTO products (id, name, description, category, gender, brand, price, stock, image_url, avg_rating)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   ON CONFLICT(id) DO UPDATE SET
     name = excluded.name,
+    description = excluded.description,
+    category = excluded.category,
+    gender = excluded.gender,
+    brand = excluded.brand,
     price = excluded.price,
-    image_url = excluded.image_url;
-`).run(P01_DATA.id, P01_DATA.name, P01_DATA.price, P01_DATA.image_url, P01_DATA.category, P01_DATA.gender);
-console.log(`  ✓ Đã cập nhật p01 trong SQLite: ${P01_DATA.name}`);
+    stock = excluded.stock,
+    image_url = excluded.image_url,
+    avg_rating = excluded.avg_rating;
+`);
 
-// Cập nhật p02
-db.prepare(`
-  INSERT INTO products (id, name, price, image_url, category, gender, brand)
-  VALUES (?, ?, ?, ?, ?, ?, 'Maison')
-  ON CONFLICT(id) DO UPDATE SET
-    name = excluded.name,
-    price = excluded.price,
-    image_url = excluded.image_url;
-`).run(P02_DATA.id, P02_DATA.name, P02_DATA.price, P02_DATA.image_url, P02_DATA.category, P02_DATA.gender);
-console.log(`  ✓ Đã cập nhật p02 trong SQLite: ${P02_DATA.name}`);
+const tx = db.transaction((items) => {
+  for (const p of items) {
+    insertSqlite.run(
+      p.id,
+      p.name,
+      p.description || '',
+      p.category,
+      p.gender || 'Nam',
+      p.brand || 'Maison',
+      Number(p.price),
+      Number(p.stock ?? 100),
+      p.image_url || '',
+      Number(p.avg_rating ?? 4.5)
+    );
+  }
+});
+tx(masterProducts);
+console.log(`  ✓ Đã cập nhật ${masterProducts.length} sản phẩm trong SQLite sttn.db!`);
 
-// 3. ĐỒNG BỘ TOÀN BỘ 100 SẢN PHẨM RA CÁC FILE TĨNH
+// 4. ĐỒNG BỘ TOÀN BỘ SẢN PHẨM RA CÁC FILE TĨNH (SEED, FRONTEND, ML)
 console.log('\n[Files Sync] Đồng bộ danh sách sản phẩm mới nhất ra file tĩnh...');
-const allSqliteProducts = db.prepare('SELECT * FROM products ORDER BY id ASC').all();
+const allProductsFromDb = db.prepare('SELECT * FROM products ORDER BY id ASC').all();
 
-const formattedProducts = allSqliteProducts.map((r) => {
+const formattedProducts = allProductsFromDb.map((r) => {
   const img = r.image_url || r.image || '';
   return {
     id: r.id,
@@ -195,7 +211,7 @@ export const getProductById = (id) => products.find((p) => p.id === id);
 fs.writeFileSync(frontendJsPath, frontendJsContent, 'utf8');
 console.log(`  ✓ Đã ghi ${formattedProducts.length} sản phẩm ra ${frontendJsPath}`);
 
-// 4. KIỂM CHỨNG LẠI DỮ LIỆU p01 & p02 TRONG SQLITE
+// 5. KIỂM CHỨNG LẠI DỮ LIỆU p01 & p02 TRONG SQLITE
 console.log('\n[Kiểm chứng trực tiếp từ SQLite sttn.db]');
 const checkP01 = db.prepare('SELECT id, name, price, image_url FROM products WHERE id = ?').get('p01');
 const checkP02 = db.prepare('SELECT id, name, price, image_url FROM products WHERE id = ?').get('p02');
@@ -203,7 +219,7 @@ console.log('  p01:', checkP01);
 console.log('  p02:', checkP02);
 db.close();
 
-// 5. BUILD FRONTEND & CẬP NHẬT DOCKER
+// 6. BUILD FRONTEND & CẬP NHẬT DOCKER
 console.log('\n[Build & Docker] Đang build frontend và cập nhật containers...');
 try {
   execSync('npm run --prefix frontend build', { stdio: 'inherit' });
@@ -213,10 +229,8 @@ try {
 }
 
 try {
-  // Docker compose up -d để gắn bind mounts và khởi động lại
-  execSync('docker compose up -d backend frontend ml-service', { stdio: 'inherit' });
   execSync('docker cp backend/src sttn-backend:/app/ && docker cp frontend/dist/. sttn-frontend:/usr/share/nginx/html/', { stdio: 'inherit' });
-  console.log('  ✓ Đã kích hoạt bind mount và cập nhật toàn bộ containers!');
+  console.log('  ✓ Đã cập nhật mã nguồn mới vào các containers!');
 } catch (e) {
   console.warn('  ! Lưu ý docker:', e.message);
 }

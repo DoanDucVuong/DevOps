@@ -128,14 +128,13 @@ export default function Admin() {
     setActiveTab(getTabFromPath())
   }, [location.pathname])
 
-  // Sync category filter from URL query when location.search changes
+  // Sync category & gender filter from URL query when location.search changes
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const cat = params.get('category')
-    if (cat) {
-      setProdFilterCat(cat)
-      setProdPage(1)
-    }
+    const gender = params.get('gender')
+    setProdFilterCat(cat || 'all')
+    setProdFilterGender(gender || 'all')
   }, [location.search])
 
   const switchTab = (tab, queryStr = '') => {
@@ -898,10 +897,19 @@ export default function Admin() {
                 <select
                   value={prodFilterCat}
                   onChange={(e) => {
-                    setProdFilterCat(e.target.value)
+                    const nextCat = e.target.value
+                    setProdFilterCat(nextCat)
                     setProdPage(1)
+                    const params = new URLSearchParams(location.search)
+                    if (nextCat && nextCat !== 'all') {
+                      params.set('category', nextCat)
+                    } else {
+                      params.delete('category')
+                    }
+                    const q = params.toString() ? `?${params.toString()}` : ''
+                    navigate(`/admin/products${q}`, { replace: true })
                   }}
-                  className="text-xs py-1.5 px-2.5 bg-paper border border-stone-dark rounded-sm outline-none focus:border-ink"
+                  className="text-xs py-1.5 px-2.5 bg-paper border border-stone-dark rounded-sm outline-none focus:border-ink font-medium"
                 >
                   <option value="all">Tất cả danh mục</option>
                   {categories.map((c) => (
@@ -915,8 +923,17 @@ export default function Admin() {
                 <select
                   value={prodFilterGender}
                   onChange={(e) => {
-                    setProdFilterGender(e.target.value)
+                    const nextGender = e.target.value
+                    setProdFilterGender(nextGender)
                     setProdPage(1)
+                    const params = new URLSearchParams(location.search)
+                    if (nextGender && nextGender !== 'all') {
+                      params.set('gender', nextGender)
+                    } else {
+                      params.delete('gender')
+                    }
+                    const q = params.toString() ? `?${params.toString()}` : ''
+                    navigate(`/admin/products${q}`, { replace: true })
                   }}
                   className="text-xs py-1.5 px-2.5 bg-paper border border-stone-dark rounded-sm outline-none focus:border-ink"
                 >
@@ -935,7 +952,7 @@ export default function Admin() {
                       setProdPage(1)
                       navigate('/admin/products')
                     }}
-                    className="text-xs text-clay hover:underline px-2 py-1"
+                    className="text-xs text-clay hover:underline px-2 py-1 font-medium"
                   >
                     Xóa bộ lọc
                   </button>
