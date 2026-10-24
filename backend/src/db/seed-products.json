@@ -5,7 +5,7 @@
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
-    "price": 280000,
+    "price": 270000,
     "oldPrice": 350000,
     "stock": 80,
     "rating": 4.2,
@@ -94,7 +94,7 @@
   },
   {
     "id": "p04",
-    "name": "Áo Thun Nam Henley Cổ Gài Nút",
+    "name": "T-Shirt Big Size Navy BSX653",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -114,9 +114,9 @@
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600&auto=format&fit=crop&q=80",
+    "image_url": "https://thoitrangbigsize.vn/wp-content/uploads/2021/10/BSX653D0.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600&auto=format&fit=crop&q=80"
+      "https://thoitrangbigsize.vn/wp-content/uploads/2021/10/BSX653D0.jpg"
     ],
     "isNew": false,
     "isFeatured": false,

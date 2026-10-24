@@ -5,13 +5,13 @@ DELETE FROM products;
 
 -- Nạp 100 sản phẩm mới
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
-VALUES ('p01', 'Áo Thun Nam Cotton Basic Trắng', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 280000, 80, 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+VALUES ('p01', 'Áo Thun Nam Cotton Basic Trắng', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 270000, 80, 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
 VALUES ('p02', 'Áo Thun Nam Polo Cổ Bẻ Xanh Navy', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 300000, 87, 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
 VALUES ('p03', 'Áo Thun Nam Oversize Đen Streetwear', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 330000, 94, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
-VALUES ('p04', 'Áo Thun Nam Henley Cổ Gài Nút', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 350000, 101, 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+VALUES ('p04', 'T-Shirt Big Size Navy BSX653', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 350000, 101, 'https://thoitrangbigsize.vn/wp-content/uploads/2021/10/BSX653D0.jpg', 4.3, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
 VALUES ('p05', 'Áo Thun Nam Thể Thao Thoáng Khí Pro', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 370000, 108, 'https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
