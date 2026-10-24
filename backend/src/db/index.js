@@ -172,6 +172,9 @@ async function init() {
 }
 
 async function seedProducts() {
+  const row = await one('SELECT COUNT(*) AS c FROM products')
+  const count = Number(row?.c || 0)
+
   const bundled = path.join(__dirname, 'seed-products.json')
   const sibling = path.join(__dirname, '..', '..', '..', 'ml-service', 'data', 'products.json')
   const file = fs.existsSync(bundled) ? bundled : sibling
@@ -180,22 +183,30 @@ async function seedProducts() {
     return
   }
   const products = JSON.parse(fs.readFileSync(file, 'utf-8'))
+
+  // BẢO VỆ DỮ LIỆU ĐÃ SỬA CỦA NGƯỜI DÙNG:
+  // Nếu bảng đã có sản phẩm, chỉ bổ sung sản phẩm mới nếu còn thiếu.
+  // TUYỆT ĐỐI KHÔNG ghi đè (UPDATE) tên, link ảnh, giá mà người dùng đã sửa trong Admin / DB.
+  let inserted = 0
   for (const p of products) {
     const existing = await one('SELECT id FROM products WHERE id = ?', [p.id])
-    if (existing) {
-      await query(
-        `UPDATE products SET name = ?, description = ?, category = ?, brand = ?, price = ?, image_url = ?, gender = ? WHERE id = ?`,
-        [p.name, p.description, p.category, p.brand, p.price, p.image_url, p.gender || 'Nam', p.id]
-      )
-    } else {
+    if (!existing) {
       await query(
         `INSERT INTO products (id, name, description, category, brand, price, image_url, avg_rating, gender)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [p.id, p.name, p.description, p.category, p.brand, p.price, p.image_url, p.avg_rating || 4.5, p.gender || 'Nam']
       )
+      inserted++
     }
   }
-  console.log(`[db] Đã đồng bộ và cập nhật thành công ${products.length} sản phẩm (Nam & Nữ).`)
+
+  if (count === 0) {
+    console.log(`[db] Đã khởi tạo ban đầu ${inserted} sản phẩm.`)
+  } else if (inserted > 0) {
+    console.log(`[db] Đã bổ sung ${inserted} sản phẩm mới thiếu vào CSDL.`)
+  } else {
+    console.log(`[db] Dữ liệu ${count} sản phẩm đã sẵn sàng (bảo toàn mọi chỉnh sửa tên/ảnh của người dùng).`)
+  }
 }
 
 async function seedCategories() {

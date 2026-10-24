@@ -103,6 +103,12 @@ async function sync() {
     fs.writeFileSync(jsonPath, JSON.stringify(updated, null, 2), 'utf-8');
     console.log('Updated backend/src/db/seed-products.json');
 
+    const mlPath = path.join(rootDir, 'ml-service/data/products.json');
+    if (fs.existsSync(mlPath)) {
+      fs.writeFileSync(mlPath, JSON.stringify(updated, null, 2), 'utf-8');
+      console.log('Updated ml-service/data/products.json');
+    }
+
     const frontendPath = path.join(rootDir, 'frontend/src/data/products.js');
     const frontendContent = `// Danh sách 100 sản phẩm thời trang (50 Nam, 50 Nữ) độc bản, hình ảnh phân định chuẩn 100%
 export const products = ${JSON.stringify(updated, null, 2)};
