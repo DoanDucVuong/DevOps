@@ -108,10 +108,10 @@ async function syncAllProductData() {
       path.resolve(__dirname, '../../src/db/sttn.db'),
       '/app/src/db/sttn.db'
     ]
-    if (Database) {
-      for (const sqlPath of sqlitePaths) {
-        try {
-          if (fs.existsSync(path.dirname(sqlPath))) {
+    for (const sqlPath of sqlitePaths) {
+      try {
+        if (fs.existsSync(path.dirname(sqlPath))) {
+          if (Database) {
             const db = new Database(sqlPath)
             db.exec(`
               CREATE TABLE IF NOT EXISTS products (
@@ -160,7 +160,6 @@ async function syncAllProductData() {
                   Number(r.avg_rating ?? 4.5)
                 )
               }
-              // Xóa sản phẩm không còn trong DB chính
               if (currentIds.length > 0) {
                 const placeholders = currentIds.map(() => '?').join(',')
                 db.prepare(`DELETE FROM products WHERE id NOT IN (${placeholders})`).run(...currentIds)
@@ -168,12 +167,47 @@ async function syncAllProductData() {
             })
             tx(rows)
             db.close()
-            console.log(`[syncService] Đã đồng bộ ${rows.length} sản phẩm sang SQLite: ${sqlPath}`)
+            console.log(`[syncService] Đã đồng bộ ${rows.length} sản phẩm sang SQLite (better-sqlite3): ${sqlPath}`)
+            break
+          } else {
+            // Fallback sang sqlite3 CLI
+            const { execSync } = require('child_process')
+            const esc = (s) => (s ? String(s).replace(/'/g, "''") : '')
+            let sql = `
+CREATE TABLE IF NOT EXISTS products (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT,
+  category TEXT,
+  gender TEXT DEFAULT 'Nam',
+  brand TEXT,
+  price REAL NOT NULL,
+  stock INTEGER DEFAULT 100,
+  image_url TEXT,
+  avg_rating REAL DEFAULT 4.5,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+BEGIN TRANSACTION;
+`
+            for (const r of rows) {
+              sql += `INSERT INTO products (id, name, description, category, gender, brand, price, stock, image_url, avg_rating)
+VALUES ('${esc(r.id)}', '${esc(r.name)}', '${esc(r.description)}', '${esc(r.category)}', '${esc(r.gender || 'Nam')}', '${esc(r.brand || 'Maison')}', ${Number(r.price)}, ${Number(r.stock ?? 100)}, '${esc(r.image_url)}', ${Number(r.avg_rating ?? 4.5)})
+ON CONFLICT(id) DO UPDATE SET
+  name=excluded.name, description=excluded.description, category=excluded.category,
+  gender=excluded.gender, brand=excluded.brand, price=excluded.price,
+  stock=excluded.stock, image_url=excluded.image_url, avg_rating=excluded.avg_rating;\n`
+            }
+            sql += 'COMMIT;\n'
+            const tempFile = path.join(path.dirname(sqlPath), '_sync_pg_sqlite.sql')
+            fs.writeFileSync(tempFile, sql, 'utf8')
+            execSync(`sqlite3 "${sqlPath}" < "${tempFile}"`)
+            try { fs.unlinkSync(tempFile) } catch (e) {}
+            console.log(`[syncService] Đã đồng bộ ${rows.length} sản phẩm sang SQLite (sqlite3 CLI): ${sqlPath}`)
             break
           }
-        } catch (e) {
-          console.warn(`[syncService] Lỗi khi sync SQLite tại ${sqlPath}:`, e.message)
         }
+      } catch (e) {
+        console.warn(`[syncService] Lỗi khi sync SQLite tại ${sqlPath}:`, e.message)
       }
     }
 

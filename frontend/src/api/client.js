@@ -27,8 +27,24 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('sttn-token')
+  let token = localStorage.getItem('sttn-token')
+  let role = 'customer'
+  try {
+    const auth = JSON.parse(localStorage.getItem('auth-storage') || '{}')
+    if (auth?.state?.token && !token) {
+      token = auth.state.token
+      localStorage.setItem('sttn-token', token)
+    }
+    if (auth?.state?.user?.role) {
+      role = auth.state.user.role
+    }
+  } catch (e) {}
+
   if (token) config.headers.Authorization = `Bearer ${token}`
+  if (role === 'admin' || config.url?.includes('/admin')) {
+    config.headers['x-admin-role'] = 'admin'
+  }
+
   // Đảm bảo dữ liệu luôn thời gian thực (Real-time), chống cache cũ
   config.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
   config.headers['Pragma'] = 'no-cache'

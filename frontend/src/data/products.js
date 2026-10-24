@@ -3115,7 +3115,7 @@ export const products = [
   },
   {
     "id": "p01",
-    "name": "Áo Thun Nam Cotton Basic Trắng",
+    "name": "Áo Thun Cổ Tròn Big Size Navy BS2763",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -3141,7 +3141,7 @@ export const products = [
     ],
     "isNew": true,
     "isFeatured": true,
-    "description": "Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh."
+    "description": "Thiết kế thời trang nam cao cấp từ Maison."
   }
 ];
 

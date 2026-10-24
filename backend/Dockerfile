@@ -8,6 +8,7 @@ COPY . .
 
 FROM node:20-alpine AS runner
 WORKDIR /app
+RUN apk add --no-cache sqlite
 ENV NODE_ENV=production
 ENV PORT=4000
 COPY --from=builder /app/package*.json ./
