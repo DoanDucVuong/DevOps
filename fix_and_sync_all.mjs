@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
-import pg from 'pg';
+import pg from './backend/node_modules/pg/lib/index.js';
 import Database from './backend/node_modules/better-sqlite3/lib/index.js';
 
 const { Pool } = pg;
