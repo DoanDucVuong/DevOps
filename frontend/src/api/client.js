@@ -74,3 +74,38 @@ export const fetchAdminOrders = () => api.get('/admin/orders').then((r) => r.dat
 export const updateOrderStatus = (id, status) => api.patch(`/admin/orders/${id}/status`, { status }).then(data)
 export const fetchMlStatus = () => api.get('/admin/ml/status').then(data)
 export const triggerRetrain = () => api.post('/admin/ml/retrain').then(data)
+
+// ---- Categories ----
+export const fetchCategories = () => api.get('/categories').then(data).catch(() => null)
+export const fetchAdminCategories = () => api.get('/categories/admin').then(data)
+export const createCategory = (payload) => api.post('/categories/admin', payload).then(data)
+export const updateCategory = (id, payload) => api.put(`/categories/admin/${id}`, payload).then(data)
+export const deleteCategory = (id) => api.delete(`/categories/admin/${id}`).then(data)
+export const createAdminCategory = createCategory
+export const updateAdminCategory = updateCategory
+export const deleteAdminCategory = deleteCategory
+
+// ---- Vouchers ----
+export const applyVoucher = (code, order_total) =>
+  api.post('/vouchers/apply', { code, order_total }).then((r) => {
+    const d = r.data
+    return {
+      ...d,
+      discountAmount: Number(d.discount_amount || d.discountAmount || 0),
+    }
+  })
+export const fetchAdminVouchers = () => api.get('/vouchers/admin').then(data)
+export const createVoucher = (payload) => api.post('/vouchers/admin', payload).then(data)
+export const updateVoucher = (id, payload) => api.put(`/vouchers/admin/${id}`, payload).then(data)
+export const deleteVoucher = (id) => api.delete(`/vouchers/admin/${id}`).then(data)
+export const createAdminVoucher = createVoucher
+export const updateAdminVoucher = updateVoucher
+export const deleteAdminVoucher = deleteVoucher
+
+// ---- Banners ----
+export const fetchBanners = () => api.get('/banners').then(data).catch(() => null)
+export const fetchAdminBanners = () => api.get('/banners/admin').then(data)
+export const createBanner = (payload) => api.post('/banners/admin', payload).then(data)
+export const updateBanner = (id, payload) => api.put(`/banners/admin/${id}`, payload).then(data)
+export const deleteBanner = (id) => api.delete(`/banners/admin/${id}`).then(data)
+export const updateAdminBanner = updateBanner

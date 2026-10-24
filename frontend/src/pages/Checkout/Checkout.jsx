@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CheckCircle2, Truck, Landmark, Wallet } from 'lucide-react'
+import { CheckCircle2, Truck, Landmark, Wallet, Ticket, Tag, X } from 'lucide-react'
 import { useCartStore } from '../../store/cartStore'
 import { useAuthStore } from '../../store/authStore'
 import { useOrderStore } from '../../store/orderStore'
-import { createOrder, IS_BACKEND } from '../../api/client'
+import { createOrder, applyVoucher, IS_BACKEND } from '../../api/client'
 import { formatCurrency } from '../../utils/format'
+import { useToast } from '../../components/common/Toast'
 
 const PAYMENT_METHODS = [
   { id: 'cod', label: 'Thanh toán khi nhận hàng (COD)', icon: Truck },
@@ -14,6 +15,7 @@ const PAYMENT_METHODS = [
 ]
 
 export default function Checkout() {
+  const { showToast } = useToast()
   const items = useCartStore((s) => s.items)
   const totalPrice = useCartStore((s) => s.totalPrice())
   const clearCart = useCartStore((s) => s.clearCart)
@@ -33,8 +35,38 @@ export default function Checkout() {
   const [error, setError] = useState('')
   const addOrder = useOrderStore((s) => s.addOrder)
 
+  // Voucher state
+  const [voucherInput, setVoucherInput] = useState('')
+  const [appliedVoucher, setAppliedVoucher] = useState(null)
+  const [voucherError, setVoucherError] = useState('')
+  const [applyingVoucher, setApplyingVoucher] = useState(false)
+
   const shippingFee = totalPrice >= 500000 || totalPrice === 0 ? 0 : 30000
-  const grandTotal = totalPrice + shippingFee
+  const discountAmount = appliedVoucher ? appliedVoucher.discountAmount : 0
+  const grandTotal = Math.max(0, totalPrice - discountAmount + shippingFee)
+
+  const handleApplyVoucher = async (e) => {
+    e.preventDefault()
+    if (!voucherInput.trim()) return
+    setVoucherError('')
+    setApplyingVoucher(true)
+    try {
+      const res = await applyVoucher(voucherInput.trim(), totalPrice)
+      setAppliedVoucher(res)
+      showToast(`Áp dụng mã ${res.voucher.code} thành công (-${formatCurrency(res.discountAmount)})`)
+    } catch (err) {
+      setVoucherError(err.response?.data?.message || 'Mã giảm giá không hợp lệ hoặc chưa đủ điều kiện.')
+      setAppliedVoucher(null)
+    } finally {
+      setApplyingVoucher(false)
+    }
+  }
+
+  const handleRemoveVoucher = () => {
+    setAppliedVoucher(null)
+    setVoucherInput('')
+    setVoucherError('')
+  }
 
   const handleConfirm = async (e) => {
     e.preventDefault()
@@ -42,13 +74,14 @@ export default function Checkout() {
     setSubmitting(true)
     try {
       if (IS_BACKEND) {
-        // Backend tự tính lại giá/tổng tiền từ database, client chỉ gửi sản phẩm + số lượng
+        // Backend tự tính lại giá/tổng tiền từ database, client gửi sản phẩm + số lượng + voucherCode
         const res = await createOrder({
           items: items.map((i) => ({
             productId: i.productId, color: i.color, size: i.size, quantity: i.quantity, image: i.image,
           })),
           shipping: form,
           paymentMethod: payment,
+          voucherCode: appliedVoucher?.voucher?.code || undefined,
         })
         setOrderId(res.code)
       } else {
@@ -211,18 +244,78 @@ export default function Checkout() {
               </div>
             ))}
           </div>
+          {/* Voucher input block */}
+          <div className="border-t border-stone pt-4 mb-4">
+            <label className="block text-xs font-medium text-ink-soft mb-2 flex items-center gap-1.5">
+              <Ticket size={14} className="text-clay" /> Mã giảm giá / Voucher
+            </label>
+            {appliedVoucher ? (
+              <div className="flex items-center justify-between p-2.5 bg-moss/10 border border-moss/30 rounded-sm">
+                <div className="flex items-center gap-2">
+                  <Tag size={15} className="text-moss" />
+                  <div>
+                    <p className="text-xs font-semibold text-moss">
+                      {appliedVoucher.voucher.code} (-{formatCurrency(appliedVoucher.discountAmount)})
+                    </p>
+                    <p className="text-[11px] text-ink-soft">Đã áp dụng giảm giá vào đơn</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleRemoveVoucher}
+                  className="p-1 text-ink-soft hover:text-clay"
+                  title="Gỡ bỏ mã"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            ) : (
+              <div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={voucherInput}
+                    onChange={(e) => setVoucherInput(e.target.value.toUpperCase())}
+                    placeholder="VD: MAISON10, GIAM50K"
+                    className="flex-1 border border-stone-dark rounded-sm px-3 py-1.5 text-xs bg-paper uppercase outline-none focus:border-ink"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyVoucher}
+                    disabled={applyingVoucher || !voucherInput.trim()}
+                    className="px-3 py-1.5 bg-ink text-ivory text-xs rounded-sm hover:bg-ink-soft disabled:opacity-50 transition-colors shrink-0"
+                  >
+                    {applyingVoucher ? '...' : 'Áp dụng'}
+                  </button>
+                </div>
+                {voucherError && (
+                  <p className="text-xs text-clay mt-1.5">{voucherError}</p>
+                )}
+                <p className="text-[11px] text-ink-soft mt-1.5">
+                  Thử các mã ưu đãi: <span className="font-mono text-clay font-medium">MAISON10</span> (-10%), <span className="font-mono text-clay font-medium">GIAM50K</span> (-50k)
+                </p>
+              </div>
+            )}
+          </div>
+
           <div className="border-t border-stone pt-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-ink-soft">Tạm tính</span>
               <span>{formatCurrency(totalPrice)}</span>
             </div>
+            {discountAmount > 0 && (
+              <div className="flex justify-between text-moss font-medium">
+                <span className="flex items-center gap-1"><Tag size={13} /> Giảm giá voucher</span>
+                <span>-{formatCurrency(discountAmount)}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-ink-soft">Vận chuyển</span>
               <span>{shippingFee === 0 ? 'Miễn phí' : formatCurrency(shippingFee)}</span>
             </div>
-            <div className="flex justify-between text-base font-semibold pt-2">
+            <div className="flex justify-between text-base font-semibold pt-2 border-t border-stone">
               <span>Tổng cộng</span>
-              <span>{formatCurrency(grandTotal)}</span>
+              <span className="text-clay text-lg">{formatCurrency(grandTotal)}</span>
             </div>
           </div>
           {error && <p className="text-sm text-clay mt-4">{error}</p>}

@@ -24,7 +24,7 @@ export default function App() {
         <Routes>
           {/* Trang Quản Trị Admin tách riêng hoàn toàn, không dùng chung giao diện bán hàng */}
           <Route
-            path="/admin"
+            path="/admin/*"
             element={
               <ProtectedRoute role="admin">
                 <AdminLayout>

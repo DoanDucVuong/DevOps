@@ -2,19 +2,28 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { ArrowUpRight, Sparkles } from 'lucide-react'
 import { products, getProductById } from '../../data/products'
-import { categories } from '../../data/categories'
+import { useCategoryStore } from '../../store/categoryStore'
 import ProductCard from '../../components/product/ProductCard'
-import { fetchRecommendations, trackRecommendationClick } from '../../api/client'
+import { fetchRecommendations, trackRecommendationClick, fetchBanners } from '../../api/client'
 import { useAuthStore } from '../../store/authStore'
 import { getEffectiveUserId } from '../../utils/guestId'
 
-const CATEGORY_IMAGES = {
+const DEFAULT_CATEGORY_IMAGES = {
   'ao-khoac': 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=600&q=70',
   'ao-so-mi': 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=70',
   'ao-thun': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=70',
   quan: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=600&q=70',
   vay: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=70',
   'phu-kien': 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=70',
+}
+
+const DEFAULT_BANNER = {
+  subtitle: 'Bộ sưu tập Thu Đông 2026',
+  title: 'Mặc đẹp mỗi ngày, không cần cố gắng',
+  description: 'Maison chọn lọc những thiết kế tối giản, chất liệu bền và dễ phối, để bạn dành thời gian cho những điều quan trọng hơn tủ đồ.',
+  image_url: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80',
+  cta_text: 'Khám phá ngay',
+  cta_link: '/products',
 }
 
 const ALGO_LABELS = {
@@ -27,10 +36,24 @@ export default function Home() {
   const featured = products.filter((p) => p.isFeatured).slice(0, 8)
   const newArrivals = products.filter((p) => p.isNew).slice(0, 4)
   const user = useAuthStore((s) => s.user)
+  const categories = useCategoryStore((s) => s.categories)
+  const fetchCategories = useCategoryStore((s) => s.fetchCategories)
 
   const [recommended, setRecommended] = useState([])
   const [algorithm, setAlgorithm] = useState(null)
   const [loadingRec, setLoadingRec] = useState(true)
+  const [banner, setBanner] = useState(DEFAULT_BANNER)
+
+  useEffect(() => {
+    fetchCategories()
+    fetchBanners()
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setBanner(data[0])
+        }
+      })
+      .catch(() => {})
+  }, [fetchCategories])
 
   useEffect(() => {
     const userId = getEffectiveUserId(user)
@@ -54,29 +77,31 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero */}
+      {/* Hero Banner (Động từ API hoặc mặc định) */}
       <section className="max-w-7xl mx-auto px-4 md:px-6 pt-10 md:pt-16 pb-16 grid md:grid-cols-2 gap-8 items-center">
         <div className="order-2 md:order-1">
-          <p className="text-sm text-clay font-medium mb-3">Bộ sưu tập Thu Đông 2026</p>
+          {banner.subtitle && (
+            <p className="text-sm text-clay font-medium mb-3">{banner.subtitle}</p>
+          )}
           <h1 className="font-display text-4xl md:text-6xl leading-[1.05] mb-6">
-            Mặc đẹp mỗi ngày, không cần cố gắng
+            {banner.title}
           </h1>
           <p className="text-ink-soft max-w-md mb-8 leading-relaxed">
-            Maison chọn lọc những thiết kế tối giản, chất liệu bền và dễ phối,
-            để bạn dành thời gian cho những điều quan trọng hơn tủ đồ.
+            {banner.description || 'Maison chọn lọc những thiết kế tối giản, chất liệu bền và dễ phối, để bạn dành thời gian cho những điều quan trọng hơn tủ đồ.'}
           </p>
           <Link
-            to="/products"
+            to={banner.cta_link || '/products'}
             className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-ivory text-sm rounded-sm hover:bg-ink-soft transition-colors"
           >
-            Khám phá ngay <ArrowUpRight size={16} />
+            {banner.cta_text || 'Khám phá ngay'} <ArrowUpRight size={16} />
           </Link>
         </div>
-        <div className="order-1 md:order-2 aspect-[4/5] md:aspect-[3/4] rounded-sm overflow-hidden bg-stone">
+        <div className="order-1 md:order-2 aspect-[4/5] md:aspect-[3/4] rounded-sm overflow-hidden bg-stone shadow-sm">
           <img
-            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80"
-            alt="Bộ sưu tập thời trang mới"
-            className="w-full h-full object-cover"
+            src={banner.image_url || DEFAULT_BANNER.image_url}
+            alt={banner.title}
+            className="w-full h-full object-cover transition-opacity duration-300"
+            onError={(e) => { e.currentTarget.src = DEFAULT_BANNER.image_url }}
           />
         </div>
       </section>
@@ -125,11 +150,11 @@ export default function Home() {
               className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-stone flex items-end p-4"
             >
               <img
-                src={CATEGORY_IMAGES[c.id]}
-                alt=""
+                src={c.image_url || DEFAULT_CATEGORY_IMAGES[c.id] || 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=70'}
+                alt={c.name}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
               />
-              <span className="relative z-10 bg-paper/90 px-3 py-1.5 rounded-sm text-sm font-medium">
+              <span className="relative z-10 bg-paper/90 px-3 py-1.5 rounded-sm text-sm font-medium shadow-sm">
                 {c.name}
               </span>
             </Link>

@@ -1,15 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, ShoppingBag, Heart, User, Menu, X, LayoutDashboard } from 'lucide-react'
 import { useCartStore } from '../../store/cartStore'
 import { useWishlistStore } from '../../store/wishlistStore'
 import { useAuthStore } from '../../store/authStore'
-import { categories } from '../../data/categories'
+import { useCategoryStore } from '../../store/categoryStore'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+
+  const categories = useCategoryStore((s) => s.categories)
+  const fetchCategories = useCategoryStore((s) => s.fetchCategories)
+
+  useEffect(() => {
+    fetchCategories()
+  }, [fetchCategories])
 
   const totalItems = useCartStore((s) => s.totalItems())
   const wishCount = useWishlistStore((s) => s.productIds.length)
@@ -51,7 +58,7 @@ export default function Header() {
               Đồ Nữ
             </Link>
             <span className="h-4 w-px bg-stone-dark" />
-            {categories.slice(0, 5).map((c) => (
+            {categories.slice(0, 6).map((c) => (
               <Link
                 key={c.id}
                 to={`/products?category=${c.id}`}

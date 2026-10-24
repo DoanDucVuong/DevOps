@@ -119,10 +119,17 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # dev only — production nên giới hạn domain của Backend
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
+
+@app.get("/ping")
+def ping():
+    return {"status": "ok", "service": "sttn-ml-service"}
+
 
 
 # ---------- Schemas ----------

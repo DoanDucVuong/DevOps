@@ -55,6 +55,7 @@ async function one(sql, params = []) {
 async function init() {
   const ID = usePg ? 'SERIAL PRIMARY KEY' : 'INTEGER PRIMARY KEY AUTOINCREMENT'
   const TS = usePg ? 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP' : 'TEXT DEFAULT CURRENT_TIMESTAMP'
+  const TS_NULL = usePg ? 'TIMESTAMP' : 'TEXT'
   const REAL = usePg ? 'DOUBLE PRECISION' : 'REAL'
 
   const ddl = [
@@ -116,9 +117,44 @@ async function init() {
       comment TEXT NOT NULL,
       created_at ${TS}
     )`,
+    `CREATE TABLE IF NOT EXISTS categories (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      slug TEXT UNIQUE NOT NULL,
+      gender_group TEXT NOT NULL DEFAULT 'Chung',
+      sort_order INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      created_at ${TS}
+    )`,
+    `CREATE TABLE IF NOT EXISTS vouchers (
+      id ${ID},
+      code TEXT UNIQUE NOT NULL,
+      discount_type TEXT NOT NULL DEFAULT 'percent',
+      discount_value ${REAL} NOT NULL,
+      min_order_value ${REAL} DEFAULT 0,
+      max_discount ${REAL},
+      usage_limit INTEGER DEFAULT 100,
+      used_count INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      expires_at ${TS_NULL},
+      created_at ${TS}
+    )`,
+    `CREATE TABLE IF NOT EXISTS banners (
+      id ${ID},
+      title TEXT NOT NULL,
+      subtitle TEXT,
+      image_url TEXT NOT NULL,
+      cta_text TEXT DEFAULT 'Khám phá ngay',
+      cta_link TEXT DEFAULT '/products',
+      sort_order INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      created_at ${TS}
+    )`,
     'CREATE INDEX IF NOT EXISTS idx_interactions_user ON interactions(user_id)',
     'CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id)',
     'CREATE INDEX IF NOT EXISTS idx_reviews_product ON reviews(product_id)',
+    'CREATE INDEX IF NOT EXISTS idx_categories_slug ON categories(slug)',
+    'CREATE INDEX IF NOT EXISTS idx_vouchers_code ON vouchers(code)',
   ]
   for (const stmt of ddl) await query(stmt)
   try {
@@ -127,6 +163,9 @@ async function init() {
     // Bỏ qua nếu cột đã tồn tại hoặc SQLite không hỗ trợ IF NOT EXISTS
   }
 
+  await seedCategories()
+  await seedVouchers()
+  await seedBanners()
   await seedProducts()
   await seedAdmin()
   console.log(`[db] Sẵn sàng (${usePg ? 'PostgreSQL' : 'SQLite'})`)
@@ -157,6 +196,75 @@ async function seedProducts() {
     }
   }
   console.log(`[db] Đã đồng bộ và cập nhật thành công ${products.length} sản phẩm (Nam & Nữ).`)
+}
+
+async function seedCategories() {
+  const row = await one('SELECT COUNT(*) AS c FROM categories')
+  if (Number(row.c) > 0) return
+
+  const defaultCategories = [
+    { id: 'ao-khoac', name: 'Áo khoác', slug: 'ao-khoac', gender_group: 'Chung', sort_order: 1 },
+    { id: 'ao-so-mi', name: 'Áo sơ mi', slug: 'ao-so-mi', gender_group: 'Chung', sort_order: 2 },
+    { id: 'ao-thun', name: 'Áo thun', slug: 'ao-thun', gender_group: 'Chung', sort_order: 3 },
+    { id: 'quan', name: 'Quần', slug: 'quan', gender_group: 'Chung', sort_order: 4 },
+    { id: 'vay-dam', name: 'Váy & Đầm', slug: 'vay-dam', gender_group: 'Nữ', sort_order: 5 },
+    { id: 'phu-kien', name: 'Phụ kiện', slug: 'phu-kien', gender_group: 'Chung', sort_order: 6 },
+  ]
+
+  for (const c of defaultCategories) {
+    await query(
+      `INSERT INTO categories (id, name, slug, gender_group, sort_order, is_active)
+       VALUES (?, ?, ?, ?, ?, 1)`,
+      [c.id, c.name, c.slug, c.gender_group, c.sort_order]
+    )
+  }
+  console.log(`[db] Đã seed ${defaultCategories.length} danh mục mặc định.`)
+}
+
+async function seedVouchers() {
+  const row = await one('SELECT COUNT(*) AS c FROM vouchers')
+  if (Number(row.c) > 0) return
+
+  const defaultVouchers = [
+    { code: 'MAISON10', discount_type: 'percent', discount_value: 10, min_order_value: 300000, max_discount: 100000, usage_limit: 500 },
+    { code: 'GIAM50K', discount_type: 'amount', discount_value: 50000, min_order_value: 500000, max_discount: 50000, usage_limit: 200 },
+    { code: 'FREESHIP', discount_type: 'amount', discount_value: 30000, min_order_value: 200000, max_discount: 30000, usage_limit: 1000 },
+  ]
+
+  for (const v of defaultVouchers) {
+    await query(
+      `INSERT INTO vouchers (code, discount_type, discount_value, min_order_value, max_discount, usage_limit, used_count, is_active)
+       VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
+      [v.code, v.discount_type, v.discount_value, v.min_order_value, v.max_discount, v.usage_limit]
+    )
+  }
+  console.log(`[db] Đã seed ${defaultVouchers.length} mã voucher khuyến mãi.`)
+}
+
+async function seedBanners() {
+  const row = await one('SELECT COUNT(*) AS c FROM banners')
+  if (Number(row.c) > 0) return
+
+  const defaultBanners = [
+    {
+      title: 'Mặc đẹp mỗi ngày, không cần cố gắng',
+      subtitle: 'Maison chọn lọc những thiết kế tối giản, chất liệu bền và dễ phối, để bạn dành thời gian cho những điều quan trọng hơn tủ đồ.',
+      image_url: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80',
+      cta_text: 'Khám phá ngay',
+      cta_link: '/products',
+      sort_order: 1,
+      is_active: 1
+    }
+  ]
+
+  for (const b of defaultBanners) {
+    await query(
+      `INSERT INTO banners (title, subtitle, image_url, cta_text, cta_link, sort_order, is_active)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [b.title, b.subtitle, b.image_url, b.cta_text, b.cta_link, b.sort_order, b.is_active]
+    )
+  }
+  console.log(`[db] Đã seed banner trang chủ mặc định.`)
 }
 
 async function seedAdmin() {

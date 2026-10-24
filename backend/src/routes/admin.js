@@ -79,12 +79,25 @@ const mlHeaders = () => (INTERNAL_API_KEY ? { 'x-internal-key': INTERNAL_API_KEY
 // GET /api/admin/ml/status -> chỉ số mô hình + trạng thái huấn luyện
 router.get('/ml/status', requireAdmin, async (req, res) => {
   const mlUrl = getMlServiceUrl()
-  try {
-    const { data } = await axios.get(`${mlUrl}/health`, { timeout: 35000 })
-    res.json(data)
-  } catch (err) {
-    console.error(`[admin/ml/status] Lỗi kết nối tới ML (${mlUrl}):`, err.message)
-    res.status(502).json({ message: 'Không kết nối được ML service.', detail: err.message, mlUrl })
+  // Thử gọi với cơ chế retry nếu ML service đang trong quá trình cold-start trên cloud
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const { data } = await axios.get(`${mlUrl}/health`, { timeout: attempt === 1 ? 4000 : 12000 })
+      return res.json({ ...data, is_ready: true })
+    } catch (err) {
+      if (attempt < 2) {
+        await new Promise((r) => setTimeout(r, 1200))
+        continue
+      }
+      console.warn(`[admin/ml/status] ML Service (${mlUrl}) đang khởi động hoặc chưa phản hồi:`, err.message)
+      return res.json({
+        status: 'waking_up',
+        is_ready: false,
+        message: 'Dịch vụ Machine Learning đang khởi động (Cold-start trên Render). Vui lòng đợi trong giây lát...',
+        detail: err.message,
+        mlUrl
+      })
+    }
   }
 })
 

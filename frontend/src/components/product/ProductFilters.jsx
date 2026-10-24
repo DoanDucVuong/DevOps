@@ -1,4 +1,5 @@
-import { categories, colors, sizes } from '../../data/categories'
+import { colors, sizes } from '../../data/categories'
+import { useCategoryStore } from '../../store/categoryStore'
 
 const PRICE_RANGES = [
   { id: 'all', label: 'Tất cả mức giá', min: 0, max: Infinity },
@@ -10,6 +11,8 @@ const PRICE_RANGES = [
 export { PRICE_RANGES }
 
 export default function ProductFilters({ filters, onChange }) {
+  const categories = useCategoryStore((s) => s.categories)
+
   const toggleColor = (id) => {
     const set = new Set(filters.colors)
     set.has(id) ? set.delete(id) : set.add(id)
@@ -21,6 +24,12 @@ export default function ProductFilters({ filters, onChange }) {
     set.has(s) ? set.delete(s) : set.add(s)
     onChange({ ...filters, sizes: [...set] })
   }
+
+  // Lọc danh mục phù hợp theo giới tính đã chọn (nếu có)
+  const displayCategories = categories.filter((c) => {
+    if (!filters.gender || filters.gender === 'all') return true
+    return !c.gender_group || c.gender_group === 'Chung' || c.gender_group === filters.gender
+  })
 
   return (
     <div className="space-y-8">
@@ -53,7 +62,7 @@ export default function ProductFilters({ filters, onChange }) {
           >
             Tất cả
           </button>
-          {categories.map((c) => (
+          {displayCategories.map((c) => (
             <button
               key={c.id}
               onClick={() => onChange({ ...filters, category: c.id })}

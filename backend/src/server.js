@@ -13,6 +13,9 @@ app.get('/health', (req, res) => res.json({ status: 'ok', service: 'backend', da
 
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/products', require('./routes/products'))
+app.use('/api/categories', require('./routes/categories'))
+app.use('/api/vouchers', require('./routes/vouchers'))
+app.use('/api/banners', require('./routes/banners'))
 app.use('/api/interactions', require('./routes/interactions'))
 app.use('/api/recommendations', require('./routes/recommendations'))
 app.use('/api/orders', require('./routes/orders'))

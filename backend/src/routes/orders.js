@@ -19,10 +19,10 @@ const parseOrder = (r) => ({
   items: JSON.parse(r.items_json),
 })
 
-// POST /api/orders  { items:[{productId,color,size,quantity,image?}], shipping:{...}, paymentMethod }
+// POST /api/orders  { items:[{productId,color,size,quantity,image?}], shipping:{...}, paymentMethod, voucherCode }
 // Giá và tổng tiền được tính lại ở server từ bảng products (không tin dữ liệu giá từ client).
 router.post('/', requireAuth, async (req, res) => {
-  const { items, shipping, paymentMethod } = req.body
+  const { items, shipping, paymentMethod, voucherCode } = req.body
   if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
     return res.status(400).json({ message: 'Giỏ hàng trống hoặc không hợp lệ.' })
   }
@@ -52,12 +52,48 @@ router.post('/', requireAuth, async (req, res) => {
   }
 
   const subtotal = lines.reduce((s, l) => s + l.price * l.quantity, 0)
-  const shippingFee = subtotal >= FREE_SHIP_THRESHOLD ? 0 : SHIPPING_FEE
-  const total = subtotal + shippingFee
+  let shippingFee = subtotal >= FREE_SHIP_THRESHOLD ? 0 : SHIPPING_FEE
+  let discountAmount = 0
+  let appliedVoucher = null
+
+  if (voucherCode && typeof voucherCode === 'string') {
+    const cleanCode = voucherCode.trim().toUpperCase()
+    const vouchers = await query('SELECT * FROM vouchers WHERE UPPER(code) = ? AND is_active = 1', [cleanCode])
+    if (vouchers.length > 0) {
+      const v = vouchers[0]
+      const now = new Date()
+      const isExpired = v.expires_at && new Date(v.expires_at) < now
+      const isLimitReached = v.usage_limit && v.used_count >= v.usage_limit
+      const isEligible = subtotal >= (Number(v.min_order_value) || 0)
+
+      if (!isExpired && !isLimitReached && isEligible) {
+        if (v.discount_type === 'percent') {
+          discountAmount = Math.round((subtotal * Number(v.discount_value)) / 100)
+          if (v.max_discount && discountAmount > Number(v.max_discount)) {
+            discountAmount = Number(v.max_discount)
+          }
+        } else {
+          discountAmount = Number(v.discount_value)
+        }
+        discountAmount = Math.min(discountAmount, subtotal)
+        appliedVoucher = v
+        await query('UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?', [v.id])
+      }
+    }
+  }
+
+  const total = Math.max(0, subtotal - discountAmount + shippingFee)
   const cleanShipping = {
     fullName: String(shipping.fullName).trim(), phone: String(shipping.phone).trim(),
     address: String(shipping.address).trim(), city: String(shipping.city).trim(),
     note: String(shipping.note || '').slice(0, 500),
+  }
+  if (appliedVoucher) {
+    cleanShipping.voucher = {
+      code: appliedVoucher.code,
+      discount: discountAmount,
+    }
+    cleanShipping.note = (cleanShipping.note ? cleanShipping.note + ' | ' : '') + `Mã giảm: ${appliedVoucher.code} (-${discountAmount.toLocaleString('vi-VN')}đ)`
   }
 
   const rows = await query(
@@ -73,7 +109,7 @@ router.post('/', requireAuth, async (req, res) => {
   }
 
   const id = rows[0].id
-  res.status(201).json({ orderId: id, code: `DH${String(id).padStart(6, '0')}`, total, shippingFee, status: 'pending' })
+  res.status(201).json({ orderId: id, code: `DH${String(id).padStart(6, '0')}`, total, shippingFee, discountAmount, status: 'pending' })
 })
 
 // GET /api/orders/me
