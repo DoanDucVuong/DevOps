@@ -18,7 +18,12 @@ export default function Login() {
     const result = await login(form)
     if (result.success) {
       showToast('Đăng nhập thành công')
-      navigate(location.state?.from?.pathname || '/profile')
+      const loggedUser = result.user || useAuthStore.getState().user
+      if (loggedUser?.role === 'admin') {
+        navigate('/admin', { replace: true })
+      } else {
+        navigate(location.state?.from?.pathname || '/products', { replace: true })
+      }
     } else {
       setError(result.message)
     }

@@ -24,7 +24,7 @@ export default function Register() {
     const result = await register({ fullName: form.name, email: form.email, password: form.password })
     if (result.success) {
       showToast('Tạo tài khoản thành công')
-      navigate('/profile')
+      navigate('/products', { replace: true })
     } else {
       setError(result.message)
     }

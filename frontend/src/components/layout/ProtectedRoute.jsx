@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
   if (role && user.role !== role) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/products" replace />
   }
   return children
 }

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/layout/Layout'
+import AdminLayout from './components/layout/AdminLayout'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import { ToastProvider } from './components/common/Toast'
 
@@ -21,6 +22,19 @@ export default function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
+          {/* Trang Quản Trị Admin tách riêng hoàn toàn, không dùng chung giao diện bán hàng */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminLayout>
+                  <Admin />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Các trang bán hàng của khách hàng */}
           <Route element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
@@ -34,14 +48,6 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <Checkout />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="admin"
-              element={
-                <ProtectedRoute role="admin">
-                  <Admin />
                 </ProtectedRoute>
               }
             />

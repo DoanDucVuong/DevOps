@@ -42,15 +42,21 @@ export const useAuthStore = create(
             const data = await loginUser({ email, password })
             localStorage.setItem('sttn-token', data.token)
             set({ user: data.user, token: data.token })
-            return { success: true }
+            return { success: true, user: data.user }
           } catch (err) {
             return { success: false, message: err.response?.data?.message || 'Đăng nhập thất bại.' }
           }
         }
         const found = get().users.find((u) => u.email === email && u.password === password)
         if (!found) return { success: false, message: 'Email hoặc mật khẩu không đúng.' }
-        set({ user: { id: email, name: found.name, email: found.email } })
-        return { success: true }
+        const u = {
+          id: email,
+          name: found.name,
+          email: found.email,
+          role: found.role || (email.toLowerCase().includes('admin') ? 'admin' : 'customer'),
+        }
+        set({ user: u })
+        return { success: true, user: u }
       },
 
       logout: () => {
