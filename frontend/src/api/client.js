@@ -39,6 +39,10 @@ const data = (r) => r.data
 export const fetchProducts = (params) => (IS_BACKEND ? api.get('/products', { params }).then(data) : noBackend())
 export const fetchSimilarProducts = (id, topK = 4) =>
   IS_BACKEND ? api.get(`/products/${id}/similar`, { params: { top_k: topK } }).then(data) : noBackend()
+export const fetchProductReviews = (id) =>
+  IS_BACKEND ? api.get(`/products/${id}/reviews`).then(data) : Promise.resolve({ reviews: [], total: 0, avgRating: 5 })
+export const submitProductReview = (id, payload) =>
+  IS_BACKEND ? api.post(`/products/${id}/reviews`, payload).then(data) : Promise.resolve({ success: true })
 
 // ---- Recommendations (ML) ----
 export const fetchRecommendations = (userId, topK = 8) =>

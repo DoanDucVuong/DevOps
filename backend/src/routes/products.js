@@ -55,6 +55,61 @@ router.get('/:id/similar', async (req, res) => {
   }
 })
 
+// GET /api/products/:id/reviews
+router.get('/:id/reviews', async (req, res) => {
+  try {
+    const reviews = await query(
+      'SELECT id, product_id, user_name, rating, comment, created_at FROM reviews WHERE product_id = ? ORDER BY created_at DESC',
+      [req.params.id]
+    )
+    const stats = await one(
+      'SELECT COUNT(*) AS total, AVG(rating) AS avg FROM reviews WHERE product_id = ?',
+      [req.params.id]
+    )
+    res.json({
+      reviews,
+      total: Number(stats?.total || 0),
+      avgRating: Number(Number(stats?.avg || 0).toFixed(1)),
+    })
+  } catch (err) {
+    res.status(500).json({ message: 'Không thể tải danh sách đánh giá.' })
+  }
+})
+
+// POST /api/products/:id/reviews
+router.post('/:id/reviews', async (req, res) => {
+  const { userName, rating, comment, userId } = req.body
+  if (!userName || !rating || !comment) {
+    return res.status(400).json({ message: 'Vui lòng nhập tên, chọn số sao và nội dung bình luận.' })
+  }
+  const numRating = Math.max(1, Math.min(5, Number(rating) || 5))
+
+  try {
+    await query(
+      'INSERT INTO reviews (product_id, user_name, rating, comment) VALUES (?, ?, ?, ?)',
+      [req.params.id, String(userName).trim(), numRating, String(comment).trim()]
+    )
+
+    const stats = await one(
+      'SELECT AVG(rating) AS avg FROM reviews WHERE product_id = ?',
+      [req.params.id]
+    )
+    const newAvg = Number(Number(stats?.avg || numRating).toFixed(1))
+    await query('UPDATE products SET avg_rating = ? WHERE id = ?', [newAvg, req.params.id])
+
+    try {
+      await query(
+        "INSERT INTO interactions (user_id, product_id, interaction_type, rating_value) VALUES (?, ?, 'rating', ?)",
+        [userId || `guest_${String(userName).trim().toLowerCase()}`, req.params.id, numRating]
+      )
+    } catch {}
+
+    res.status(201).json({ message: 'Đánh giá thành công!', avgRating: newAvg })
+  } catch (err) {
+    res.status(500).json({ message: 'Không thể lưu đánh giá.' })
+  }
+})
+
 // GET /api/products/:id
 router.get('/:id', async (req, res) => {
   const product = await one('SELECT * FROM products WHERE id = ?', [req.params.id])

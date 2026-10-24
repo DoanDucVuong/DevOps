@@ -108,8 +108,17 @@ async function init() {
       is_clicked INTEGER DEFAULT 0,
       created_at ${TS}
     )`,
+    `CREATE TABLE IF NOT EXISTS reviews (
+      id ${ID},
+      product_id TEXT NOT NULL,
+      user_name TEXT NOT NULL,
+      rating INTEGER NOT NULL CHECK(rating >= 1 AND rating <= 5),
+      comment TEXT NOT NULL,
+      created_at ${TS}
+    )`,
     'CREATE INDEX IF NOT EXISTS idx_interactions_user ON interactions(user_id)',
     'CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id)',
+    'CREATE INDEX IF NOT EXISTS idx_reviews_product ON reviews(product_id)',
   ]
   for (const stmt of ddl) await query(stmt)
   try {

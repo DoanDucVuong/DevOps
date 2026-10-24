@@ -9,6 +9,7 @@ import { useToast } from '../../components/common/Toast'
 import { formatCurrency } from '../../utils/format'
 import Rating from '../../components/common/Rating'
 import ProductCard from '../../components/product/ProductCard'
+import ProductReviews from '../../components/product/ProductReviews'
 import { fetchSimilarProducts, recordInteraction } from '../../api/client'
 
 export default function ProductDetail() {
@@ -197,6 +198,12 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {/* Đánh giá & Bình luận khách hàng */}
+      <ProductReviews
+        productId={product.id}
+        initialAvgRating={Number(product.rating || product.avg_rating || 5)}
+      />
 
       {related.length > 0 && (
         <section className="mt-20">
