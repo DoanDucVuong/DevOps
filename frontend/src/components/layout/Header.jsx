@@ -37,7 +37,20 @@ export default function Header() {
             Maison<span className="text-clay">.</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm">
+          <nav className="hidden md:flex items-center gap-5 text-sm">
+            <Link
+              to="/products?gender=Nam"
+              className="font-medium text-ink hover:text-clay transition-colors"
+            >
+              Đồ Nam
+            </Link>
+            <Link
+              to="/products?gender=Nữ"
+              className="font-medium text-ink hover:text-clay transition-colors"
+            >
+              Đồ Nữ
+            </Link>
+            <span className="h-4 w-px bg-stone-dark" />
             {categories.slice(0, 5).map((c) => (
               <Link
                 key={c.id}
@@ -106,6 +119,20 @@ export default function Header() {
               />
             </form>
             <nav className="flex flex-col gap-1">
+              <Link
+                to="/products?gender=Nam"
+                onClick={() => setMenuOpen(false)}
+                className="py-2 text-sm font-medium text-clay border-b border-stone"
+              >
+                👕 Đồ Nam
+              </Link>
+              <Link
+                to="/products?gender=Nữ"
+                onClick={() => setMenuOpen(false)}
+                className="py-2 text-sm font-medium text-clay border-b border-stone"
+              >
+                👗 Đồ Nữ
+              </Link>
               {categories.map((c) => (
                 <Link
                   key={c.id}

@@ -19,12 +19,12 @@ export default function ProductCard({ product }) {
     <Link to={`/products/${product.id}`} className="group block">
       <div className="relative aspect-[3/4] overflow-hidden bg-stone rounded-sm mb-3">
         <img
-          src={product.images[0]}
+          src={product.images?.[0] || product.image_url}
           alt={product.name}
           loading="lazy"
           onError={(e) => {
             e.currentTarget.onerror = null
-            e.currentTarget.src = `https://picsum.photos/seed/${product.id}/800/1067`
+            e.currentTarget.src = `https://placehold.co/400x600?text=${encodeURIComponent(product.name || 'SanPham')}`
           }}
           className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
         />

@@ -73,6 +73,7 @@ async function init() {
       name TEXT NOT NULL,
       description TEXT,
       category TEXT,
+      gender TEXT DEFAULT 'Unisex',
       brand TEXT,
       price ${REAL} NOT NULL,
       stock INTEGER DEFAULT 100,
@@ -111,6 +112,11 @@ async function init() {
     'CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id)',
   ]
   for (const stmt of ddl) await query(stmt)
+  try {
+    await query("ALTER TABLE products ADD COLUMN IF NOT EXISTS gender TEXT DEFAULT 'Unisex'")
+  } catch (err) {
+    // Bỏ qua nếu cột đã tồn tại hoặc SQLite không hỗ trợ IF NOT EXISTS
+  }
 
   await seedProducts()
   await seedAdmin()

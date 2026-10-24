@@ -14,11 +14,12 @@ const byIds = async (ids) => {
 
 // GET /api/products?q=&category=&minPrice=&maxPrice=&sort=&page=&limit=
 router.get('/', async (req, res) => {
-  const { q, category, minPrice, maxPrice, sort, page = 1, limit = 24 } = req.query
+  const { q, category, gender, minPrice, maxPrice, sort, page = 1, limit = 24 } = req.query
   let where = ' WHERE 1=1'
   const params = []
   if (q) { where += ' AND LOWER(name) LIKE LOWER(?)'; params.push(`%${q}%`) }
   if (category) { where += ' AND category = ?'; params.push(category) }
+  if (gender) { where += ' AND gender = ?'; params.push(gender) }
   if (minPrice) { where += ' AND price >= ?'; params.push(Number(minPrice)) }
   if (maxPrice) { where += ' AND price <= ?'; params.push(Number(maxPrice)) }
 

@@ -25,6 +25,26 @@ export default function ProductFilters({ filters, onChange }) {
   return (
     <div className="space-y-8">
       <div>
+        <h4 className="text-sm font-medium mb-3">Đối tượng</h4>
+        <div className="flex gap-2">
+          {['all', 'Nam', 'Nữ'].map((g) => (
+            <button
+              key={g}
+              type="button"
+              onClick={() => onChange({ ...filters, gender: g })}
+              className={`px-3 py-1.5 text-xs rounded-sm border transition-colors ${
+                (filters.gender || 'all') === g
+                  ? 'bg-ink text-ivory border-ink font-medium'
+                  : 'bg-paper text-ink-soft border-stone-dark hover:border-ink'
+              }`}
+            >
+              {g === 'all' ? 'Tất cả' : g === 'Nam' ? 'Đồ Nam' : 'Đồ Nữ'}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
         <h4 className="text-sm font-medium mb-3">Danh mục</h4>
         <div className="space-y-2">
           <button

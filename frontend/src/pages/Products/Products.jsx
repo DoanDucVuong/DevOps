@@ -22,6 +22,7 @@ export default function Products() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   const [filters, setFilters] = useState({
+    gender: searchParams.get('gender') || 'all',
     category: searchParams.get('category') || 'all',
     priceRange: 'all',
     colors: [],
@@ -30,10 +31,11 @@ export default function Products() {
   const [sort, setSort] = useState('default')
   const query = searchParams.get('q') || ''
 
-  // Đồng bộ category từ URL khi searchParams thay đổi (ví dụ bấm link danh mục trên Header)
+  // Đồng bộ category & gender từ URL khi searchParams thay đổi (ví dụ bấm link trên Header)
   useEffect(() => {
     const cat = searchParams.get('category') || 'all'
-    setFilters((prev) => (prev.category !== cat ? { ...prev, category: cat } : prev))
+    const gen = searchParams.get('gender') || 'all'
+    setFilters((prev) => (prev.category !== cat || prev.gender !== gen ? { ...prev, category: cat, gender: gen } : prev))
   }, [searchParams])
 
   useEffect(() => {
@@ -44,12 +46,13 @@ export default function Products() {
 
   const handleFilterChange = (next) => {
     setFilters(next)
-    if (next.category !== 'all') {
-      setSearchParams((prev) => {
-        prev.set('category', next.category)
-        return prev
-      })
-    }
+    setSearchParams((prev) => {
+      if (next.category && next.category !== 'all') prev.set('category', next.category)
+      else prev.delete('category')
+      if (next.gender && next.gender !== 'all') prev.set('gender', next.gender)
+      else prev.delete('gender')
+      return prev
+    })
   }
 
   const filtered = useMemo(() => {
@@ -57,6 +60,9 @@ export default function Products() {
 
     if (query) {
       list = list.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
+    }
+    if (filters.gender && filters.gender !== 'all') {
+      list = list.filter((p) => p.gender === filters.gender)
     }
     if (filters.category !== 'all') {
       list = list.filter((p) => p.category === filters.category)
@@ -95,7 +101,13 @@ export default function Products() {
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
       <div className="mb-8">
         <h1 className="font-display text-3xl mb-1">
-          {query ? `Kết quả cho "${query}"` : 'Tất cả sản phẩm'}
+          {query
+            ? `Kết quả cho "${query}"`
+            : filters.gender === 'Nam'
+            ? 'Thời Trang Nam'
+            : filters.gender === 'Nữ'
+            ? 'Thời Trang Nữ'
+            : 'Tất cả sản phẩm'}
         </h1>
         <p className="text-sm text-ink-soft">{filtered.length} sản phẩm</p>
       </div>

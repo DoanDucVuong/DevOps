@@ -102,6 +102,11 @@ export default function ProductDetail() {
         </div>
 
         <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-clay/10 text-clay border border-clay/30 uppercase tracking-wide">
+              {product.gender === 'Nam' ? 'Đồ Nam' : product.gender === 'Nữ' ? 'Đồ Nữ' : 'Unisex'}
+            </span>
+          </div>
           <h1 className="font-display text-3xl mb-2">{product.name}</h1>
           <Rating value={product.rating} />
           <div className="flex items-center gap-3 mt-4 mb-6">

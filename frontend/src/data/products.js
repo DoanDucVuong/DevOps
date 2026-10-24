@@ -1,607 +1,1328 @@
-// Danh sách 50 sản phẩm thời trang đầy đủ với hình ảnh chính xác 100% đúng loại mặt hàng
-const local = (name) => `/products/${name}.jpg`
-const img = (id) => `https://images.unsplash.com/photo-${id}?w=800&auto=format&fit=crop`
-
+// Danh sách 50 sản phẩm thời trang (25 Nam, 25 Nữ) phân chia rõ ràng, tuân thủ nghiêm ngặt Placeholder ảnh theo tên sản phẩm
 export const products = [
   {
-    id: 'p01',
-    name: 'Áo khoác dạ dáng dài',
-    category: 'ao-khoac',
-    price: 1290000,
-    oldPrice: 1590000,
-    colors: ['den', 'be', 'nau'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.7,
-    images: [local('p01'), img('1539533018447-63fcce2678e3')],
-    description: 'Áo khoác dạ form dáng dài, chất liệu len pha giữ ấm tốt, phù hợp phối cùng trang phục công sở hoặc dạo phố mùa lạnh.',
-    isNew: true,
-    isFeatured: true,
+    "id": "p01",
+    "name": "Áo Thun Nam Basic Trắng",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 320000,
+    "colors": [
+      "trang",
+      "den",
+      "xanh"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.8,
+    "isNew": true,
+    "isFeatured": true,
+    "description": "Chất liệu 100% cotton thoáng mát, form regular fit dễ phối đồ hàng ngày.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nam+Basic+Trang",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nam+Basic+Trang"
+    ],
+    "stock": 100
   },
   {
-    id: 'p02',
-    name: 'Sơ mi lụa tay dài',
-    category: 'ao-so-mi',
-    price: 590000,
-    colors: ['trang', 'den', 'be'],
-    sizes: ['XS', 'S', 'M', 'L'],
-    rating: 4.5,
-    images: [local('p02'), img('1598554747436-c9293d6a588f')],
-    description: 'Sơ mi lụa mềm mại, form suông thanh lịch, dễ phối cùng chân váy hoặc quần tây.',
-    isFeatured: true,
+    "id": "p02",
+    "name": "Áo Thun Nam Polo Cổ Bẻ",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 450000,
+    "colors": [
+      "trang",
+      "den",
+      "be"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.7,
+    "isFeatured": true,
+    "description": "Áo polo nam dệt tổ ong dày dặn, lịch thiệp khi đi làm hoặc dạo phố.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nam+Polo+Co+Be",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nam+Polo+Co+Be"
+    ],
+    "stock": 100
   },
   {
-    id: 'p03',
-    name: 'Áo thun cotton basic',
-    category: 'ao-thun',
-    price: 259000,
-    colors: ['trang', 'den', 'xanh'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.8,
-    images: [local('p03'), img('1521572267360-ee0c2909d518')],
-    description: 'Áo thun cotton 100%, form regular, chất vải thoáng mát, item cơ bản không thể thiếu.',
-    isNew: true,
+    "id": "p03",
+    "name": "Áo Thun Nam Oversize Graphic",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 380000,
+    "colors": [
+      "den",
+      "trang",
+      "nau"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.6,
+    "isNew": true,
+    "description": "Kiểu dáng unisex rộng rãi đường phố phong cách streetwear trẻ trung.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nam+Oversize+Graphic",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nam+Oversize+Graphic"
+    ],
+    "stock": 100
   },
   {
-    id: 'p04',
-    name: 'Quần âu ống suông',
-    category: 'quan',
-    price: 690000,
-    colors: ['den', 'xanh', 'be'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.4,
-    images: [local('p04'), img('1509631179647-0177331693ae')],
-    description: 'Quần âu ống suông, cạp cao, chất vải đứng dáng, phù hợp môi trường công sở.',
-    isFeatured: true,
+    "id": "p04",
+    "name": "Áo Thun Nam Henley Cổ V",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 350000,
+    "colors": [
+      "xanh",
+      "den",
+      "trang"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.5,
+    "description": "Áo thun nam cổ gài nút nam tính, tôn dáng ngực và bắp tay.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nam+Henley+Co+V",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nam+Henley+Co+V"
+    ],
+    "stock": 100
   },
   {
-    id: 'p05',
-    name: 'Đầm hoa nhí midi',
-    category: 'vay',
-    price: 750000,
-    oldPrice: 890000,
-    colors: ['trang', 'do'],
-    sizes: ['XS', 'S', 'M'],
-    rating: 4.9,
-    images: [local('p05'), img('1572804013309-59a88b7e92f1')],
-    description: 'Đầm midi hoạ tiết hoa nhí, chất liệu voan nhẹ nhàng, thích hợp cho những buổi dạo phố mùa hè.',
-    isNew: true,
-    isFeatured: true,
+    "id": "p05",
+    "name": "Áo Thun Nam Cotton Thoáng Khí",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 310000,
+    "colors": [
+      "trang",
+      "xanh",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.9,
+    "description": "Công nghệ sợi làm mát co giãn 4 chiều chuyên dụng cho vận động.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nam+Cotton+Thoang+Khi",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nam+Cotton+Thoang+Khi"
+    ],
+    "stock": 100
   },
   {
-    id: 'p06',
-    name: 'Chân váy xếp ly',
-    category: 'vay',
-    price: 450000,
-    colors: ['den', 'be', 'nau'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.3,
-    images: [local('p06'), img('1583496661160-fb5886a0aaaa')],
-    description: 'Chân váy xếp ly midi, form A-line tôn dáng, dễ mặc trong nhiều dịp khác nhau.',
+    "id": "p06",
+    "name": "Áo Sơ Mi Nam Trắng Công Sở",
+    "gender": "Nam",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 520000,
+    "colors": [
+      "trang",
+      "xanh"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.9,
+    "isFeatured": true,
+    "description": "Áo sơ mi dài tay chống nhăn cao cấp, form slim-fit tôn vóc dáng chuẩn.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Trang+Cong+So",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Trang+Cong+So"
+    ],
+    "stock": 100
   },
   {
-    id: 'p07',
-    name: 'Túi xách da tối giản',
-    category: 'phu-kien',
-    price: 890000,
-    colors: ['den', 'nau', 'be'],
-    sizes: ['One Size'],
-    rating: 4.6,
-    images: [img('1584917865442-de89df76afd3'), img('1590874103328-eac38a683ce7')],
-    description: 'Túi xách da tổng hợp thiết kế tối giản, dung tích vừa phải, phù hợp đi làm hằng ngày.',
-    isFeatured: true,
+    "id": "p07",
+    "name": "Áo Sơ Mi Nam Oxford Kẻ Sọc",
+    "gender": "Nam",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 590000,
+    "colors": [
+      "xanh",
+      "trang"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.6,
+    "description": "Vải Oxford cao cấp bền màu, họa tiết kẻ sọc nhã nhặn phong cách Ivy League.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Oxford+Ke+Soc",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Oxford+Ke+Soc"
+    ],
+    "stock": 100
   },
   {
-    id: 'p08',
-    name: 'Khăn lụa hoạ tiết',
-    category: 'phu-kien',
-    price: 190000,
-    colors: ['do', 'be', 'trang'],
-    sizes: ['One Size'],
-    rating: 4.2,
-    images: [img('1601924994987-69e26d50dc26'), img('1584030373081-f37b7bb4fa8e')],
-    description: 'Khăn lụa hoạ tiết, phụ kiện điểm nhấn giúp tổng thể trang phục thêm phần nổi bật.',
+    "id": "p08",
+    "name": "Áo Sơ Mi Nam Denim Dài Tay",
+    "gender": "Nam",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 680000,
+    "colors": [
+      "xanh",
+      "den"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.7,
+    "isNew": true,
+    "description": "Chất bò denim mài cổ điển, cá tính và bụi bặm cho phái mạnh.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Denim+Dai+Tay",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Denim+Dai+Tay"
+    ],
+    "stock": 100
   },
   {
-    id: 'p09',
-    name: 'Áo khoác denim',
-    category: 'ao-khoac',
-    price: 620000,
-    colors: ['xanh', 'den'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.5,
-    images: [img('1576995853123-5a10305d93c0'), img('1544441893-675973e31985')],
-    description: 'Áo khoác denim form rộng, phong cách trẻ trung, dễ layer cùng nhiều trang phục.',
-    isNew: true,
+    "id": "p09",
+    "name": "Áo Sơ Mi Nam Cuba Cổ Danton",
+    "gender": "Nam",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 490000,
+    "colors": [
+      "be",
+      "trang",
+      "xanh"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.5,
+    "description": "Áo sơ mi ngắn tay cổ mở phóng khoáng, họa tiết nhẹ thích hợp du lịch hè.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Cuba+Co+Danton",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Cuba+Co+Danton"
+    ],
+    "stock": 100
   },
   {
-    id: 'p10',
-    name: 'Áo thun in hoạ tiết',
-    category: 'ao-thun',
-    price: 299000,
-    colors: ['trang', 'den'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.1,
-    images: [img('1503342217505-b0a15ec3261c'), img('1521572267360-ee0c2909d518')],
-    description: 'Áo thun in hoạ tiết graphic, chất liệu cotton co giãn nhẹ, thoải mái vận động.',
+    "id": "p10",
+    "name": "Áo Sơ Mi Nam Linen Cổ Trụ",
+    "gender": "Nam",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 620000,
+    "colors": [
+      "trang",
+      "be",
+      "nau"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.8,
+    "description": "Chất liệu vải đũi tự nhiên mát mẻ, cổ tàu thanh thoát tối giản.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Linen+Co+Tru",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nam+Linen+Co+Tru"
+    ],
+    "stock": 100
   },
   {
-    id: 'p11',
-    name: 'Sơ mi caro',
-    category: 'ao-so-mi',
-    price: 490000,
-    colors: ['xanh', 'do'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.0,
-    images: [img('1604176354204-9268737828e4'), img('1598033129183-c4f50c736f10')],
-    description: 'Sơ mi hoạ tiết caro cổ điển, chất vải cotton pha, mặc thoải mái quanh năm.',
+    "id": "p11",
+    "name": "Áo Khoác Nam Bomber Gió",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 790000,
+    "colors": [
+      "den",
+      "xanh",
+      "be"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.7,
+    "isNew": true,
+    "description": "Áo khoác gió 2 lớp chống nước cản gió tốt, phối viền bo gấu thời thượng.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nam+Bomber+Gio",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nam+Bomber+Gio"
+    ],
+    "stock": 100
   },
   {
-    id: 'p12',
-    name: 'Quần jean skinny',
-    category: 'quan',
-    price: 550000,
-    oldPrice: 650000,
-    colors: ['xanh', 'den'],
-    sizes: ['XS', 'S', 'M', 'L'],
-    rating: 4.6,
-    images: [img('1541099649105-f69ad21f3246'), img('1582552938357-32b906df40cb')],
-    description: 'Quần jean skinny co giãn 4 chiều, tôn dáng, dễ phối với hầu hết áo trên.',
-    isFeatured: true,
+    "id": "p12",
+    "name": "Áo Khoác Nam Denim Cổ Điển",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 890000,
+    "colors": [
+      "xanh",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.9,
+    "isFeatured": true,
+    "description": "Áo khoác jean nam form rộng bền bỉ, dễ mix cùng áo thun trắng bên trong.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nam+Denim+Co+Dien",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nam+Denim+Co+Dien"
+    ],
+    "stock": 100
   },
   {
-    id: 'p13',
-    name: 'Áo khoác blazer dáng ôm',
-    category: 'ao-khoac',
-    price: 990000,
-    colors: ['den', 'be'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.5,
-    images: [img('1591047139829-d91aecb6caea'), img('1548624149-f1b9616ed639')],
-    description: 'Blazer dáng ôm nhẹ, vai form chuẩn, phù hợp môi trường công sở và các buổi gặp gỡ quan trọng.',
-    isFeatured: true,
+    "id": "p13",
+    "name": "Áo Khoác Nam Blazer Thanh Lịch",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 1450000,
+    "colors": [
+      "den",
+      "xanh",
+      "nau"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 5,
+    "isFeatured": true,
+    "description": "Áo vest blazer nam 1 cúc phong cách Hàn Quốc, chuẩn mực cho hội nghị và dạ tiệc.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nam+Blazer+Thanh+Lich",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nam+Blazer+Thanh+Lich"
+    ],
+    "stock": 100
   },
   {
-    id: 'p14',
-    name: 'Áo khoác phao siêu nhẹ',
-    category: 'ao-khoac',
-    price: 850000,
-    oldPrice: 990000,
-    colors: ['den', 'do', 'xanh'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.4,
-    images: [img('1544022613-e87ca75a784a'), img('1516826957135-700dedea698c')],
-    description: 'Áo phao siêu nhẹ, gọn gàng khi gấp, giữ ấm tốt cho những ngày trời trở lạnh.',
-    isNew: true,
+    "id": "p14",
+    "name": "Áo Khoác Nam Cardigan Len",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 650000,
+    "colors": [
+      "nau",
+      "be",
+      "den"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.6,
+    "description": "Cardigan len dệt kim mềm mịn, giữ ấm nhẹ nhàng vào ngày chớm lạnh.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nam+Cardigan+Len",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nam+Cardigan+Len"
+    ],
+    "stock": 100
   },
   {
-    id: 'p15',
-    name: 'Sơ mi trắng công sở',
-    category: 'ao-so-mi',
-    price: 450000,
-    colors: ['trang'],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    rating: 4.6,
-    images: [img('1598554747436-c9293d6a588f'), img('1554412933-514a83d2f3c8')],
-    description: 'Sơ mi trắng basic không thể thiếu, form chuẩn, chất vải ít nhăn, dễ ủi.',
-    isFeatured: true,
+    "id": "p15",
+    "name": "Áo Khoác Nam Hoodie Zip Nỉ",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 580000,
+    "colors": [
+      "den",
+      "xanh",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.5,
+    "description": "Áo khoác nỉ bông có mũ kèm khóa kéo tiện lợi, năng động trẻ trung.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nam+Hoodie+Zip+Ni",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nam+Hoodie+Zip+Ni"
+    ],
+    "stock": 100
   },
   {
-    id: 'p16',
-    name: 'Sơ mi oversize kẻ sọc',
-    category: 'ao-so-mi',
-    price: 420000,
-    colors: ['xanh', 'trang'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.2,
-    images: [img('1596755094514-f87e34085b2c'), img('1515886657613-9f3515b0c78f')],
-    description: 'Sơ mi oversize hoạ tiết kẻ sọc, phong cách trẻ trung, mặc rời hoặc buộc gấu đều đẹp.',
-    isNew: true,
+    "id": "p16",
+    "name": "Quần Jean Nam Slimfit Xanh Đậm",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 690000,
+    "colors": [
+      "xanh",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.8,
+    "isFeatured": true,
+    "description": "Quần bò co giãn nhẹ màu xanh chàm indigo kinh điển, tôn dáng đôi chân.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Jean+Nam+Slimfit+Xanh+Dam",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Jean+Nam+Slimfit+Xanh+Dam"
+    ],
+    "stock": 100
   },
   {
-    id: 'p17',
-    name: 'Áo thun cổ tròn form rộng',
-    category: 'ao-thun',
-    price: 279000,
-    colors: ['den', 'be', 'xanh'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.3,
-    images: [img('1583743814966-8936f5b7be1a'), img('1529374255404-311a2a4f1fd9')],
-    description: 'Áo thun form rộng phong cách streetwear, chất cotton dày dặn, không xù lông.',
+    "id": "p17",
+    "name": "Quần Jean Nam Rách Gối Cá Tính",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 750000,
+    "colors": [
+      "xanh",
+      "den"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.4,
+    "description": "Điểm nhấn rách xước nhẹ tinh tế mang lại vẻ ngoài sành điệu cuốn hút.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Jean+Nam+Rach+Goi+Ca+Tinh",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Jean+Nam+Rach+Goi+Ca+Tinh"
+    ],
+    "stock": 100
   },
   {
-    id: 'p18',
-    name: 'Áo ba lỗ thể thao',
-    category: 'ao-thun',
-    price: 199000,
-    colors: ['den', 'trang', 'xanh'],
-    sizes: ['XS', 'S', 'M', 'L'],
-    rating: 4.0,
-    images: [img('1518310383802-640c2de311b2'), img('1506152983158-b4a74a01c721')],
-    description: 'Áo ba lỗ chất liệu thấm hút mồ hôi, phù hợp tập luyện hoặc mặc mùa hè.',
-    isNew: true,
+    "id": "p18",
+    "name": "Quần Tây Nam Công Sở Dáng Đứng",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 620000,
+    "colors": [
+      "den",
+      "xanh",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.9,
+    "description": "Vải tuyết mưa đứng form, cạp thông minh co giãn ôm trọn vòng eo.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Tay+Nam+Cong+So+Dang+Dung",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Tay+Nam+Cong+So+Dang+Dung"
+    ],
+    "stock": 100
   },
   {
-    id: 'p19',
-    name: 'Áo len cổ lọ',
-    category: 'ao-thun',
-    price: 390000,
-    colors: ['be', 'nau', 'den'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.5,
-    images: [img('1574201635302-388dd92a4c3f'), img('1608234807905-4466023792f5')],
-    description: 'Áo len cổ lọ mềm mại, giữ ấm tốt, dễ phối cùng blazer hoặc áo khoác ngoài.',
+    "id": "p19",
+    "name": "Quần Kaki Nam Chino Hàn Quốc",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 550000,
+    "colors": [
+      "be",
+      "nau",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.7,
+    "description": "Quần kaki mềm mịn gam màu beige kem nhã nhặn, tiện mix với mọi loại áo.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Kaki+Nam+Chino+Han+Quoc",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Kaki+Nam+Chino+Han+Quoc"
+    ],
+    "stock": 100
   },
   {
-    id: 'p20',
-    name: 'Quần short kaki',
-    category: 'quan',
-    price: 350000,
-    colors: ['be', 'xanh', 'den'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.1,
-    images: [img('1591195853828-11db59a44f6b'), img('1560243563-062bfc001d68')],
-    description: 'Quần short kaki form vừa, chất vải thoáng mát, phù hợp mùa hè và các chuyến du lịch.',
+    "id": "p20",
+    "name": "Quần Jogger Nam Thể Thao Nỉ",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 480000,
+    "colors": [
+      "den",
+      "xanh",
+      "be"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.6,
+    "description": "Gấu quần bo thun ôm cổ chân khỏe khoắn, thích hợp chạy bộ và tập gym.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Jogger+Nam+The+Thao+Ni",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Jogger+Nam+The+Thao+Ni"
+    ],
+    "stock": 100
   },
   {
-    id: 'p21',
-    name: 'Quần jogger thể thao',
-    category: 'quan',
-    price: 480000,
-    colors: ['den', 'xanh'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.4,
-    images: [img('1552902865-b72c031ac5ea'), img('1517838277536-f5f99be501cd')],
-    description: 'Quần jogger bo gấu, chất nỉ mềm, thoải mái cho cả tập luyện lẫn mặc thường ngày.',
-    isNew: true,
+    "id": "p21",
+    "name": "Quần Short Nam Kaki Đi Biển",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 360000,
+    "colors": [
+      "be",
+      "xanh",
+      "trang"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.5,
+    "description": "Độ dài ngang gối thoải mái, chất kaki cotton thấm hút mồ hôi tối đa.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Short+Nam+Kaki+Di+Bien",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Short+Nam+Kaki+Di+Bien"
+    ],
+    "stock": 100
   },
   {
-    id: 'p22',
-    name: 'Quần tây ống đứng',
-    category: 'quan',
-    price: 620000,
-    oldPrice: 750000,
-    colors: ['den', 'nau'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.3,
-    images: [img('1509631179647-0177331693ae'), img('1594633312681-425c7b97ccd1')],
-    description: 'Quần tây ống đứng cạp cao, đường may sắc sảo, tôn dáng cho môi trường công sở.',
+    "id": "p22",
+    "name": "Quần Short Nam Dù Thể Thao",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 320000,
+    "colors": [
+      "den",
+      "xanh"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.6,
+    "description": "Vải dù siêu nhẹ nhanh khô, cạp chun co giãn vận động linh hoạt.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Short+Nam+Du+The+Thao",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Short+Nam+Du+The+Thao"
+    ],
+    "stock": 100
   },
   {
-    id: 'p23',
-    name: 'Đầm suông dáng dài',
-    category: 'vay',
-    price: 680000,
-    colors: ['den', 'xanh'],
-    sizes: ['XS', 'S', 'M', 'L'],
-    rating: 4.5,
-    images: [img('1515372039744-b8f02a3ae446'), img('1496747611176-843222e1e57c')],
-    description: 'Đầm suông dáng dài tối giản, chất liệu co giãn nhẹ, mặc thoải mái cả ngày dài.',
-    isFeatured: true,
+    "id": "p23",
+    "name": "Áo Len Nam Cổ Lọ Ấm Áp",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 720000,
+    "colors": [
+      "nau",
+      "be",
+      "den"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.7,
+    "description": "Len cừu mềm mại không gây ngứa ráp, giữ ấm cổ tối đa trong mùa đông lạnh.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Len+Nam+Co+Lo+Am+Ap",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Len+Nam+Co+Lo+Am+Ap"
+    ],
+    "stock": 100
   },
   {
-    id: 'p24',
-    name: 'Đầm hai dây dạ hội',
-    category: 'vay',
-    price: 980000,
-    oldPrice: 1190000,
-    colors: ['den', 'do'],
-    sizes: ['XS', 'S', 'M'],
-    rating: 4.7,
-    images: [img('1566174053879-31528523f8ae'), img('1539109136881-3be0616acf4b')],
-    description: 'Đầm hai dây tôn dáng, phù hợp cho các buổi tiệc và sự kiện quan trọng.',
-    isNew: true,
+    "id": "p24",
+    "name": "Áo Vest Nam Tuxedo Cao Cấp",
+    "gender": "Nam",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 1500000,
+    "colors": [
+      "den",
+      "xanh"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 5,
+    "isFeatured": true,
+    "description": "Cắt may thủ công sắc nét theo chuẩn Suit quý ông cho những dịp đặc biệt.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Vest+Nam+Tuxedo+Cao+Cap",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Vest+Nam+Tuxedo+Cao+Cap"
+    ],
+    "stock": 100
   },
   {
-    id: 'p25',
-    name: 'Chân váy denim',
-    category: 'vay',
-    price: 390000,
-    colors: ['xanh'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.1,
-    images: [img('1583496661160-fb5886a0aaaa'), img('1578632767115-351597cf2477')],
-    description: 'Chân váy denim form chữ A, phong cách trẻ trung, dễ phối cùng áo thun hoặc sơ mi.',
+    "id": "p25",
+    "name": "Quần Cargo Nam Túi Hộp",
+    "gender": "Nam",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 680000,
+    "colors": [
+      "den",
+      "be",
+      "xanh"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "rating": 4.8,
+    "isNew": true,
+    "description": "Quần lính túi hộp tiện dụng form suông mang đậm phong cách đường phố.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Cargo+Nam+Tui+Hop",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Cargo+Nam+Tui+Hop"
+    ],
+    "stock": 100
   },
   {
-    id: 'p26',
-    name: 'Kính mát tròng vuông',
-    category: 'phu-kien',
-    price: 320000,
-    colors: ['den', 'nau'],
-    sizes: ['One Size'],
-    rating: 4.3,
-    images: [img('1511499767150-a48a237f0083'), img('1508296695146-257a814070b4')],
-    description: 'Kính mát gọng vuông thời trang, chống tia UV, điểm nhấn hoàn hảo cho outfit mùa hè.',
-    isNew: true,
+    "id": "p26",
+    "name": "Đầm Nữ Suông Linen Thanh Lịch",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 750000,
+    "colors": [
+      "be",
+      "trang",
+      "nau"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.8,
+    "isFeatured": true,
+    "description": "Đầm suông vải đũi tự nhiên nhẹ nhàng, giấu khuyết điểm vòng 2 hoàn hảo.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Dam+Nu+Suong+Linen+Thanh+Lich",
+    "images": [
+      "https://placehold.co/400x600?text=Dam+Nu+Suong+Linen+Thanh+Lich"
+    ],
+    "stock": 100
   },
   {
-    id: 'p27',
-    name: 'Thắt lưng da thật',
-    category: 'phu-kien',
-    price: 450000,
-    colors: ['den', 'nau'],
-    sizes: ['One Size'],
-    rating: 4.6,
-    images: [img('1624222247344-550fb60583dc'), img('1553062407-98eeb64c6a62')],
-    description: 'Thắt lưng da thật cao cấp, khoá kim loại chắc chắn, phù hợp cả nam và nữ.',
-    isFeatured: true,
+    "id": "p27",
+    "name": "Đầm Nữ Xòe Hoa Nhí Vintage",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 680000,
+    "colors": [
+      "do",
+      "be",
+      "trang"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.9,
+    "isNew": true,
+    "isFeatured": true,
+    "description": "Họa tiết hoa nhí nữ tính phong cách retro, tùng váy xòe bồng bềnh.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Dam+Nu+Xoe+Hoa+Nhi+Vintage",
+    "images": [
+      "https://placehold.co/400x600?text=Dam+Nu+Xoe+Hoa+Nhi+Vintage"
+    ],
+    "stock": 100
   },
   {
-    id: 'p28',
-    name: 'Mũ len beanie',
-    category: 'phu-kien',
-    price: 150000,
-    colors: ['den', 'be', 'xanh'],
-    sizes: ['One Size'],
-    rating: 4.0,
-    images: [img('1576871337622-98d48d1cf531'), img('1542295669297-4d352b042bca')],
-    description: 'Mũ len beanie giữ ấm, form ôm đầu vừa vặn, dễ phối cùng áo khoác mùa đông.',
+    "id": "p28",
+    "name": "Đầm Nữ Ôm Body Cổ Vuông Quyến Rũ",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 820000,
+    "colors": [
+      "den",
+      "do",
+      "nau"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M"
+    ],
+    "rating": 4.7,
+    "description": "Đầm ôm chất thun tăm co giãn khoe trọn đường cong cơ thể quyến rũ.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Dam+Nu+Om+Body+Co+Vuong+Quyen+Ru",
+    "images": [
+      "https://placehold.co/400x600?text=Dam+Nu+Om+Body+Co+Vuong+Quyen+Ru"
+    ],
+    "stock": 100
   },
   {
-    id: 'p29',
-    name: 'Giày sneaker trắng',
-    category: 'phu-kien',
-    price: 890000,
-    oldPrice: 1050000,
-    colors: ['trang', 'den'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.8,
-    images: [img('1595950653106-6c9ebd614d3a'), img('1549298916-b41d501d3772')],
-    description: 'Giày sneaker trắng basic, đế êm, dễ phối cùng hầu hết trang phục hằng ngày.',
-    isFeatured: true,
-    isNew: true,
+    "id": "p29",
+    "name": "Đầm Dạ Hội Nữ Ren Sang Trọng",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 1480000,
+    "colors": [
+      "den",
+      "do",
+      "trang"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 5,
+    "isFeatured": true,
+    "description": "Chất ren thêu tinh xảo cao cấp kết hợp đính hạt lấp lánh cho buổi tiệc tối.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Dam+Da+Hoi+Nu+Ren+Sang+Trong",
+    "images": [
+      "https://placehold.co/400x600?text=Dam+Da+Hoi+Nu+Ren+Sang+Trong"
+    ],
+    "stock": 100
   },
   {
-    id: 'p30',
-    name: 'Vòng cổ tối giản mạ vàng',
-    category: 'phu-kien',
-    price: 230000,
-    colors: ['be'],
-    sizes: ['One Size'],
-    rating: 4.2,
-    images: [img('1599643478518-a784e5dc4c8f'), img('1611591475770-4927f80b91e9')],
-    description: 'Vòng cổ mạ vàng thiết kế tối giản, điểm nhấn tinh tế cho trang phục thường ngày.',
-  },
-  // --- 20 Sản phẩm mới bổ sung (p31 - p50) ---
-  {
-    id: 'p31',
-    name: 'Áo cardigan len mỏng',
-    category: 'ao-khoac',
-    price: 380000,
-    colors: ['be', 'trang', 'nau'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.6,
-    images: [img('1434389677669-e08b4cac3105'), img('1584273143981-41c073dfe8f8')],
-    description: 'Áo cardigan len mỏng nhẹ nhàng, cài khuy vintage, thích hợp khoác nhẹ mùa thu hoặc môi trường điều hoà.',
-    isNew: true,
-  },
-  {
-    id: 'p32',
-    name: 'Áo croptop tay ngắn',
-    category: 'ao-thun',
-    price: 220000,
-    oldPrice: 280000,
-    colors: ['trang', 'den', 'do'],
-    sizes: ['XS', 'S', 'M'],
-    rating: 4.4,
-    images: [img('1503342217505-b0a15ec3261c'), img('1521572267360-ee0c2909d518')],
-    description: 'Áo croptop cổ tròn năng động, tôn dáng eo thon, dễ phối cùng quần cạp cao hoặc chân váy.',
-    isNew: true,
+    "id": "p30",
+    "name": "Đầm Nữ Maxi Đi Biển Voan Tơ",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 890000,
+    "colors": [
+      "trang",
+      "be",
+      "do"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.8,
+    "isNew": true,
+    "description": "Chất voan tơ bay bổng tà dài mềm mại, rực rỡ dưới nắng biển mùa hè.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Dam+Nu+Maxi+Di+Bien+Voan+To",
+    "images": [
+      "https://placehold.co/400x600?text=Dam+Nu+Maxi+Di+Bien+Voan+To"
+    ],
+    "stock": 100
   },
   {
-    id: 'p33',
-    name: 'Áo sơ mi voan hoa',
-    category: 'ao-so-mi',
-    price: 480000,
-    colors: ['trang', 'be'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.5,
-    images: [img('1607344645866-009c320c5ab8'), img('1598554747436-c9293d6a588f')],
-    description: 'Sơ mi voan hoạ tiết hoa mềm mại, cổ thắt nơ nữ tính, phù hợp phong cách công sở dịu dàng.',
+    "id": "p31",
+    "name": "Chân Váy Nữ Xếp Ly Dáng Dài",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 520000,
+    "colors": [
+      "be",
+      "den",
+      "nau"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.7,
+    "description": "Dáng xòe dập ly tinh tế phong cách tiểu thư Nhật Bản dịu dàng.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Chan+Vay+Nu+Xep+Ly+Dang+Dai",
+    "images": [
+      "https://placehold.co/400x600?text=Chan+Vay+Nu+Xep+Ly+Dang+Dai"
+    ],
+    "stock": 100
   },
   {
-    id: 'p34',
-    name: 'Quần ống rộng culottes',
-    category: 'quan',
-    price: 520000,
-    colors: ['den', 'be', 'nau'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.3,
-    images: [img('1594633312681-425c7b97ccd1'), img('1509631179647-0177331693ae')],
-    description: 'Quần culottes dáng lửng ống rộng, chất đũi thoáng mát, mang lại sự dễ chịu tuyệt đối khi vận động.',
+    "id": "p32",
+    "name": "Chân Váy Nữ Chữ A Kaki Ngắn",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 420000,
+    "colors": [
+      "be",
+      "den",
+      "nau"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M"
+    ],
+    "rating": 4.6,
+    "description": "Form chữ A khoe chân dài thon gọn, có quần bảo hộ may liền bên trong an toàn.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Chan+Vay+Nu+Chu+A+Kaki+Ngan",
+    "images": [
+      "https://placehold.co/400x600?text=Chan+Vay+Nu+Chu+A+Kaki+Ngan"
+    ],
+    "stock": 100
   },
   {
-    id: 'p35',
-    name: 'Đầm xòe cổ V thắt eo',
-    category: 'vay',
-    price: 820000,
-    oldPrice: 990000,
-    colors: ['do', 'den', 'be'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.8,
-    images: [img('1539109136881-3be0616acf4b'), img('1515372039744-b8f02a3ae446')],
-    description: 'Đầm xòe cổ V thanh lịch, chi tiết nơ thắt eo giúp tôn vòng 2 nhỏ gọn, chất vải đứng form tinh tế.',
-    isFeatured: true,
+    "id": "p33",
+    "name": "Chân Váy Nữ Jean Bút Chì Xẻ Tà",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 560000,
+    "colors": [
+      "xanh",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.8,
+    "description": "Vải jean dày dặn tôn vòng 3, đường xẻ tà trước bước đi linh hoạt duyên dáng.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Chan+Vay+Nu+Jean+But+Chi+Xe+Ta",
+    "images": [
+      "https://placehold.co/400x600?text=Chan+Vay+Nu+Jean+But+Chi+Xe+Ta"
+    ],
+    "stock": 100
   },
   {
-    id: 'p36',
-    name: 'Chân váy chữ A kaki',
-    category: 'vay',
-    price: 360000,
-    colors: ['be', 'nau', 'den'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.2,
-    images: [img('1583496661160-fb5886a0aaaa'), img('1578632767115-351597cf2477')],
-    description: 'Chân váy chữ A chất kaki dặn dặn, thiết kế có túi tiện dụng, trẻ trung và cá tính.',
+    "id": "p34",
+    "name": "Áo Sơ Mi Nữ Lụa Satin Cao Cấp",
+    "gender": "Nữ",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 650000,
+    "colors": [
+      "trang",
+      "be",
+      "den"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.9,
+    "isFeatured": true,
+    "description": "Độ bóng mịn sang chảnh, bề mặt mát lạnh chạm vào êm ái trên da.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Lua+Satin+Cao+Cap",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Lua+Satin+Cao+Cap"
+    ],
+    "stock": 100
   },
   {
-    id: 'p37',
-    name: 'Balo da thời trang',
-    category: 'phu-kien',
-    price: 650000,
-    colors: ['den', 'nau'],
-    sizes: ['One Size'],
-    rating: 4.5,
-    images: [img('1553062407-98eeb64c6a62'), img('1584917865442-de89df76afd3')],
-    description: 'Balo da nữ mini nhỏ gọn, nhiều ngăn chứa đồ khoa học, đường may tỉ mỉ chắc chắn.',
-    isNew: true,
+    "id": "p35",
+    "name": "Áo Sơ Mi Nữ Cổ Thắt Nơ Công Sở",
+    "gender": "Nữ",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 580000,
+    "colors": [
+      "trang",
+      "be",
+      "do"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.7,
+    "description": "Điểm nhấn nơ cổ thanh nhã, kết hợp hoàn hảo cùng chân váy bút chì.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Co+That+No+Cong+So",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Co+That+No+Cong+So"
+    ],
+    "stock": 100
   },
   {
-    id: 'p38',
-    name: 'Áo polo nữ form suông',
-    category: 'ao-thun',
-    price: 310000,
-    colors: ['trang', 'xanh', 'den'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.4,
-    images: [img('1625910513413-568eb2a688b1'), img('1521572267360-ee0c2909d518')],
-    description: 'Áo thun polo cổ dệt lịch sự, chất liệu cá sấu co giãn tốt, mặc đi học hay đi làm đều đẹp.',
+    "id": "p36",
+    "name": "Áo Sơ Mi Nữ Trắng Tay Phồng",
+    "gender": "Nữ",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 490000,
+    "colors": [
+      "trang"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.6,
+    "description": "Thiết kế tay bồng nữ tính, che gọn bắp tay cho vóc dáng thêm phần yêu kiều.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Trang+Tay+Phong",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Trang+Tay+Phong"
+    ],
+    "stock": 100
   },
   {
-    id: 'p39',
-    name: 'Áo hoodie form rộng',
-    category: 'ao-khoac',
-    price: 490000,
-    oldPrice: 590000,
-    colors: ['den', 'be', 'xanh'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.7,
-    images: [img('1556905055-8f358a7a47b2'), img('1509967419530-da38b4704bc6')],
-    description: 'Áo hoodie nỉ bông ấm áp, nón trùm dày dặn, phong cách unisex khỏe khoắn năng động.',
-    isFeatured: true,
+    "id": "p37",
+    "name": "Áo Sơ Mi Nữ Kẻ Caro Oversize",
+    "gender": "Nữ",
+    "category": "ao-so-mi",
+    "categoryName": "Áo sơ mi",
+    "price": 460000,
+    "colors": [
+      "nau",
+      "be",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.5,
+    "description": "Form rộng rãi phóng khoáng, có thể mặc riêng hoặc khoác ngoài áo hai dây.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Ke+Caro+Oversize",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+So+Mi+Nu+Ke+Caro+Oversize"
+    ],
+    "stock": 100
   },
   {
-    id: 'p40',
-    name: 'Quần ống rộng xếp ly',
-    category: 'quan',
-    price: 720000,
-    colors: ['be', 'den'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.6,
-    images: [img('1509631179647-0177331693ae'), img('1594633312681-425c7b97ccd1')],
-    description: 'Quần xếp ly ly dập nổi sang trọng, chất lụa cát rủ mềm mại, bước đi thướt tha tự nhiên.',
+    "id": "p38",
+    "name": "Áo Thun Nữ Cổ Tim Basic",
+    "gender": "Nữ",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 320000,
+    "colors": [
+      "trang",
+      "den",
+      "be"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.6,
+    "description": "Chất cotton 100% co giãn tốt, cổ tim thanh mảnh khoe xương quai xanh.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nu+Co+Tim+Basic",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nu+Co+Tim+Basic"
+    ],
+    "stock": 100
   },
   {
-    id: 'p41',
-    name: 'Đầm hai dây ôm body',
-    category: 'vay',
-    price: 590000,
-    colors: ['den', 'do'],
-    sizes: ['XS', 'S', 'M'],
-    rating: 4.5,
-    images: [img('1566174053879-31528523f8ae'), img('1539109136881-3be0616acf4b')],
-    description: 'Đầm hai dây ôm sát đường cong cơ thể, quyến rũ cuốn hút cho các buổi tiệc tối.',
-    isNew: true,
+    "id": "p39",
+    "name": "Áo Thun Nữ Croptop Năng Động",
+    "gender": "Nữ",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 340000,
+    "colors": [
+      "trang",
+      "den",
+      "xanh"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M"
+    ],
+    "rating": 4.8,
+    "isNew": true,
+    "description": "Độ dài ngang eo khoe eo thon, phối cùng quần jean cạp cao cực tôn dáng.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nu+Croptop+Nang+Dong",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nu+Croptop+Nang+Dong"
+    ],
+    "stock": 100
   },
   {
-    id: 'p42',
-    name: 'Áo kiểu trễ vai',
-    category: 'ao-so-mi',
-    price: 390000,
-    colors: ['trang', 'be'],
-    sizes: ['XS', 'S', 'M'],
-    rating: 4.3,
-    images: [img('1515886657613-9f3515b0c78f'), img('1598554747436-c9293d6a588f')],
-    description: 'Áo kiểu thiết kế trễ vai quyến rũ, chất voan nhún chun ngực mềm mại tôn vai trần gợi cảm.',
+    "id": "p40",
+    "name": "Áo Thun Nữ In Họa Tiết Floral",
+    "gender": "Nữ",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 360000,
+    "colors": [
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.5,
+    "description": "Hình in hoa lá sắc nét không bong tróc, gam màu pastel ngọt ngào.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Thun+Nu+In+Hoa+Tiet+Floral",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Thun+Nu+In+Hoa+Tiet+Floral"
+    ],
+    "stock": 100
   },
   {
-    id: 'p43',
-    name: 'Giày cao gót mũi nhọn',
-    category: 'phu-kien',
-    price: 790000,
-    oldPrice: 950000,
-    colors: ['den', 'be'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.7,
-    images: [img('1543163521-1bf539c55dd2'), img('1595950653106-6c9ebd614d3a')],
-    description: 'Giày cao gót 7cm mũi nhọn kinh điển, chất da bóng mờ thanh lịch, tôn đôi chân thon dài.',
-    isFeatured: true,
+    "id": "p41",
+    "name": "Áo Len Nữ Dệt Kim Mỏng Cổ Tròn",
+    "gender": "Nữ",
+    "category": "ao-thun",
+    "categoryName": "Áo thun",
+    "price": 550000,
+    "colors": [
+      "be",
+      "nau",
+      "do"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.7,
+    "description": "Sợi dệt mịn màng thoáng mát, chuẩn style thanh lịch phong cách Hàn Quốc.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Len+Nu+Det+Kim+Mong+Co+Tron",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Len+Nu+Det+Kim+Mong+Co+Tron"
+    ],
+    "stock": 100
   },
   {
-    id: 'p44',
-    name: 'Mũ cối cói đi biển',
-    category: 'phu-kien',
-    price: 260000,
-    colors: ['be', 'trang'],
-    sizes: ['One Size'],
-    rating: 4.2,
-    images: [img('1521369909029-2afed882baee'), img('1576871337622-98d48d1cf531')],
-    description: 'Mũ cói vành rộng che nắng hiệu quả, nơ đai đen điểm nhấn, không thể thiếu cho kỳ nghỉ biển.',
+    "id": "p42",
+    "name": "Áo Khoác Nữ Tweed Tiểu Thư",
+    "gender": "Nữ",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 1250000,
+    "colors": [
+      "trang",
+      "den",
+      "do"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 5,
+    "isFeatured": true,
+    "description": "Dạ tweed dệt hạt nổi sang trọng viền kim loại ánh vàng lấp lánh quý phái.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nu+Tweed+Tieu+Thu",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nu+Tweed+Tieu+Thu"
+    ],
+    "stock": 100
   },
   {
-    id: 'p45',
-    name: 'Áo len dệt kim cổ tim',
-    category: 'ao-thun',
-    price: 430000,
-    colors: ['be', 'nau', 'trang'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.6,
-    images: [img('1574201635302-388dd92a4c3f'), img('1608234807905-4466023792f5')],
-    description: 'Áo len dệt kim cổ V mềm nhẹ, form hơi thả lỏng, phối cùng quần jean hay chân váy đều tinh tế.',
+    "id": "p43",
+    "name": "Áo Khoác Nữ Blazer Dáng Rộng",
+    "gender": "Nữ",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 980000,
+    "colors": [
+      "den",
+      "be",
+      "nau"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.8,
+    "isNew": true,
+    "description": "Blazer thời trang 2 lớp đệm vai nhẹ, hiện đại cho các cô nàng văn phòng.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nu+Blazer+Dang+Rong",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nu+Blazer+Dang+Rong"
+    ],
+    "stock": 100
   },
   {
-    id: 'p46',
-    name: 'Quần jean ống rộng retro',
-    category: 'quan',
-    price: 650000,
-    oldPrice: 780000,
-    colors: ['xanh', 'den'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    rating: 4.8,
-    images: [img('1541099649105-f69ad21f3246'), img('1582552938357-32b906df40cb')],
-    description: 'Quần jean ống rộng phong cách vintage 90s, chất bò denim dày dặn không bai dão.',
-    isNew: true,
-    isFeatured: true,
+    "id": "p44",
+    "name": "Áo Khoác Nữ Cardigan Len Xù",
+    "gender": "Nữ",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 620000,
+    "colors": [
+      "be",
+      "nau",
+      "trang"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.6,
+    "description": "Chất len xù lông mềm êm ái như mây, tone màu kem be nhẹ nhàng mùa đông.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nu+Cardigan+Len+Xu",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nu+Cardigan+Len+Xu"
+    ],
+    "stock": 100
   },
   {
-    id: 'p47',
-    name: 'Áo măng tô dạ dáng ngắn',
-    category: 'ao-khoac',
-    price: 1150000,
-    oldPrice: 1390000,
-    colors: ['be', 'nau', 'den'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.9,
-    images: [img('1539533018447-63fcce2678e3'), img('1591047139829-d91aecb6caea')],
-    description: 'Áo măng tô dạ dáng ngắn 2 hàng khuy sang trọng, chuẩn phong cách Hàn Quốc hiện đại.',
-    isFeatured: true,
+    "id": "p45",
+    "name": "Áo Khoác Nữ Dạ Dài Mùa Đông",
+    "gender": "Nữ",
+    "category": "ao-khoac",
+    "categoryName": "Áo khoác",
+    "price": 1450000,
+    "colors": [
+      "nau",
+      "den",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.9,
+    "isFeatured": true,
+    "description": "Măng tô dạ ấm áp qua gối kèm đai thắt eo sang trọng chuẩn phong thái thanh lịch.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Ao+Khoac+Nu+Da+Dai+Mua+Dong",
+    "images": [
+      "https://placehold.co/400x600?text=Ao+Khoac+Nu+Da+Dai+Mua+Dong"
+    ],
+    "stock": 100
   },
   {
-    id: 'p48',
-    name: 'Kính mát phi công gọng kim loại',
-    category: 'phu-kien',
-    price: 350000,
-    colors: ['den', 'nau'],
-    sizes: ['One Size'],
-    rating: 4.4,
-    images: [img('1511499767150-a48a237f0083'), img('1508296695146-257a814070b4')],
-    description: 'Kính mắt phi công gọng kim loại mảnh mạ vàng, tròng kính tráng gương chống lóa tốt.',
+    "id": "p46",
+    "name": "Quần Jean Nữ Ống Rộng Lưng Cao",
+    "gender": "Nữ",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 680000,
+    "colors": [
+      "xanh",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.9,
+    "isNew": true,
+    "isFeatured": true,
+    "description": "Quần bò ống rộng hack chân dài miên man, chất jean cao cấp không xù lông.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Jean+Nu+Ong+Rong+Lung+Cao",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Jean+Nu+Ong+Rong+Lung+Cao"
+    ],
+    "stock": 100
   },
   {
-    id: 'p49',
-    name: 'Bông tai ngọc trai nhân tạo',
-    category: 'phu-kien',
-    price: 180000,
-    colors: ['trang', 'be'],
-    sizes: ['One Size'],
-    rating: 4.5,
-    images: [img('1599643478518-a784e5dc4c8f'), img('1611591475770-4927f80b91e9')],
-    description: 'Bông tai nụ ngọc trai đính đá sang trọng, tạo điểm nhấn quý phái cho gương mặt.',
+    "id": "p47",
+    "name": "Quần Tây Nữ Baggy Công Sở",
+    "gender": "Nữ",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 590000,
+    "colors": [
+      "den",
+      "be",
+      "xanh"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.7,
+    "description": "Form baggy rộng ở hông và bóp nhẹ gấu, che khuyết điểm chân to hiệu quả.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Tay+Nu+Baggy+Cong+So",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Tay+Nu+Baggy+Cong+So"
+    ],
+    "stock": 100
   },
   {
-    id: 'p50',
-    name: 'Đầm maxi voan đi biển',
-    category: 'vay',
-    price: 890000,
-    oldPrice: 1050000,
-    colors: ['do', 'trang', 'xanh'],
-    sizes: ['S', 'M', 'L'],
-    rating: 4.9,
-    images: [img('1496747611176-843222e1e57c'), img('1572804013309-59a88b7e92f1')],
-    description: 'Đầm maxi dáng dài tha thướt bằng voan tơ, hoa văn nhẹ nhàng tạo nét bay bổng trước biển.',
-    isNew: true,
-    isFeatured: true,
+    "id": "p48",
+    "name": "Quần Nữ Ống Loe Co Giãn",
+    "gender": "Nữ",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 640000,
+    "colors": [
+      "den",
+      "nau"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M"
+    ],
+    "rating": 4.8,
+    "description": "Đáy cạp cao ôm sát đùi và xòe nhẹ từ đầu gối, tạo tỷ lệ cơ thể chữ S chuẩn mực.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Nu+Ong+Loe+Co+Gian",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Nu+Ong+Loe+Co+Gian"
+    ],
+    "stock": 100
   },
+  {
+    "id": "p49",
+    "name": "Quần Short Nữ Kaki Lưng Thun",
+    "gender": "Nữ",
+    "category": "quan",
+    "categoryName": "Quần",
+    "price": 350000,
+    "colors": [
+      "be",
+      "trang",
+      "den"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.5,
+    "description": "Cạp chun thoải mái với túi 2 bên tiện lợi, cực kỳ mát mẻ khi ở nhà hoặc dạo phố.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Quan+Short+Nu+Kaki+Lung+Thun",
+    "images": [
+      "https://placehold.co/400x600?text=Quan+Short+Nu+Kaki+Lung+Thun"
+    ],
+    "stock": 100
+  },
+  {
+    "id": "p50",
+    "name": "Set Bộ Nữ Áo Vest Va Chân Váy",
+    "gender": "Nữ",
+    "category": "vay",
+    "categoryName": "Váy & Đầm",
+    "price": 1350000,
+    "colors": [
+      "be",
+      "den",
+      "nau"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "rating": 4.9,
+    "isFeatured": true,
+    "description": "Set bộ đồng màu cao cấp gồm áo vest ngắn tay và chân váy chữ A sành điệu.",
+    "brand": "Maison",
+    "image_url": "https://placehold.co/400x600?text=Set+Bo+Nu+Ao+Vest+Va+Chan+Vay",
+    "images": [
+      "https://placehold.co/400x600?text=Set+Bo+Nu+Ao+Vest+Va+Chan+Vay"
+    ],
+    "stock": 100
+  }
 ]
 
 export const getProductById = (id) => products.find((p) => p.id === id)
