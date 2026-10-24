@@ -1,308 +1,606 @@
 
+-- Xoá dữ liệu cũ
 DELETE FROM reviews;
 DELETE FROM products;
 
-INSERT INTO products (id, name, gender, category, brand, price, stock, image_url, description, avg_rating)
-VALUES
-('p01', 'Áo Thun Nam Cotton Basic Trắng', 'Nam', 'ao-thun', 'Maison', 320000, 100, 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=60', 'Chất liệu 100% cotton thoáng mát, form regular fit dễ phối đồ hàng ngày.', 4.8),
-('p02', 'Áo Thun Nam Polo Cổ Bẻ Xanh Navy', 'Nam', 'ao-thun', 'Maison', 450000, 100, 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=60', 'Áo polo nam dệt tổ ong dày dặn, lịch thiệp khi đi làm hoặc dạo phố.', 4.6),
-('p03', 'Áo Thun Nam Oversize Đen Streetwear', 'Nam', 'ao-thun', 'Maison', 380000, 100, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=60', 'Kiểu dáng unisex rộng rãi đường phố phong cách streetwear trẻ trung.', 4.5),
-('p04', 'Áo Thun Nam Henley Cổ Gài Nút', 'Nam', 'ao-thun', 'Maison', 350000, 100, 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=500&auto=format&fit=crop&q=60', 'Áo thun nam cổ gài nút nam tính, tôn dáng ngực và bắp tay.', 4.7),
-('p05', 'Áo Thun Nam Thể Thao Thoáng Khí', 'Nam', 'ao-thun', 'Maison', 310000, 100, 'https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=500&auto=format&fit=crop&q=60', 'Công nghệ sợi làm mát co giãn 4 chiều chuyên dụng cho vận động thể thao.', 5),
-('p06', 'Áo Thun Nam Graphic Nghệ Thuật', 'Nam', 'ao-thun', 'Maison', 390000, 100, 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=500&auto=format&fit=crop&q=60', 'Họa tiết in lụa nghệ thuật bền màu, phong cách tối giản cá tính.', 4.5),
-('p07', 'Áo Thun Nam Form Rộng Màu Be', 'Nam', 'ao-thun', 'Maison', 360000, 100, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500&auto=format&fit=crop&q=60', 'Tone be nhã nhặn, chất vải cotton hữu cơ mềm mịn không xù lông.', 4.9),
-('p08', 'Áo Polo Nam Phối Viền Cổ Dệt Kim', 'Nam', 'ao-thun', 'Maison', 490000, 100, 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=500&auto=format&fit=crop&q=60', 'Cổ dệt kim sọc tương phản cao cấp, chuẩn phong cách quý ông hiện đại.', 4.7),
-('p09', 'Áo Thun Nam Tay Dài Cổ Tròn Xám', 'Nam', 'ao-thun', 'Maison', 420000, 100, 'https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=500&auto=format&fit=crop&q=60', 'Áo thun dài tay giữ ấm nhẹ ngày thu đông, co giãn thoải mái.', 5),
-('p10', 'Áo Thun Nam Vintage Washed Xám Tro', 'Nam', 'ao-thun', 'Maison', 450000, 100, 'https://images.unsplash.com/photo-1622445268065-330b0b819601?w=500&auto=format&fit=crop&q=60', 'Công nghệ wash đá tạo hiệu ứng bạc màu vintage phong trần.', 4.7),
-('p11', 'Áo Thun Nam Cổ Tim Trẻ Trung', 'Nam', 'ao-thun', 'Maison', 330000, 100, 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=60', 'Thiết kế cổ tim thanh thoát tôn đường nét xương quai xanh nam tính.', 5),
-('p12', 'Áo Thun Nam Unisex Street Style', 'Nam', 'ao-thun', 'Maison', 370000, 100, 'https://images.unsplash.com/photo-1618354691551-44de113f0141?w=500&auto=format&fit=crop&q=60', 'Áo thun đen in typography lưng cá tính cho các bạn trẻ năng động.', 4.8),
-('p13', 'Áo Thun Nam Dệt Gân Co Giãn', 'Nam', 'ao-thun', 'Maison', 340000, 100, 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=60', 'Chất thun gân ôm nhẹ tôn hình thể săn chắc, thấm hút mồ hôi tốt.', 4.7),
-('p14', 'Áo Sơ Mi Nam Trắng Công Sở Chống Nhăn', 'Nam', 'ao-so-mi', 'Maison', 520000, 100, 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&auto=format&fit=crop&q=60', 'Áo sơ mi dài tay chống nhăn cao cấp, form slim-fit tôn vóc dáng chuẩn.', 4.9),
-('p15', 'Áo Sơ Mi Nam Oxford Xanh Nhạt', 'Nam', 'ao-so-mi', 'Maison', 590000, 100, 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=60', 'Vải Oxford cao cấp bền màu, phong cách Ivy League lịch thiệp nhã nhặn.', 4.9),
-('p16', 'Áo Sơ Mi Nam Kẻ Caro Trẻ Trung', 'Nam', 'ao-so-mi', 'Maison', 480000, 100, 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500&auto=format&fit=crop&q=60', 'Họa tiết caro kẻ ô thanh lịch, dễ phối cùng áo thun trắng lót bên trong.', 4.5),
-('p17', 'Áo Sơ Mi Nam Denim Dài Tay Phong Trần', 'Nam', 'ao-so-mi', 'Maison', 680000, 100, 'https://images.unsplash.com/photo-1607345366928-199ea26ede99?w=500&auto=format&fit=crop&q=60', 'Chất bò denim mài cổ điển, cá tính và bụi bặm cho phái mạnh.', 4.8),
-('p18', 'Áo Sơ Mi Nam Công Sở Cổ Đức', 'Nam', 'ao-so-mi', 'Maison', 550000, 100, 'https://images.unsplash.com/photo-1620012253295-c15c429fca3e?w=500&auto=format&fit=crop&q=60', 'Cổ đức cứng cáp đứng form kết hợp cà vạt chuẩn mực cho văn phòng.', 4.6),
-('p19', 'Áo Sơ Mi Nam Linen Cổ Trụ Mát Mẻ', 'Nam', 'ao-so-mi', 'Maison', 620000, 100, 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&auto=format&fit=crop&q=60', 'Chất liệu vải đũi tự nhiên mát mẻ, cổ tàu thanh thoát tối giản.', 4.9),
-('p20', 'Áo Sơ Mi Nam Sọc Xanh Thanh Nhã', 'Nam', 'ao-so-mi', 'Maison', 560000, 100, 'https://images.unsplash.com/photo-1589310243389-9685981f3c4c?w=500&auto=format&fit=crop&q=60', 'Kẻ sọc dọc tạo cảm giác thân hình thon gọn cao ráo hơn.', 4.6),
-('p21', 'Áo Sơ Mi Nam Cổ Mở Cuba Mùa Hè', 'Nam', 'ao-so-mi', 'Maison', 490000, 100, 'https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?w=500&auto=format&fit=crop&q=60', 'Áo sơ mi ngắn tay cổ mở phóng khoáng, họa tiết nhẹ thích hợp du lịch hè.', 5),
-('p22', 'Áo Sơ Mi Nam Màu Be Tối Giản', 'Nam', 'ao-so-mi', 'Maison', 540000, 100, 'https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=500&auto=format&fit=crop&q=60', 'Tone màu đất ấm áp, chất vải tencel mềm rũ sang trọng.', 4.5),
-('p23', 'Áo Sơ Mi Nam Dệt Họa Tiết Chìm', 'Nam', 'ao-so-mi', 'Maison', 650000, 100, 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=500&auto=format&fit=crop&q=60', 'Họa tiết dệt chìm tinh xảo dưới ánh sáng, sang trọng đẳng cấp.', 5),
-('p24', 'Áo Sơ Mi Nam Dạ Tiệc Cổ Bẻ Ý', 'Nam', 'ao-so-mi', 'Maison', 790000, 100, 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500&auto=format&fit=crop&q=60', 'Dành cho các buổi tiệc dạ hội trang trọng, khuy áo mạ bóng cao cấp.', 4.8),
-('p25', 'Áo Sơ Mi Nam Caro Xám Phong Cách Hàn', 'Nam', 'ao-so-mi', 'Maison', 530000, 100, 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=500&auto=format&fit=crop&q=60', 'Form rộng rãi kiểu dáng Oppa Hàn Quốc trẻ trung hiện đại.', 4.7),
-('p26', 'Áo Khoác Nam Bomber Da Cá Tính', 'Nam', 'ao-khoac', 'Maison', 1250000, 100, 'https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=500&auto=format&fit=crop&q=60', 'Chất liệu da cao cấp mềm mại chống nứt, lót chần bông giữ ấm tuyệt vời.', 4.8),
-('p27', 'Áo Khoác Nam Denim Cổ Điển', 'Nam', 'ao-khoac', 'Maison', 890000, 100, 'https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?w=500&auto=format&fit=crop&q=60', 'Áo khoác jean nam form rộng bền bỉ, dễ mix cùng áo thun trắng bên trong.', 4.6),
-('p28', 'Áo Khoác Nam Da Biker Khóa Chéo', 'Nam', 'ao-khoac', 'Maison', 1450000, 100, 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=60', 'Đậm chất phong trần cho các tay lái biker, khóa kéo kim loại hầm hố.', 4.5),
-('p29', 'Áo Khoác Nam Bomber Gió 2 Lớp', 'Nam', 'ao-khoac', 'Maison', 790000, 100, 'https://images.unsplash.com/photo-1548883354-7622d03aca27?w=500&auto=format&fit=crop&q=60', 'Áo khoác gió chống nước cản gió tốt, phối viền bo gấu thời thượng.', 4.5),
-('p30', 'Áo Khoác Nam Hoodie Nỉ Bông Có Mũ', 'Nam', 'ao-khoac', 'Maison', 580000, 100, 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=60', 'Áo khoác nỉ bông có mũ kèm khóa kéo tiện lợi, năng động trẻ trung.', 4.7),
-('p31', 'Áo Blazer Nam Hàn Quốc Dáng Rộng', 'Nam', 'ao-khoac', 'Maison', 1350000, 100, 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=60', 'Áo vest blazer nam 1 cúc phong cách Hàn Quốc, chuẩn mực cho hội nghị và dạ tiệc.', 4.8),
-('p32', 'Áo Vest Nam Tuxedo Dạ Tiệc Cao Cấp', 'Nam', 'ao-khoac', 'Maison', 1500000, 100, 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&auto=format&fit=crop&q=60', 'Cắt may thủ công sắc nét theo chuẩn Suit quý ông cho những dịp đặc biệt.', 4.8),
-('p33', 'Áo Khoác Nam Măng Tô Dạ Dài', 'Nam', 'ao-khoac', 'Maison', 1480000, 100, 'https://images.unsplash.com/photo-1544441893-675973e31985?w=500&auto=format&fit=crop&q=60', 'Măng tô dạ ấm áp dài qua gối lịch lãm chuẩn tài tử điện ảnh.', 4.9),
-('p34', 'Áo Khoác Nam Parka Chống Rét Mùa Đông', 'Nam', 'ao-khoac', 'Maison', 1390000, 100, 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=500&auto=format&fit=crop&q=60', 'Lót lông cừu ấm áp, mũ viền lông tháo rời cản bão gió rét cực tốt.', 4.8),
-('p35', 'Áo Khoác Nam Dù Thể Thao Phối Màu', 'Nam', 'ao-khoac', 'Maison', 650000, 100, 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=500&auto=format&fit=crop&q=60', 'Thiết kế phối mảng màu color-block thể thao nổi bật khỏe khoắn.', 4.6),
-('p36', 'Áo Khoác Nam Kaki Cổ Bẻ Lịch Sự', 'Nam', 'ao-khoac', 'Maison', 720000, 100, 'https://images.unsplash.com/photo-1548883354-7622d03aca27?w=500&auto=format&fit=crop&q=60', 'Chất kaki cotton dệt chéo đứng form, mặc đi làm đi chơi đều đẹp.', 4.9),
-('p37', 'Áo Cardigan Nam Len Dệt Kim', 'Nam', 'ao-khoac', 'Maison', 650000, 100, 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500&auto=format&fit=crop&q=60', 'Cardigan len dệt kim mềm mịn, giữ ấm nhẹ nhàng vào ngày chớm lạnh.', 4.5),
-('p38', 'Áo Khoác Jean Nam Rách Xước Cá Tính', 'Nam', 'ao-khoac', 'Maison', 920000, 100, 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?w=500&auto=format&fit=crop&q=60', 'Điểm xuyết các vết cào xước thủ công đậm chất phong trần nghệ sĩ.', 4.8),
-('p39', 'Quần Jean Nam Slimfit Xanh Indigo', 'Nam', 'quan', 'Maison', 690000, 100, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&auto=format&fit=crop&q=60', 'Quần bò co giãn nhẹ màu xanh chàm indigo kinh điển, tôn dáng đôi chân.', 5),
-('p40', 'Quần Tây Nam Công Sở Dáng Đứng', 'Nam', 'quan', 'Maison', 620000, 100, 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=60', 'Vải tuyết mưa đứng form, cạp thông minh co giãn ôm trọn vòng eo.', 5),
-('p41', 'Quần Jean Nam Ống Suông Rộng Rãi', 'Nam', 'quan', 'Maison', 720000, 100, 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&auto=format&fit=crop&q=60', 'Form straight suông thẳng thoải mái cho mọi hoạt động thường nhật.', 4.7),
-('p42', 'Quần Jean Nam Rách Gối Cá Tính', 'Nam', 'quan', 'Maison', 750000, 100, 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&auto=format&fit=crop&q=60', 'Điểm nhấn rách xước nhẹ tinh tế mang lại vẻ ngoài sành điệu cuốn hút.', 4.6),
-('p43', 'Quần Kaki Nam Chino Màu Kem Hàn Quốc', 'Nam', 'quan', 'Maison', 550000, 100, 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=500&auto=format&fit=crop&q=60', 'Quần kaki mềm mịn gam màu beige kem nhã nhặn, tiện mix với mọi loại áo.', 4.7),
-('p44', 'Quần Jogger Nam Thể Thao Bo Gấu', 'Nam', 'quan', 'Maison', 480000, 100, 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=500&auto=format&fit=crop&q=60', 'Gấu quần bo thun ôm cổ chân khỏe khoắn, thích hợp chạy bộ và tập gym.', 4.7),
-('p45', 'Quần Short Nam Kaki Đi Biển', 'Nam', 'quan', 'Maison', 360000, 100, 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=60', 'Độ dài ngang gối thoải mái, chất kaki cotton thấm hút mồ hôi tối đa.', 4.8),
-('p46', 'Quần Cargo Nam Túi Hộp Đa Năng', 'Nam', 'quan', 'Maison', 680000, 100, 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60', 'Quần lính túi hộp tiện dụng form suông mang đậm phong cách đường phố.', 4.9),
-('p47', 'Quần Âu Nam Xếp Ly Cạp Cao Cổ Điển', 'Nam', 'quan', 'Maison', 680000, 100, 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=500&auto=format&fit=crop&q=60', 'Xếp 2 ly trước thanh lịch phong cách Sartorial cổ điển quý phái.', 4.8),
-('p48', 'Quần Jean Nam Đen Trơn Co Giãn', 'Nam', 'quan', 'Maison', 660000, 100, 'https://images.unsplash.com/photo-1582552938357-32b906dfca0f?w=500&auto=format&fit=crop&q=60', 'Tone đen tuyền không phai màu, co giãn thoải mái khi ngồi làm việc.', 5),
-('p49', 'Quần Short Kaki Nam Túi Chéo', 'Nam', 'quan', 'Maison', 380000, 100, 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&auto=format&fit=crop&q=60', 'Chất liệu thoáng khí nhanh khô, đường may 2 kim gia cố chắc chắn.', 4.5),
-('p50', 'Quần Nỉ Nam Jogger Năng Động', 'Nam', 'quan', 'Maison', 460000, 100, 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=500&auto=format&fit=crop&q=60', 'Chất thun da cá co giãn êm ái, giữ nhiệt tốt cho mùa lạnh.', 4.9),
-('p51', 'Đầm Nữ Xòe Dáng Midi Hoa Nhí', 'Nữ', 'vay', 'Maison', 750000, 100, 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500&auto=format&fit=crop&q=60', 'Họa tiết hoa nhí nữ tính phong cách retro, tùng váy xòe bồng bềnh thanh lịch.', 4.8),
-('p52', 'Đầm Dạ Hội Nữ Nhung Đỏ Quyến Rũ', 'Nữ', 'vay', 'Maison', 1480000, 100, 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500&auto=format&fit=crop&q=60', 'Chất nhung tuyết bắt sáng quý phái, cổ trễ vai sang chảnh cho buổi dạ tiệc.', 4.7),
-('p53', 'Đầm Nữ Trắng Dáng Chữ A Tinh Khôi', 'Nữ', 'vay', 'Maison', 820000, 100, 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500&auto=format&fit=crop&q=60', 'Thiết kế trắng ngà thanh thuần, đường may xếp nếp tôn trọn vòng eo thon gọn.', 4.9),
-('p54', 'Đầm Nữ Hoa Mùa Hè Cổ Vuông', 'Nữ', 'vay', 'Maison', 680000, 100, 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=500&auto=format&fit=crop&q=60', 'Cổ vuông khoe xương quai xanh gợi cảm, tay phồng nhẹ che bắp tay.', 4.9),
-('p55', 'Chân Váy Nữ Xếp Ly Dáng Dài Tiểu Thư', 'Nữ', 'vay', 'Maison', 520000, 100, 'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=500&auto=format&fit=crop&q=60', 'Dáng xòe dập ly tinh tế phong cách tiểu thư Nhật Bản dịu dàng.', 4.8),
-('p56', 'Đầm Maxi Nữ Voan Tơ Đi Biển', 'Nữ', 'vay', 'Maison', 890000, 100, 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=500&auto=format&fit=crop&q=60', 'Chất voan tơ bay bổng tà dài mềm mại, rực rỡ dưới nắng biển mùa hè.', 4.8),
-('p57', 'Chân Váy Nữ Chữ A Kaki Trẻ Trung', 'Nữ', 'vay', 'Maison', 420000, 100, 'https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=500&auto=format&fit=crop&q=60', 'Form chữ A hack chân dài thon gọn, có quần bảo hộ may liền bên trong an toàn.', 4.9),
-('p58', 'Đầm Suông Nữ Vải Đũi Linen Mát Mẻ', 'Nữ', 'vay', 'Maison', 720000, 100, 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=500&auto=format&fit=crop&q=60', 'Đầm suông vải đũi tự nhiên nhẹ nhàng, giấu khuyết điểm vòng 2 hoàn hảo.', 5),
-('p59', 'Chân Váy Jean Nữ Bút Chì Xẻ Tà', 'Nữ', 'vay', 'Maison', 560000, 100, 'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=500&auto=format&fit=crop&q=60', 'Vải jean dày dặn tôn vòng 3, đường xẻ tà trước bước đi linh hoạt duyên dáng.', 4.8),
-('p60', 'Set Bộ Nữ Áo Croptop Va Chân Váy', 'Nữ', 'vay', 'Maison', 1150000, 100, 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500&auto=format&fit=crop&q=60', 'Set bộ tone sur tone cao cấp cực kỳ tôn dáng và thời thượng.', 4.7),
-('p61', 'Áo Sơ Mi Nữ Lụa Satin Trắng Cao Cấp', 'Nữ', 'ao-so-mi', 'Maison', 650000, 100, 'https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=500&auto=format&fit=crop&q=60', 'Độ bóng mịn sang chảnh, bề mặt mát lạnh chạm vào êm ái trên da.', 4.7),
-('p62', 'Áo Sơ Mi Nữ Kẻ Sọc Dọc Công Sở', 'Nữ', 'ao-so-mi', 'Maison', 580000, 100, 'https://images.unsplash.com/photo-1589310243389-9685981f3c4c?w=500&auto=format&fit=crop&q=60', 'Họa tiết sọc dọc tinh tế cho nàng văn phòng vóc dáng thon thả.', 5),
-('p63', 'Áo Sơ Mi Nữ Cổ Thắt Nơ Duyên Dáng', 'Nữ', 'ao-so-mi', 'Maison', 590000, 100, 'https://images.unsplash.com/photo-1564257631407-4deb1f99d9d2?w=500&auto=format&fit=crop&q=60', 'Điểm nhấn nơ cổ thanh nhã, kết hợp hoàn hảo cùng chân váy bút chì.', 4.6),
-('p64', 'Áo Sơ Mi Nữ Trắng Tay Bồng Điệu Đà', 'Nữ', 'ao-so-mi', 'Maison', 490000, 100, 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&auto=format&fit=crop&q=60', 'Thiết kế tay bồng nữ tính, che gọn bắp tay cho vóc dáng thêm phần yêu kiều.', 4.9),
-('p65', 'Áo Sơ Mi Nữ Form Rộng Oversize Tự Do', 'Nữ', 'ao-so-mi', 'Maison', 520000, 100, 'https://images.unsplash.com/photo-1604176354204-9268737828e4?w=500&auto=format&fit=crop&q=60', 'Form rộng rãi phóng khoáng, có thể mặc riêng hoặc khoác ngoài áo hai dây.', 4.7),
-('p66', 'Áo Sơ Mi Nữ Voan Hoa Mùa Thu', 'Nữ', 'ao-so-mi', 'Maison', 480000, 100, 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&auto=format&fit=crop&q=60', 'Họa tiết hoa rơi tinh tế trên nền voan cát mịn nhẹ nhàng.', 4.8),
-('p67', 'Áo Sơ Mi Nữ Cổ Chữ V Gợi Cảm', 'Nữ', 'ao-so-mi', 'Maison', 530000, 100, 'https://images.unsplash.com/photo-1516762689617-e1cff0442787?w=500&auto=format&fit=crop&q=60', 'Cổ V vát sâu vừa phải tôn vinh vòng 1 và nét quyến rũ tự nhiên.', 4.6),
-('p68', 'Áo Sơ Mi Nữ Croptop Cá Tính', 'Nữ', 'ao-so-mi', 'Maison', 460000, 100, 'https://images.unsplash.com/photo-1583744946564-792d13372f70?w=500&auto=format&fit=crop&q=60', 'Vạt áo cắt ngắn ngang eo cá tính phối cùng quần cạp cao siêu hack dáng.', 4.7),
-('p69', 'Áo Sơ Mi Nữ Vải Đũi Thêu Hoa', 'Nữ', 'ao-so-mi', 'Maison', 550000, 100, 'https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=500&auto=format&fit=crop&q=60', 'Chi tiết thêu hoa thủ công tỉ mỉ trên chất vải đũi tự nhiên mát lành.', 4.7),
-('p70', 'Áo Sơ Mi Nữ Kẻ Caro Phong Cách Retro', 'Nữ', 'ao-so-mi', 'Maison', 470000, 100, 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=60', 'Tone màu ấm áp vintage, chất cotton mềm mại dày dặn.', 5),
-('p71', 'Áo Thun Nữ Cotton Cổ Tròn Basic', 'Nữ', 'ao-thun', 'Maison', 320000, 100, 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=60', 'Chất cotton 100% co giãn tốt, dáng suông nhẹ nhàng tiện dụng hàng ngày.', 5),
-('p72', 'Áo Thun Nữ Cổ Tim Tôn Dáng Trắng', 'Nữ', 'ao-thun', 'Maison', 330000, 100, 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=60', 'Cổ tim thanh mảnh khoe xương quai xanh, vải mềm mại thấm hút mồ hôi.', 4.6),
-('p73', 'Áo Thun Nữ Graphic In Hình Tối Giản', 'Nữ', 'ao-thun', 'Maison', 360000, 100, 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=500&auto=format&fit=crop&q=60', 'Hình in typo nghệ thuật không bong tróc, gam màu pastel ngọt ngào.', 4.6),
-('p74', 'Áo Thun Nữ Ôm Body Dài Tay Quyến Rũ', 'Nữ', 'ao-thun', 'Maison', 380000, 100, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=60', 'Chất thun tăm co giãn 4 chiều ôm sát khoe trọn đường cong cơ thể.', 5),
-('p75', 'Áo Polo Nữ Viền Cổ Dệt Thể Thao', 'Nữ', 'ao-thun', 'Maison', 450000, 100, 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=500&auto=format&fit=crop&q=60', 'Áo polo nữ trẻ trung năng động thích hợp đánh tennis, dạo phố.', 4.9),
-('p76', 'Áo Croptop Nữ Dệt Kim Ngắn Tay', 'Nữ', 'ao-thun', 'Maison', 390000, 100, 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=60', 'Sợi dệt kim mềm thoáng mát, khoe eo thon cuốn hút mùa hè.', 5),
-('p77', 'Áo Baby Tee Nữ Dễ Thương Trẻ Trung', 'Nữ', 'ao-thun', 'Maison', 310000, 100, 'https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=500&auto=format&fit=crop&q=60', 'Form baby tee ôm ngực cực hot trend Y2K cho các cô nàng sành điệu.', 4.7),
-('p78', 'Áo Len Nữ Dệt Kim Mỏng Cổ Tròn', 'Nữ', 'ao-thun', 'Maison', 550000, 100, 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=60', 'Chất len mỏng nhẹ giữ ấm những ngày chớm lạnh thu đông.', 4.7),
-('p79', 'Áo Thun Nữ Form Rộng Giấu Quần', 'Nữ', 'ao-thun', 'Maison', 370000, 100, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500&auto=format&fit=crop&q=60', 'Phong cách giấu quần năng động và thoải mái tuyệt đối khi ra ngoài.', 4.7),
-('p80', 'Áo Ba Lỗ Nữ Thun Gân Thể Thao', 'Nữ', 'ao-thun', 'Maison', 290000, 100, 'https://images.unsplash.com/photo-1622445268065-330b0b819601?w=500&auto=format&fit=crop&q=60', 'Mặc lót trong áo blazer hoặc mặc riêng tập gym vô cùng cá tính.', 4.9),
-('p81', 'Áo Khoác Nữ Dạ Dài Mùa Đông Sang Chảnh', 'Nữ', 'ao-khoac', 'Maison', 1450000, 100, 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=500&auto=format&fit=crop&q=60', 'Măng tô dạ ấm áp qua gối kèm đai thắt eo sang trọng chuẩn phong thái quý cô.', 4.9),
-('p82', 'Áo Trench Coat Nữ Dáng Dài Khuy Đôi', 'Nữ', 'ao-khoac', 'Maison', 1380000, 100, 'https://images.unsplash.com/photo-1544441893-675973e31985?w=500&auto=format&fit=crop&q=60', 'Áo gió trench coat kinh điển phong cách Anh quốc, cản mưa chống gió.', 5),
-('p83', 'Áo Khoác Da Biker Nữ Thời Thượng', 'Nữ', 'ao-khoac', 'Maison', 1290000, 100, 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=60', 'Chất da cao cấp đanh lì, phối khóa kim loại bạc cực chất.', 5),
-('p84', 'Áo Khoác Blazer Nữ 2 Lớp Đệm Vai', 'Nữ', 'ao-khoac', 'Maison', 980000, 100, 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=60', 'Blazer thời trang 2 lớp đệm vai nhẹ, hiện đại cho các cô nàng văn phòng.', 4.9),
-('p85', 'Áo Khoác Nữ Cardigan Len Xù Mềm Mại', 'Nữ', 'ao-khoac', 'Maison', 620000, 100, 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500&auto=format&fit=crop&q=60', 'Chất len xù lông mềm êm ái như mây, tone màu kem be nhẹ nhàng mùa đông.', 4.9),
-('p86', 'Áo Khoác Dạ Tweed Nữ Tiểu Thư Sang Trọng', 'Nữ', 'ao-khoac', 'Maison', 1250000, 100, 'https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=500&auto=format&fit=crop&q=60', 'Dạ tweed dệt hạt nổi sang trọng viền kim loại ánh vàng lấp lánh quý phái.', 4.7),
-('p87', 'Áo Khoác Jean Nữ Form Rộng Cá Tính', 'Nữ', 'ao-khoac', 'Maison', 790000, 100, 'https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?w=500&auto=format&fit=crop&q=60', 'Chất bò dày dặn mài nhẹ, mix cùng váy đầm hoặc quần short đều xinh.', 4.6),
-('p88', 'Áo Hoodie Nữ Nỉ Bông Ấm Áp', 'Nữ', 'ao-khoac', 'Maison', 580000, 100, 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=60', 'Form thụng rộng rãi đáng yêu, túi kangaroo phía trước tiện lợi ủ ấm.', 4.8),
-('p89', 'Áo Khoác Phao Nữ Đại Hàn Siêu Nhẹ', 'Nữ', 'ao-khoac', 'Maison', 1350000, 100, 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=500&auto=format&fit=crop&q=60', 'Lông vũ nhân tạo siêu nhẹ giữ ấm cực đại trong thời tiết rét buốt.', 4.8),
-('p90', 'Áo Khoác Gió Nữ Croptop Rút Dây', 'Nữ', 'ao-khoac', 'Maison', 620000, 100, 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=500&auto=format&fit=crop&q=60', 'Dáng ngắn trẻ trung có dây rút gấu, chống nước nhẹ đi sương gió.', 5),
-('p91', 'Quần Tây Nữ Ống Rộng Lưng Cao Hack Dáng', 'Nữ', 'quan', 'Maison', 680000, 100, 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&auto=format&fit=crop&q=60', 'Quần âu ống suông cạp cao che khuyết điểm chân, hack chiều cao vượt trội.', 4.7),
-('p92', 'Quần Jean Nữ Cạp Cao Ống Đứng Xanh Đậm', 'Nữ', 'quan', 'Maison', 690000, 100, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&auto=format&fit=crop&q=60', 'Chất jean co giãn nhẹ ôm gọn vòng 3 và làm thon gọn đùi hiệu quả.', 4.7),
-('p93', 'Quần Nữ Ống Loe Co Giãn Phong Cách Retro', 'Nữ', 'quan', 'Maison', 640000, 100, 'https://images.unsplash.com/photo-1582552938357-32b906dfca0f?w=500&auto=format&fit=crop&q=60', 'Đáy cạp cao ôm sát đùi và xòe nhẹ từ đầu gối, tạo tỷ lệ cơ thể chữ S chuẩn mực.', 5),
-('p94', 'Quần Tây Nữ Baggy Công Sở Thanh Lịch', 'Nữ', 'quan', 'Maison', 590000, 100, 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=60', 'Form baggy rộng ở hông và bóp nhẹ gấu, che khuyết điểm chân to hiệu quả.', 4.8),
-('p95', 'Quần Jean Nữ Rách Gối Boyfriend Cá Tính', 'Nữ', 'quan', 'Maison', 720000, 100, 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&auto=format&fit=crop&q=60', 'Kiểu dáng bạn trai phóng khoáng cho các cô nàng yêu thích style bụi bặm.', 4.6),
-('p96', 'Quần Kaki Nữ Ống Đứng Màu Be', 'Nữ', 'quan', 'Maison', 560000, 100, 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=500&auto=format&fit=crop&q=60', 'Màu kem trang nhã dễ tính, vải kaki mềm mịn không nhăn nhàu.', 5),
-('p97', 'Quần Jogger Nữ Nỉ Bo Gấu Thể Thao', 'Nữ', 'quan', 'Maison', 480000, 100, 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=500&auto=format&fit=crop&q=60', 'Dáng thể thao năng động, chất nỉ cotton mềm mại êm ái khi mặc nhà hay ra phố.', 4.9),
-('p98', 'Quần Short Jean Nữ Cạp Cao Xé Gấu', 'Nữ', 'quan', 'Maison', 390000, 100, 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=60', 'Chi tiết lai xé tưa thời thượng khoe trọn đôi chân thon dài quyến rũ.', 4.9),
-('p99', 'Quần Suông Nữ Vải Đũi Linen Thoáng Mát', 'Nữ', 'quan', 'Maison', 580000, 100, 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60', 'Cạp thun phía sau dễ thở, ống rộng suông mát mẻ tuyệt đối ngày hè.', 5),
-('p100', 'Quần Short Nữ Kaki Lưng Thun Có Túi', 'Nữ', 'quan', 'Maison', 350000, 100, 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=500&auto=format&fit=crop&q=60', 'Cạp chun thoải mái với túi 2 bên tiện lợi, cực kỳ mát mẻ khi ở nhà hoặc dạo phố.', 4.8);
+-- Nạp 100 sản phẩm mới
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p01', 'Áo Thun Nam Cotton Basic Trắng', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 280000, 80, 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p02', 'Áo Thun Nam Polo Cổ Bẻ Xanh Navy', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 300000, 87, 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p03', 'Áo Thun Nam Oversize Đen Streetwear', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 330000, 94, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p04', 'Áo Thun Nam Henley Cổ Gài Nút', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 350000, 101, 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p05', 'Áo Thun Nam Thể Thao Thoáng Khí Pro', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 370000, 108, 'https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p06', 'Áo Thun Nam Graphic Minimalist Hiện Đại', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 400000, 115, 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&auto=format&fit=crop&q=80', 4.9, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p07', 'Áo Thun Nam Xám Melange Cổ Tròn', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 420000, 122, 'https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=600&auto=format&fit=crop&q=80', 4.4, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p08', 'Áo Thun Nam Trắng Dáng Relaxed', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 440000, 129, 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=600&auto=format&fit=crop&q=80', 4.7, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p09', 'Áo Thun Nam Cổ Tròn Bo Viền Cao Cấp', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 460000, 136, 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p10', 'Áo Thun Nam Vintage Washed Xám Tro', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 490000, 143, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p11', 'Áo Thun Nam Cổ Tim Phong Cách Casual', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 510000, 150, 'https://images.unsplash.com/photo-1521485714898-f097eb6fc5b9?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p12', 'Áo Thun Nam Street Style In Họa Tiết', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 530000, 157, 'https://images.unsplash.com/photo-1579038773867-044c48829161?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p13', 'Áo Sơ Mi Nam Oxford Dài Tay Trắng', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 560000, 164, 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p14', 'Áo Sơ Mi Nam Vải Đũi Linen Mát Mẻ', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 580000, 171, 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600&auto=format&fit=crop&q=80', 4.9, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p15', 'Áo Sơ Mi Nam Slim Fit Công Sở Thanh Lịch', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 600000, 178, 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop&q=80', 4.4, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p16', 'Áo Sơ Mi Nam Tay Ngắn Cổ Cuba Retro', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 630000, 185, 'https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?w=600&auto=format&fit=crop&q=80', 4.7, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p17', 'Áo Sơ Mi Nam Kẻ Ca-rô Denim Phóng Khoáng', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 650000, 192, 'https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p18', 'Áo Sơ Mi Nam Xanh Pastel Chống Nhăn', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 670000, 199, 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p19', 'Áo Sơ Mi Nam Flannel Dày Dặn Thu Đông', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 690000, 86, 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p20', 'Áo Sơ Mi Nam Kẻ Sọc Dọc Trẻ Trung', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 720000, 93, 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p21', 'Áo Sơ Mi Nam Cổ Tàu Đũi Tự Nhiên', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 740000, 100, 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p22', 'Áo Sơ Mi Nam Doanh Nhân Cao Cấp', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 760000, 107, 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80', 4.9, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p23', 'Áo Sơ Mi Nam Lụa Satin Dự Tiệc Tối', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 790000, 114, 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=600&auto=format&fit=crop&q=80', 4.4, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p24', 'Áo Sơ Mi Nam Dệt Họa Tiết Chambray', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-so-mi', 'Maison', 810000, 121, 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&auto=format&fit=crop&q=80', 4.7, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p25', 'Áo Khoác Da Biker Nam Cá Tính Cực Ngầu', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 830000, 128, 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p26', 'Áo Khoác Bomber Nam Phối Màu Trẻ Trung', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 860000, 135, 'https://images.unsplash.com/photo-1548883354-7622d03aca27?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p27', 'Áo Khoác Nam Có Nón Dù Trượt Nước', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 880000, 142, 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p28', 'Áo Khoác Măng Tô Dạ Nam Dáng Dài Ấm Áp', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 900000, 149, 'https://images.unsplash.com/photo-1544441893-675973e31985?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p29', 'Áo Khoác Jean Nam Trucker Phong Trần', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 920000, 156, 'https://images.unsplash.com/photo-1537109662156-fade15c5ae8e?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p30', 'Áo Blazer Nam May Đo Phong Cách Hàn Quốc', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 950000, 163, 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop&q=80', 4.9, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p31', 'Áo Blazer Nam Form Rộng Casual Hiện Đại', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 970000, 170, 'https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=600&auto=format&fit=crop&q=80', 4.4, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p32', 'Áo Khoác Nam Kẻ Glen Plaid Lịch Lãm', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 990000, 177, 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=600&auto=format&fit=crop&q=80', 4.7, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p33', 'Áo Vest Nam Doanh Nhân Màu Xám Than', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 1020000, 184, 'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p34', 'Áo Khoác Gió Nam Thể Thao Cản Gió Siêu Nhẹ', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 290000, 191, 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p35', 'Áo Khoác Safari Nam Phong Cách Utility', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 310000, 198, 'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p36', 'Áo Khoác Dạ Hai Hàng Khuy Cổ Điển', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 340000, 85, 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p37', 'Áo Khoác Da Lộn Nam Màu Nâu Vintage', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-khoac', 'Maison', 360000, 92, 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p38', 'Quần Jean Nam Xanh Classic Dáng Straight', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 380000, 99, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80', 4.9, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p39', 'Quần Jean Nam Tối Màu Slim Fit Cao Cấp', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 400000, 106, 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&auto=format&fit=crop&q=80', 4.4, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p40', 'Quần Chino Nam Vải Kaki Co Giãn Màu Be', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 430000, 113, 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&auto=format&fit=crop&q=80', 4.7, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p41', 'Quần Jean Nam Rách Xước Nhẹ Retro', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 450000, 120, 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p42', 'Quần Jogger Nam Thể Thao Bo Gấu Năng Động', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 470000, 127, 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p43', 'Quần Jean Nam Vải Raw Selvedge Bền Đẹp', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 500000, 134, 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600&auto=format&fit=crop&q=80', 4.8, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p44', 'Quần Túi Hộp Cargo Nam Phong Cách Bụi Bặm', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 520000, 141, 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop&q=80', 4.3, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p45', 'Quần Tây Nam Xếp Ly Công Sở Lịch Lãm', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 540000, 148, 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80', 4.6, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p46', 'Quần Ống Suông Nam Rộng Thoải Mái', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 570000, 155, 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop&q=80', 4.9, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p47', 'Quần Kaki Nam Lửng Cropped Mắt Cá', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 590000, 162, 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format&fit=crop&q=80', 4.4, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p48', 'Quần Tây Nam Đen Dáng Slim Doanh Nhân', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 610000, 169, 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop&q=80', 4.7, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p49', 'Quần Vải Linen Nam Đũi Suông Thoáng Mát', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 630000, 176, 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p50', 'Quần Âu Nam May Đo Cao Cấp', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'quan', 'Maison', 660000, 183, 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p51', 'Đầm Midi Nữ Xòe Dáng Dài Thanh Lịch', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 320000, 70, 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p52', 'Váy Nữ Hoa Nhí Phong Cách Bohemian', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 350000, 81, 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p53', 'Đầm Dạ Hội Nữ Cúp Ngực Quyến Rũ', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 380000, 92, 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p54', 'Đầm Đỏ Nữ Dự Tiệc Đính Nơ Sang Trọng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 410000, 103, 'https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p55', 'Váy Hai Dây Nữ Lụa Satin Quyến Rũ', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 440000, 114, 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p56', 'Đầm Chấm Bi Nữ Cổ Điển Vintage', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 470000, 125, 'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p57', 'Đầm Nữ Xòe Chữ A Dự Tiệc Cocktail', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 490000, 136, 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p58', 'Váy Trắng Nữ Đi Biển Hở Lưng Mùa Hè', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 520000, 147, 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p59', 'Đầm Suông Nữ Lụa Phối Ren Duyên Dáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 550000, 158, 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p60', 'Đầm Maxi Nữ Tầng Xếp Dạo Phố', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 580000, 169, 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p61', 'Váy Nữ Vải Đũi Linen Thắt Nơ Lưng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 610000, 80, 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p62', 'Đầm Voan Nữ Bồng Bềnh Nữ Tính', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 640000, 91, 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p63', 'Đầm Blazer Nữ Thanh Lịch Hiện Đại', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 670000, 102, 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p64', 'Váy Ôm Body Nữ Dệt Kim Tôn Dáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'vay-dam', 'Maison', 700000, 113, 'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p65', 'Áo Sơ Mi Nữ Lụa Vàng Sang Trọng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 730000, 124, 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p66', 'Áo Sơ Mi Nữ Trắng Công Sở Dáng Chuẩn', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 760000, 135, 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p67', 'Áo Blouse Nữ Cổ Chữ V Tinh Tế', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 780000, 146, 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p68', 'Áo Sơ Mi Nữ Vải Đũi Cổ Đức Nhẹ Nhàng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 810000, 157, 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p69', 'Áo Blouse Nữ Họa Tiết Hoa Nhí', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 840000, 168, 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p70', 'Áo Sơ Mi Nữ Form Rộng Phong Cách Boyfriend', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 870000, 79, 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p71', 'Áo Blouse Nữ Phối Nơ Cổ Duyên Dáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 900000, 90, 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p72', 'Áo Sơ Mi Nữ Kẻ Sọc Công Sở Trẻ Trung', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 930000, 101, 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p73', 'Áo Kiểu Nữ Xếp Ly Tay Bồng Nữ Tính', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 960000, 112, 'https://images.unsplash.com/photo-1550614000-4895a10e1bfd?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p74', 'Áo Sơ Mi Nữ Croptop Cá Tính Mùa Hè', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-so-mi', 'Maison', 990000, 123, 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p75', 'Áo Thun Nữ Graphic Năng Động Phong Cách', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 1020000, 134, 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p76', 'Áo Thun Nữ Neon Phối Màu Nổi Bật', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 1050000, 145, 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p77', 'Áo Thun Nữ Cotton Hữu Cơ Basic Trắng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 1070000, 156, 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p78', 'Áo Thun Nữ Cổ Lọ Dệt Kim Mềm Mịn', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 1100000, 167, 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p79', 'Áo Thun Nữ Pastel Cổ Tròn Nữ Tính', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 1130000, 78, 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p80', 'Áo Tập Nữ Thể Thao Thoáng Khí Ôm Dáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 1160000, 89, 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p81', 'Áo Thun Nữ Rộng Phong Cách Hàn Quốc', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 340000, 100, 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p82', 'Áo Thun Nữ Cổ Tim Bo Gân Nhẹ Nhàng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 370000, 111, 'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p83', 'Áo Ba Lỗ Nữ Thun Gân Năng Động', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 400000, 122, 'https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p84', 'Áo Thun Nữ Dài Tay Dệt Kim Mùa Thu', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-thun', 'Maison', 430000, 133, 'https://images.unsplash.com/photo-1604176354204-9268737828e4?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p85', 'Áo Măng Tô Dạ Nữ Màu Be Dáng Dài', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 460000, 144, 'https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p86', 'Áo Khoác Phao Nữ Đại Hàn Siêu Nhẹ Siêu Ấm', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 490000, 155, 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p87', 'Áo Khoác Jean Nữ Croptop Bụi Bặm', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 510000, 166, 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p88', 'Áo Cardigan Nữ Dệt Kim Mềm Dáng Rộng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 540000, 77, 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p89', 'Áo Khoác Trench Coat Nữ 2 Hàng Khuy Chuẩn Anh', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 570000, 88, 'https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p90', 'Áo Khoác Nữ Phối Lông Ấm Áp Mùa Đông', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 600000, 99, 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p91', 'Áo Khoác Lông Cừu Nữ Dễ Thương Ấm Áp', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 630000, 110, 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p92', 'Áo Blazer Nữ Tone Pastel Công Sở Hack Dáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'ao-khoac', 'Maison', 660000, 121, 'https://images.unsplash.com/photo-1534126511673-b6899657816a?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p93', 'Quần Tây Nữ Ống Rộng Lưng Cao Tôn Dáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 690000, 132, 'https://images.unsplash.com/photo-1550639525-c97d455acf70?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p94', 'Chân Váy Nữ Xếp Ly Dài Sang Trọng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 720000, 143, 'https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=600&auto=format&fit=crop&q=80', 4.5, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p95', 'Chân Váy Lụa Satin Nữ Dáng Suông Dài', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 750000, 154, 'https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?w=600&auto=format&fit=crop&q=80', 4.7, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p96', 'Chân Váy Nữ Chữ A Dạ Kẻ Caro Trẻ Trung', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 780000, 165, 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop&q=80', 4.9, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p97', 'Quần Jean Nữ Ống Đứng Cạp Cao Xanh Sáng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 800000, 76, 'https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=600&auto=format&fit=crop&q=80', 4.4, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p98', 'Quần Nữ Ống Rộng Vải Linen Thoáng Mát', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 830000, 87, 'https://images.unsplash.com/photo-1588117305388-c2631a279f82?w=600&auto=format&fit=crop&q=80', 4.6, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p99', 'Quần Jean Skinny Nữ Co Giãn Siêu Hack Chân', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 860000, 98, 'https://images.unsplash.com/photo-1597196526281-fe4861daa915?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p100', 'Quần Tây Nữ Dáng Lửng Thời Thượng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 890000, 109, 'https://images.unsplash.com/photo-1605763240000-7e93b172d754?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
 
-INSERT INTO reviews (product_id, user_name, rating, comment)
-VALUES
-('p01', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p02', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p02', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p03', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p03', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p03', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p04', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p05', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p05', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p06', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p06', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p06', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p07', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p08', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p08', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p09', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p09', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p09', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p10', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p11', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p11', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p12', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p12', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p12', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p13', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p14', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p14', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p15', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p15', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p15', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p16', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p17', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p17', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p18', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p18', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p18', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p19', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p20', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p20', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p21', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p21', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p21', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p22', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p23', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p23', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p24', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p24', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p24', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p25', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p26', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p26', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p27', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p27', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p27', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p28', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p29', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p29', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p30', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p30', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p30', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p31', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p32', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p32', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p33', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p33', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p33', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p34', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p35', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p35', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p36', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p36', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p36', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p37', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p38', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p38', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p39', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p39', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p39', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p40', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p41', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p41', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p42', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p42', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p42', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p43', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p44', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p44', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p45', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p45', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p45', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p46', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p47', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p47', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p48', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p48', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p48', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p49', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p50', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p50', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p51', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p51', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p51', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p52', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p53', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p53', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p54', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p54', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p54', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p55', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p56', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p56', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p57', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p57', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p57', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p58', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p59', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p59', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p60', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p60', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p60', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p61', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p62', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p62', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p63', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p63', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p63', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p64', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p65', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p65', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p66', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p66', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p66', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p67', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p68', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p68', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p69', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p69', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p69', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p70', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p71', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p71', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p72', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p72', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p72', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p73', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p74', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p74', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p75', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p75', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p75', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p76', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p77', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p77', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p78', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p78', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p78', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p79', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p80', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p80', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p81', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p81', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p81', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p82', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p83', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p83', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p84', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p84', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p84', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p85', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p86', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p86', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p87', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p87', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p87', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p88', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p89', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p89', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p90', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p90', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p90', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p91', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p92', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.'),
-('p92', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p93', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p93', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p93', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p94', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p95', 'Đặng Tuấn Kiệt', 5, 'Sản phẩm hoàn thiện tốt, chất liệu cao cấp vượt mong đợi trong tầm giá này.'),
-('p95', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p96', 'Bùi Phương Linh', 4, 'Rất ưng ý, vải không bị nhăn, màu sắc trang nhã dễ phối đồ.'),
-('p96', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p96', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p97', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p98', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói hộp Maison rất đẹp và thơm. Áo mặc vừa vặn chuẩn size.'),
-('p98', 'Vũ Đức Anh', 4, 'Hàng chuẩn đẹp, mặc đi làm ai cũng khen. Vải co giãn thoải mái khi vận động.'),
-('p99', 'Lê Hoàng Nam', 5, 'Form áo đẹp tôn dáng, vải mát không bị xù sau khi giặt. Sẽ ủng hộ shop thêm!'),
-('p99', 'Hoàng Yến Nhi', 5, 'Mặc đi tiệc ai cũng khen, chất vải sang trọng xịn sò, form đầm chuẩn từng milimet!'),
-('p99', 'Nguyễn Văn Minh', 5, 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!'),
-('p100', 'Phạm Thu Trang', 5, 'Vải mềm mịn, đường may cẩn thận. Màu sắc y hình chụp, 10 điểm cho chất lượng.');
+-- Thêm đánh giá mẫu
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p01', 'Nguyễn Văn An', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '0 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p02', 'Trần Thị Mai', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '3 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p02', 'Lê Hoàng Nam', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '4 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p03', 'Lê Hoàng Nam', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '6 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p03', 'Phạm Quỳnh Chi', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '7 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p03', 'Vũ Đình Trọng', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '8 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p04', 'Phạm Quỳnh Chi', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '9 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p05', 'Vũ Đình Trọng', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '12 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p05', 'Đặng Thuỳ Linh', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '13 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p06', 'Đặng Thuỳ Linh', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '15 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p06', 'Bùi Minh Đức', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '16 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p06', 'Hoàng Kim Ngân', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '17 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p07', 'Bùi Minh Đức', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '18 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p08', 'Hoàng Kim Ngân', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '21 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p08', 'Nguyễn Văn An', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '22 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p09', 'Nguyễn Văn An', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '24 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p09', 'Trần Thị Mai', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '25 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p09', 'Lê Hoàng Nam', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '26 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p10', 'Trần Thị Mai', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '27 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p11', 'Lê Hoàng Nam', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '30 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p11', 'Phạm Quỳnh Chi', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '31 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p12', 'Phạm Quỳnh Chi', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '33 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p12', 'Vũ Đình Trọng', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '34 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p12', 'Đặng Thuỳ Linh', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '35 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p13', 'Vũ Đình Trọng', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '36 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p14', 'Đặng Thuỳ Linh', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '39 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p14', 'Bùi Minh Đức', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '40 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p15', 'Bùi Minh Đức', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '42 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p15', 'Hoàng Kim Ngân', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '43 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p15', 'Nguyễn Văn An', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '44 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p16', 'Hoàng Kim Ngân', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '45 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p17', 'Nguyễn Văn An', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '48 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p17', 'Trần Thị Mai', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '49 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p18', 'Trần Thị Mai', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '51 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p18', 'Lê Hoàng Nam', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '52 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p18', 'Phạm Quỳnh Chi', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '53 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p19', 'Lê Hoàng Nam', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '54 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p20', 'Phạm Quỳnh Chi', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '57 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p20', 'Vũ Đình Trọng', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '58 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p21', 'Vũ Đình Trọng', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '60 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p21', 'Đặng Thuỳ Linh', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '61 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p21', 'Bùi Minh Đức', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '62 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p22', 'Đặng Thuỳ Linh', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '63 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p23', 'Bùi Minh Đức', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '66 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p23', 'Hoàng Kim Ngân', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '67 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p24', 'Hoàng Kim Ngân', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '69 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p24', 'Nguyễn Văn An', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '70 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p24', 'Trần Thị Mai', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '71 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p25', 'Nguyễn Văn An', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '72 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p26', 'Trần Thị Mai', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '75 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p26', 'Lê Hoàng Nam', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '76 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p27', 'Lê Hoàng Nam', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '78 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p27', 'Phạm Quỳnh Chi', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '79 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p27', 'Vũ Đình Trọng', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '80 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p28', 'Phạm Quỳnh Chi', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '81 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p29', 'Vũ Đình Trọng', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '84 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p29', 'Đặng Thuỳ Linh', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '85 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p30', 'Đặng Thuỳ Linh', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '87 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p30', 'Bùi Minh Đức', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '88 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p30', 'Hoàng Kim Ngân', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '89 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p31', 'Bùi Minh Đức', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '90 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p32', 'Hoàng Kim Ngân', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '93 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p32', 'Nguyễn Văn An', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '94 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p33', 'Nguyễn Văn An', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '96 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p33', 'Trần Thị Mai', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '97 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p33', 'Lê Hoàng Nam', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '98 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p34', 'Trần Thị Mai', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '99 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p35', 'Lê Hoàng Nam', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '102 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p35', 'Phạm Quỳnh Chi', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '103 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p36', 'Phạm Quỳnh Chi', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '105 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p36', 'Vũ Đình Trọng', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '106 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p36', 'Đặng Thuỳ Linh', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '107 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p37', 'Vũ Đình Trọng', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '108 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p38', 'Đặng Thuỳ Linh', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '111 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p38', 'Bùi Minh Đức', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '112 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p39', 'Bùi Minh Đức', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '114 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p39', 'Hoàng Kim Ngân', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '115 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p39', 'Nguyễn Văn An', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '116 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p40', 'Hoàng Kim Ngân', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '117 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p41', 'Nguyễn Văn An', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '120 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p41', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '121 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p42', 'Trần Thị Mai', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '123 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p42', 'Lê Hoàng Nam', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '124 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p42', 'Phạm Quỳnh Chi', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '125 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p43', 'Lê Hoàng Nam', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '126 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p44', 'Phạm Quỳnh Chi', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '129 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p44', 'Vũ Đình Trọng', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '130 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p45', 'Vũ Đình Trọng', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '132 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p45', 'Đặng Thuỳ Linh', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '133 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p45', 'Bùi Minh Đức', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '134 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p46', 'Đặng Thuỳ Linh', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '135 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p47', 'Bùi Minh Đức', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '138 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p47', 'Hoàng Kim Ngân', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '139 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p48', 'Hoàng Kim Ngân', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '141 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p48', 'Nguyễn Văn An', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '142 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p48', 'Trần Thị Mai', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '143 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p49', 'Nguyễn Văn An', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '144 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p50', 'Trần Thị Mai', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '147 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p50', 'Lê Hoàng Nam', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '148 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p51', 'Lê Hoàng Nam', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '150 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p51', 'Phạm Quỳnh Chi', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '151 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p51', 'Vũ Đình Trọng', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '152 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p52', 'Phạm Quỳnh Chi', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '153 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p53', 'Vũ Đình Trọng', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '156 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p53', 'Đặng Thuỳ Linh', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '157 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p54', 'Đặng Thuỳ Linh', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '159 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p54', 'Bùi Minh Đức', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '160 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p54', 'Hoàng Kim Ngân', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '161 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p55', 'Bùi Minh Đức', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '162 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p56', 'Hoàng Kim Ngân', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '165 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p56', 'Nguyễn Văn An', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '166 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p57', 'Nguyễn Văn An', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '168 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p57', 'Trần Thị Mai', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '169 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p57', 'Lê Hoàng Nam', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '170 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p58', 'Trần Thị Mai', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '171 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p59', 'Lê Hoàng Nam', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '174 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p59', 'Phạm Quỳnh Chi', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '175 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p60', 'Phạm Quỳnh Chi', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '177 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p60', 'Vũ Đình Trọng', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '178 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p60', 'Đặng Thuỳ Linh', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '179 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p61', 'Vũ Đình Trọng', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '180 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p62', 'Đặng Thuỳ Linh', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '183 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p62', 'Bùi Minh Đức', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '184 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p63', 'Bùi Minh Đức', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '186 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p63', 'Hoàng Kim Ngân', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '187 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p63', 'Nguyễn Văn An', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '188 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p64', 'Hoàng Kim Ngân', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '189 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p65', 'Nguyễn Văn An', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '192 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p65', 'Trần Thị Mai', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '193 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p66', 'Trần Thị Mai', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '195 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p66', 'Lê Hoàng Nam', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '196 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p66', 'Phạm Quỳnh Chi', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '197 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p67', 'Lê Hoàng Nam', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '198 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p68', 'Phạm Quỳnh Chi', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '201 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p68', 'Vũ Đình Trọng', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '202 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p69', 'Vũ Đình Trọng', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '204 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p69', 'Đặng Thuỳ Linh', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '205 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p69', 'Bùi Minh Đức', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '206 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p70', 'Đặng Thuỳ Linh', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '207 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p71', 'Bùi Minh Đức', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '210 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p71', 'Hoàng Kim Ngân', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '211 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p72', 'Hoàng Kim Ngân', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '213 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p72', 'Nguyễn Văn An', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '214 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p72', 'Trần Thị Mai', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '215 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p73', 'Nguyễn Văn An', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '216 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p74', 'Trần Thị Mai', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '219 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p74', 'Lê Hoàng Nam', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '220 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p75', 'Lê Hoàng Nam', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '222 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p75', 'Phạm Quỳnh Chi', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '223 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p75', 'Vũ Đình Trọng', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '224 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p76', 'Phạm Quỳnh Chi', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '225 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p77', 'Vũ Đình Trọng', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '228 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p77', 'Đặng Thuỳ Linh', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '229 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p78', 'Đặng Thuỳ Linh', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '231 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p78', 'Bùi Minh Đức', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '232 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p78', 'Hoàng Kim Ngân', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '233 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p79', 'Bùi Minh Đức', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '234 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p80', 'Hoàng Kim Ngân', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '237 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p80', 'Nguyễn Văn An', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '238 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p81', 'Nguyễn Văn An', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '240 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p81', 'Trần Thị Mai', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '241 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p81', 'Lê Hoàng Nam', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '242 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p82', 'Trần Thị Mai', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '243 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p83', 'Lê Hoàng Nam', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '246 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p83', 'Phạm Quỳnh Chi', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '247 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p84', 'Phạm Quỳnh Chi', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '249 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p84', 'Vũ Đình Trọng', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '250 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p84', 'Đặng Thuỳ Linh', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '251 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p85', 'Vũ Đình Trọng', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '252 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p86', 'Đặng Thuỳ Linh', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '255 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p86', 'Bùi Minh Đức', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '256 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p87', 'Bùi Minh Đức', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '258 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p87', 'Hoàng Kim Ngân', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '259 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p87', 'Nguyễn Văn An', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '260 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p88', 'Hoàng Kim Ngân', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '261 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p89', 'Nguyễn Văn An', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '264 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p89', 'Trần Thị Mai', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '265 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p90', 'Trần Thị Mai', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '267 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p90', 'Lê Hoàng Nam', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '268 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p90', 'Phạm Quỳnh Chi', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '269 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p91', 'Lê Hoàng Nam', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '270 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p92', 'Phạm Quỳnh Chi', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '273 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p92', 'Vũ Đình Trọng', 5, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '274 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p93', 'Vũ Đình Trọng', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '276 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p93', 'Đặng Thuỳ Linh', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '277 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p93', 'Bùi Minh Đức', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '278 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p94', 'Đặng Thuỳ Linh', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '279 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p95', 'Bùi Minh Đức', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '282 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p95', 'Hoàng Kim Ngân', 5, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '283 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p96', 'Hoàng Kim Ngân', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '285 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p96', 'Nguyễn Văn An', 5, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '286 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p96', 'Trần Thị Mai', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '287 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p97', 'Nguyễn Văn An', 4, 'Giao hàng nhanh, đóng gói cẩn thận, đúng như hình ảnh mô tả.', NOW() - INTERVAL '288 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p98', 'Trần Thị Mai', 4, 'Chất lượng tốt so với tầm giá, sẽ tiếp tục ủng hộ shop.', NOW() - INTERVAL '291 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p98', 'Lê Hoàng Nam', 5, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '292 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p99', 'Lê Hoàng Nam', 4, 'Rất ưng ý, phom dáng chuẩn, màu sắc nhã nhặn lịch thiệp.', NOW() - INTERVAL '294 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p99', 'Phạm Quỳnh Chi', 5, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '295 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p99', 'Vũ Đình Trọng', 4, 'Sản phẩm rất đẹp, vải mịn mát, mặc vừa vặn tuyệt vời!', NOW() - INTERVAL '296 DAYS');
+INSERT INTO reviews (product_id, user_name, rating, comment, created_at)
+VALUES ('p100', 'Phạm Quỳnh Chi', 4, 'Mua lần thứ hai rồi, chất vải dày dặn không bai xù khi giặt.', NOW() - INTERVAL '297 DAYS');

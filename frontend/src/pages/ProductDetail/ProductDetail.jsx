@@ -85,7 +85,17 @@ export default function ProductDetail() {
       <div className="grid md:grid-cols-2 gap-10">
         <div>
           <div className="aspect-[3/4] rounded-sm overflow-hidden bg-stone mb-3">
-            <img src={product.images[activeImage]} alt={product.name} className="w-full h-full object-cover" />
+            <img
+              src={product.images[activeImage]}
+              alt={product.name}
+              onError={(e) => {
+                e.currentTarget.onerror = null
+                e.currentTarget.src = product.gender === 'Nữ'
+                  ? 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&auto=format&fit=crop&q=80'
+                  : 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80'
+              }}
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="flex gap-3">
             {product.images.map((img, i) => (

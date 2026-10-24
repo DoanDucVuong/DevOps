@@ -24,7 +24,9 @@ export default function ProductCard({ product }) {
           loading="lazy"
           onError={(e) => {
             e.currentTarget.onerror = null
-            e.currentTarget.src = `https://placehold.co/400x600?text=${encodeURIComponent(product.name || 'SanPham')}`
+            e.currentTarget.src = product.gender === 'Nữ'
+              ? 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500&auto=format&fit=crop&q=80'
+              : 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80'
           }}
           className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
         />
