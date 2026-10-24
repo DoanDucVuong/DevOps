@@ -409,6 +409,7 @@ export default function Admin() {
   // ==========================================
   const handleOpenProductModal = (prod = null) => {
     if (prod) {
+      const rawImg = prod.image_url || prod.image || (Array.isArray(prod.images) ? prod.images[0] : '') || ''
       setEditingProduct(prod)
       setProductForm({
         id: prod.id,
@@ -417,7 +418,8 @@ export default function Admin() {
         category: prod.category || (categories[0]?.id || 'ao-khoac'),
         gender: prod.gender || 'Nam',
         price: prod.price || 350000,
-        image_url: prod.image_url || '',
+        image_url: rawImg,
+        image: rawImg,
         brand: prod.brand || 'Maison',
       })
     } else {
@@ -432,6 +434,7 @@ export default function Admin() {
         gender: defaultGender,
         price: 350000,
         image_url: '',
+        image: '',
         brand: 'Maison',
       })
     }
@@ -441,15 +444,26 @@ export default function Admin() {
   const handleSaveProduct = async (e) => {
     e.preventDefault()
     setSavingProduct(true)
+    const cleanImg = (productForm.image_url || productForm.image || '').trim()
+    const payload = {
+      name: productForm.name.trim(),
+      description: (productForm.description || '').trim(),
+      category: productForm.category,
+      gender: productForm.gender,
+      price: Number(productForm.price),
+      image_url: cleanImg,
+      image: cleanImg,
+      brand: productForm.brand || 'Maison',
+    }
     try {
       if (editingProduct) {
-        const res = await updateAdminProduct(editingProduct.id, productForm)
+        const res = await updateAdminProduct(editingProduct.id, payload)
         showToast('Cập nhật sản phẩm thành công!')
         if (res?.product) {
           syncProductUpdate(res.product)
         }
       } else {
-        const res = await createAdminProduct(productForm)
+        const res = await createAdminProduct({ ...payload, id: productForm.id })
         showToast('Thêm sản phẩm mới thành công!')
         if (res?.product) {
           syncProductUpdate(res.product)
@@ -460,7 +474,7 @@ export default function Admin() {
       loadCategories() // Refresh category product counts
       refreshStoreProducts() // Refresh customer storefront
     } catch (err) {
-      showToast(err.response?.data?.message || 'Lỗi khi lưu sản phẩm')
+      showToast(err.response?.data?.message || err.message || 'Lỗi khi lưu sản phẩm')
     } finally {
       setSavingProduct(false)
     }

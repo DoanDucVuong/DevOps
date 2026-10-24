@@ -171,7 +171,8 @@ router.get('/products', requireAdmin, async (req, res) => {
 
 // POST /api/admin/products
 router.post('/products', requireAdmin, async (req, res) => {
-  const { id, name, description = '', category, gender = 'Chung', price, image_url = '', brand = 'Maison' } = req.body
+  const { id, name, description = '', category, gender = 'Chung', price, brand = 'Maison' } = req.body
+  const rawImg = (req.body.image_url || req.body.image || req.body.img || '').trim()
   if (!name || !name.trim()) return res.status(400).json({ message: 'Tên sản phẩm không được để trống.' })
   if (!category || !category.trim()) return res.status(400).json({ message: 'Danh mục không được để trống.' })
   const numPrice = Number(price)
@@ -190,10 +191,10 @@ router.post('/products', requireAdmin, async (req, res) => {
     `INSERT INTO products (id, name, description, category, gender, brand, price, image_url)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
      RETURNING *`,
-    [cleanId, name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, image_url.trim()]
+    [cleanId, name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, rawImg]
   )
 
-  const created = rows[0] || { id: cleanId, name, description, category, gender, brand, price: numPrice, image_url }
+  const created = rows[0] || { id: cleanId, name, description, category, gender, brand, price: numPrice, image_url: rawImg }
   res.status(201).json({ message: 'Thêm sản phẩm thành công!', product: created })
 
   // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
@@ -203,7 +204,8 @@ router.post('/products', requireAdmin, async (req, res) => {
 // PUT /api/admin/products/:id
 router.put('/products/:id', requireAdmin, async (req, res) => {
   const { id } = req.params
-  const { name, description = '', category, gender = 'Chung', price, image_url = '', brand = 'Maison' } = req.body
+  const { name, description = '', category, gender = 'Chung', price, brand = 'Maison' } = req.body
+  const rawImg = (req.body.image_url || req.body.image || req.body.img || '').trim()
   if (!name || !name.trim()) return res.status(400).json({ message: 'Tên sản phẩm không được để trống.' })
   if (!category || !category.trim()) return res.status(400).json({ message: 'Danh mục không được để trống.' })
   const numPrice = Number(price)
@@ -217,10 +219,10 @@ router.put('/products/:id', requireAdmin, async (req, res) => {
      SET name = ?, description = ?, category = ?, gender = ?, brand = ?, price = ?, image_url = ?
      WHERE id = ?
      RETURNING *`,
-    [name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, image_url.trim(), id]
+    [name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, rawImg, id]
   )
 
-  const updated = rows[0] || { id, name, description, category, gender, brand, price: numPrice, image_url }
+  const updated = rows[0] || { id, name, description, category, gender, brand, price: numPrice, image_url: rawImg }
   res.json({ message: 'Cập nhật sản phẩm thành công!', product: updated })
 
   // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
