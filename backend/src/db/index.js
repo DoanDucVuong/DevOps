@@ -133,10 +133,6 @@ async function init() {
 }
 
 async function seedProducts() {
-  const row = await one('SELECT COUNT(*) AS c FROM products')
-  if (Number(row.c) > 0) return
-
-  // Ưu tiên bản copy đóng gói sẵn (Docker), fallback sang ml-service/data khi chạy monorepo local
   const bundled = path.join(__dirname, 'seed-products.json')
   const sibling = path.join(__dirname, '..', '..', '..', 'ml-service', 'data', 'products.json')
   const file = fs.existsSync(bundled) ? bundled : sibling
@@ -146,14 +142,21 @@ async function seedProducts() {
   }
   const products = JSON.parse(fs.readFileSync(file, 'utf-8'))
   for (const p of products) {
-    await query(
-      `INSERT INTO products (id, name, description, category, brand, price, image_url, avg_rating)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [p.id, p.name, p.description, p.category, p.brand, p.price,
-        `https://picsum.photos/seed/${p.id}/600/800`, +(3.8 + Math.random() * 1.2).toFixed(1)]
-    )
+    const existing = await one('SELECT id FROM products WHERE id = ?', [p.id])
+    if (existing) {
+      await query(
+        `UPDATE products SET name = ?, description = ?, category = ?, brand = ?, price = ?, image_url = ?, gender = ? WHERE id = ?`,
+        [p.name, p.description, p.category, p.brand, p.price, p.image_url, p.gender || 'Nam', p.id]
+      )
+    } else {
+      await query(
+        `INSERT INTO products (id, name, description, category, brand, price, image_url, avg_rating, gender)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [p.id, p.name, p.description, p.category, p.brand, p.price, p.image_url, p.avg_rating || 4.5, p.gender || 'Nam']
+      )
+    }
   }
-  console.log(`[db] Đã seed ${products.length} sản phẩm.`)
+  console.log(`[db] Đã đồng bộ và cập nhật thành công ${products.length} sản phẩm (Nam & Nữ).`)
 }
 
 async function seedAdmin() {
