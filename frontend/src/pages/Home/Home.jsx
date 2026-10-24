@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { ArrowUpRight, Sparkles } from 'lucide-react'
-import { products, getProductById } from '../../data/products'
+import { useProductStore } from '../../store/productStore'
 import { useCategoryStore } from '../../store/categoryStore'
 import ProductCard from '../../components/product/ProductCard'
 import { fetchRecommendations, trackRecommendationClick, fetchBanners } from '../../api/client'
@@ -33,11 +33,19 @@ const ALGO_LABELS = {
 }
 
 export default function Home() {
+  const products = useProductStore((s) => s.products)
+  const getProductById = useProductStore((s) => s.getProductById)
+  const fetchProducts = useProductStore((s) => s.fetchProducts)
+
   const featured = products.filter((p) => p.isFeatured).slice(0, 8)
   const newArrivals = products.filter((p) => p.isNew).slice(0, 4)
   const user = useAuthStore((s) => s.user)
   const categories = useCategoryStore((s) => s.categories)
   const fetchCategories = useCategoryStore((s) => s.fetchCategories)
+
+  useEffect(() => {
+    fetchProducts()
+  }, [fetchProducts])
 
   const [recommended, setRecommended] = useState([])
   const [algorithm, setAlgorithm] = useState(null)

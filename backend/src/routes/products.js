@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
   if (maxPrice) { where += ' AND price <= ?'; params.push(Number(maxPrice)) }
 
   const sortMap = { 'price-asc': 'price ASC', 'price-desc': 'price DESC', rating: 'avg_rating DESC' }
-  const lim = Math.min(Number(limit) || 24, 100)
+  const lim = Math.min(Number(limit) || 24, 500)
   const offset = (Math.max(Number(page) || 1, 1) - 1) * lim
 
   const items = await query(

@@ -1,12 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { SlidersHorizontal, X } from 'lucide-react'
-import { products } from '../../data/products'
+import { useProductStore } from '../../store/productStore'
 import ProductCard from '../../components/product/ProductCard'
 import ProductFilters, { PRICE_RANGES } from '../../components/product/ProductFilters'
 import EmptyState from '../../components/common/EmptyState'
 import { ProductGridSkeleton } from '../../components/common/Skeleton'
-import { useEffect } from 'react'
 
 const SORT_OPTIONS = [
   { id: 'default', label: 'Mặc định' },
@@ -20,6 +19,12 @@ export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [loading, setLoading] = useState(true)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const products = useProductStore((s) => s.products)
+  const fetchProducts = useProductStore((s) => s.fetchProducts)
+
+  useEffect(() => {
+    fetchProducts()
+  }, [fetchProducts])
 
   const [filters, setFilters] = useState({
     gender: searchParams.get('gender') || 'all',

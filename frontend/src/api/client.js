@@ -74,6 +74,10 @@ export const fetchAdminOrders = () => api.get('/admin/orders').then((r) => r.dat
 export const updateOrderStatus = (id, status) => api.patch(`/admin/orders/${id}/status`, { status }).then(data)
 export const fetchMlStatus = () => api.get('/admin/ml/status').then(data)
 export const triggerRetrain = () => api.post('/admin/ml/retrain').then(data)
+export const fetchAdminProducts = (params) => api.get('/admin/products', { params }).then(data)
+export const createAdminProduct = (payload) => api.post('/admin/products', payload).then(data)
+export const updateAdminProduct = (id, payload) => api.put(`/admin/products/${id}`, payload).then(data)
+export const deleteAdminProduct = (id) => api.delete(`/admin/products/${id}`).then(data)
 
 // ---- Categories ----
 export const fetchCategories = () => api.get('/categories').then(data).catch(() => null)

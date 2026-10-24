@@ -114,4 +114,125 @@ router.post('/ml/retrain', requireAdmin, async (req, res) => {
   }
 })
 
+// ==========================================
+// QUẢN LÝ SẢN PHẨM (PRODUCT MANAGEMENT - CRUD)
+// ==========================================
+
+// GET /api/admin/products?q=&category=&gender=&page=1&limit=20
+router.get('/products', requireAdmin, async (req, res) => {
+  const { q, category, gender, page = 1, limit = 20 } = req.query
+  let where = ' WHERE 1=1'
+  const params = []
+
+  if (q && q.trim()) {
+    where += ' AND LOWER(p.name) LIKE LOWER(?)'
+    params.push(`%${q.trim()}%`)
+  }
+  if (category && category !== 'all') {
+    where += ' AND p.category = ?'
+    params.push(category)
+  }
+  if (gender && gender !== 'all') {
+    where += ' AND p.gender = ?'
+    params.push(gender)
+  }
+
+  const lim = Math.max(1, Math.min(Number(limit) || 20, 200))
+  const pg = Math.max(1, Number(page) || 1)
+  const offset = (pg - 1) * lim
+
+  const items = await query(
+    `SELECT p.*, c.name AS category_name
+     FROM products p
+     LEFT JOIN categories c ON c.id = p.category
+     ${where}
+     ORDER BY p.created_at DESC, p.id ASC
+     LIMIT ? OFFSET ?`,
+    [...params, lim, offset]
+  )
+
+  const totalRow = await one(`SELECT COUNT(*) AS c FROM products p ${where}`, params)
+  const total = Number(totalRow?.c || 0)
+
+  res.json({
+    items: items.map((r) => ({
+      ...r,
+      price: Number(r.price),
+      avg_rating: Number(r.avg_rating || 0),
+      stock: Number(r.stock || 0),
+    })),
+    total,
+    page: pg,
+    limit: lim,
+    totalPages: Math.ceil(total / lim) || 1,
+  })
+})
+
+// POST /api/admin/products
+router.post('/products', requireAdmin, async (req, res) => {
+  const { id, name, description = '', category, gender = 'Chung', price, image_url = '', brand = 'Maison' } = req.body
+  if (!name || !name.trim()) return res.status(400).json({ message: 'Tên sản phẩm không được để trống.' })
+  if (!category || !category.trim()) return res.status(400).json({ message: 'Danh mục không được để trống.' })
+  const numPrice = Number(price)
+  if (isNaN(numPrice) || numPrice < 0) return res.status(400).json({ message: 'Giá sản phẩm không hợp lệ.' })
+
+  // Tạo ID nếu chưa có
+  const cleanId = (id && id.trim())
+    ? id.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-')
+    : `${category}-${Date.now().toString().slice(-6)}`
+
+  // Kiểm tra trùng ID
+  const existing = await one('SELECT id FROM products WHERE id = ?', [cleanId])
+  if (existing) return res.status(409).json({ message: `Mã sản phẩm "${cleanId}" đã tồn tại.` })
+
+  const rows = await query(
+    `INSERT INTO products (id, name, description, category, gender, brand, price, image_url)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+     RETURNING *`,
+    [cleanId, name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, image_url.trim()]
+  )
+
+  const created = rows[0] || { id: cleanId, name, description, category, gender, brand, price: numPrice, image_url }
+  res.status(201).json({ message: 'Thêm sản phẩm thành công!', product: created })
+})
+
+// PUT /api/admin/products/:id
+router.put('/products/:id', requireAdmin, async (req, res) => {
+  const { id } = req.params
+  const { name, description = '', category, gender = 'Chung', price, image_url = '', brand = 'Maison' } = req.body
+  if (!name || !name.trim()) return res.status(400).json({ message: 'Tên sản phẩm không được để trống.' })
+  if (!category || !category.trim()) return res.status(400).json({ message: 'Danh mục không được để trống.' })
+  const numPrice = Number(price)
+  if (isNaN(numPrice) || numPrice < 0) return res.status(400).json({ message: 'Giá sản phẩm không hợp lệ.' })
+
+  const existing = await one('SELECT id FROM products WHERE id = ?', [id])
+  if (!existing) return res.status(404).json({ message: 'Không tìm thấy sản phẩm.' })
+
+  const rows = await query(
+    `UPDATE products
+     SET name = ?, description = ?, category = ?, gender = ?, brand = ?, price = ?, image_url = ?
+     WHERE id = ?
+     RETURNING *`,
+    [name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, image_url.trim(), id]
+  )
+
+  const updated = rows[0] || { id, name, description, category, gender, brand, price: numPrice, image_url }
+  res.json({ message: 'Cập nhật sản phẩm thành công!', product: updated })
+})
+
+// DELETE /api/admin/products/:id
+router.delete('/products/:id', requireAdmin, async (req, res) => {
+  const { id } = req.params
+  const existing = await one('SELECT id FROM products WHERE id = ?', [id])
+  if (!existing) return res.status(404).json({ message: 'Không tìm thấy sản phẩm.' })
+
+  // Dọn dẹp dữ liệu liên kết nếu có
+  await query('DELETE FROM interactions WHERE product_id = ?', [id])
+  await query('DELETE FROM reviews WHERE product_id = ?', [id])
+  await query('DELETE FROM recommendation_log WHERE product_id = ?', [id])
+  await query('DELETE FROM products WHERE id = ?', [id])
+
+  res.json({ message: 'Đã xóa sản phẩm thành công!', id })
+})
+
 module.exports = router

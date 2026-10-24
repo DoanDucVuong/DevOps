@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { Heart, Minus, Plus, Truck, RefreshCw } from 'lucide-react'
-import { getProductById, products } from '../../data/products'
+import { useProductStore } from '../../store/productStore'
 import { colors as colorData } from '../../data/categories'
 import { useCartStore } from '../../store/cartStore'
 import { useWishlistStore } from '../../store/wishlistStore'
@@ -14,11 +14,13 @@ import { fetchSimilarProducts, recordInteraction } from '../../api/client'
 
 export default function ProductDetail() {
   const { id } = useParams()
+  const getProductById = useProductStore((s) => s.getProductById)
+  const products = useProductStore((s) => s.products)
   const product = getProductById(id)
 
   const [activeImage, setActiveImage] = useState(0)
-  const [selectedColor, setSelectedColor] = useState(product?.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product?.sizes[0])
+  const [selectedColor, setSelectedColor] = useState(product?.colors?.[0] || 'den')
+  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || 'M')
   const [quantity, setQuantity] = useState(1)
   const [related, setRelated] = useState([])
   const [relatedAlgo, setRelatedAlgo] = useState(null)
