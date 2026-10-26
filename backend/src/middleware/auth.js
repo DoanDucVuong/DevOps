@@ -27,7 +27,7 @@ function requireAuth(req, res, next) {
 
 function requireAdmin(req, res, next) {
   requireAuth(req, res, () => {
-    if (req.user?.role === 'admin' || req.headers['x-admin-role'] === 'admin') {
+    if (req.user?.role === 'admin') {
       return next()
     }
     return res.status(403).json({ message: 'Yêu cầu quyền admin.' })

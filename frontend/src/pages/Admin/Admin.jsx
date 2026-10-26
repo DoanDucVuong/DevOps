@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import {
   RefreshCw, Brain, LayoutDashboard, Folders, Ticket, Image as ImageIcon,
   Plus, Edit2, Trash2, Check, X, AlertCircle, Eye, EyeOff, Loader2, Sparkles,
-  ExternalLink, Package, Search, Filter, ChevronLeft, ChevronRight
+  ExternalLink, Package, Search, Filter, ChevronLeft, ChevronRight, ShoppingBag
 } from 'lucide-react'
+import OrdersManagement from './OrdersManagement'
 import {
   fetchAdminDashboard, fetchAdminOrders, updateOrderStatus, fetchMlStatus, triggerRetrain,
   fetchAdminCategories, createAdminCategory, updateAdminCategory, deleteAdminCategory,
@@ -58,6 +59,7 @@ export default function Admin() {
 
   // Determine active tab from URL path
   const getTabFromPath = () => {
+    if (location.pathname.includes('/orders')) return 'orders'
     if (location.pathname.includes('/products')) return 'products'
     if (location.pathname.includes('/categories')) return 'categories'
     if (location.pathname.includes('/vouchers')) return 'vouchers'
@@ -627,7 +629,18 @@ export default function Admin() {
               : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
           }`}
         >
-          <LayoutDashboard size={17} /> Tổng quan & Đơn hàng
+          <LayoutDashboard size={17} /> Tổng quan
+        </button>
+        <button
+          onClick={() => switchTab('orders')}
+          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
+            activeTab === 'orders'
+              ? 'border-clay text-clay font-semibold'
+              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
+          }`}
+        >
+          <ShoppingBag size={17} /> Quản lý đơn hàng
+          <span className="text-xs bg-clay/10 text-clay font-semibold px-2 py-0.5 rounded-full">{orders.length}</span>
         </button>
         <button
           onClick={() => switchTab('products')}
@@ -841,16 +854,33 @@ export default function Admin() {
                         <td className="py-3 pr-3">{formatDate(o.date)}</td>
                         <td className="py-3 pr-3">{paymentLabels[o.paymentMethod] || '—'}</td>
                         <td className="py-3 pr-3 text-right">{formatCurrency(o.total)}</td>
-                        <td className="py-3">
-                          <select
-                            value={o.status}
-                            onChange={(e) => handleStatusChange(o, e.target.value)}
-                            className="border border-stone-dark rounded-sm px-2 py-1 bg-paper text-sm outline-none focus:border-ink"
-                          >
-                            {Object.entries(statusLabels).map(([value, label]) => (
-                              <option key={value} value={value}>{label}</option>
-                            ))}
-                          </select>
+                        <td className="py-3 whitespace-nowrap">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium border ${
+                                o.status === 'pending'
+                                  ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                  : o.status === 'paid'
+                                  ? 'bg-sky-50 text-sky-700 border-sky-200'
+                                  : o.status === 'shipped'
+                                  ? 'bg-purple-50 text-purple-700 border-purple-200'
+                                  : o.status === 'completed'
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                  : 'bg-rose-50 text-rose-700 border-rose-200'
+                              }`}
+                            >
+                              {statusLabels[o.status] || o.status}
+                            </span>
+                            <select
+                              value={o.status}
+                              onChange={(e) => handleStatusChange(o, e.target.value)}
+                              className="border border-stone-dark rounded-sm px-2 py-1 bg-paper text-xs outline-none focus:border-ink cursor-pointer"
+                            >
+                              {Object.entries(statusLabels).map(([value, label]) => (
+                                <option key={value} value={value}>{label}</option>
+                              ))}
+                            </select>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -860,6 +890,13 @@ export default function Admin() {
             )}
           </Panel>
         </div>
+      )}
+
+      {/* ========================================================= */}
+      {/* TAB: QUẢN LÝ ĐƠN HÀNG (ORDERS MANAGEMENT)               */}
+      {/* ========================================================= */}
+      {activeTab === 'orders' && (
+        <OrdersManagement />
       )}
 
       {/* ========================================================= */}

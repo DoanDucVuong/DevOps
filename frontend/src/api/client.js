@@ -41,7 +41,7 @@ api.interceptors.request.use((config) => {
   } catch (e) {}
 
   if (token) config.headers.Authorization = `Bearer ${token}`
-  if (role === 'admin' || config.url?.includes('/admin')) {
+  if (role === 'admin') {
     config.headers['x-admin-role'] = 'admin'
   }
 
@@ -137,3 +137,5 @@ export const createBanner = (payload) => api.post('/banners/admin', payload).the
 export const updateBanner = (id, payload) => api.put(`/banners/admin/${id}`, payload).then(data)
 export const deleteBanner = (id) => api.delete(`/banners/admin/${id}`).then(data)
 export const updateAdminBanner = updateBanner
+
+export default api
