@@ -28,8 +28,10 @@ export const useProductStore = create((set, get) => ({
             images: p.image_url ? [p.image_url, ...(fallback.images?.slice(1) || [])] : (fallback.images || []),
             colors: fallback.colors || ['den', 'trang', 'be'],
             sizes: fallback.sizes || ['S', 'M', 'L', 'XL'],
-            avgRating: Number(p.avg_rating || fallback.avgRating || 4.5),
-            stock: Number(p.stock || 100),
+            avgRating: Number(p.avg_rating || 0),
+            rating: Number(p.avg_rating || 0),
+            review_count: Number(p.review_count || 0),
+            stock: Number(p.stock ?? 100),
           }
         })
         set({ products: mapped, isLoading: false })
@@ -63,7 +65,9 @@ export const useProductStore = create((set, get) => ({
         images: newImg ? [newImg] : [],
         colors: prod.colors || ['den', 'trang', 'be'],
         sizes: prod.sizes || ['S', 'M', 'L', 'XL'],
-        avgRating: Number(prod.avg_rating || 4.8),
+        avgRating: Number(prod.avg_rating || 0),
+        rating: Number(prod.avg_rating || 0),
+        review_count: Number(prod.review_count || 0),
         stock: Number(prod.stock || 100),
       }
       if (exists) {

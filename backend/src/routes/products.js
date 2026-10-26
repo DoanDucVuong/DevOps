@@ -112,10 +112,11 @@ router.get('/:id/reviews', async (req, res) => {
       }
     })
 
+    const hasReviews = Number(stats?.total || 0) > 0
     res.json({
       reviews: enrichedReviews,
       total: Number(stats?.total || 0),
-      avgRating: Number(Number(stats?.avg || 0).toFixed(1)),
+      avgRating: hasReviews ? Number(Number(stats?.avg || 0).toFixed(1)) : 0,
     })
   } catch (err) {
     console.error('[products/reviews/get] Lỗi:', err)
@@ -176,9 +177,10 @@ router.post('/:id/reviews', requireAuth, async (req, res) => {
     const newAvg = (stats && stats.avg !== null && stats.avg !== undefined)
       ? Number(Number(stats.avg).toFixed(1))
       : numRating
+    const newTotal = Number(stats?.total || 1)
 
-    // 5. Cập nhật avg_rating vào bảng products
-    await query('UPDATE products SET avg_rating = ? WHERE id = ?', [newAvg, prodId])
+    // 5. Cập nhật avg_rating và review_count vào bảng products
+    await query('UPDATE products SET avg_rating = ?, review_count = ? WHERE id = ?', [newAvg, newTotal, prodId])
 
     try {
       await query(

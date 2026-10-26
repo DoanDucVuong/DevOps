@@ -6,13 +6,13 @@ import { useAuthStore } from '../../store/authStore'
 import { useToast } from '../common/Toast'
 import { formatDate } from '../../utils/format'
 
-export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
+export default function ProductReviews({ productId, initialAvgRating = 0 }) {
   const user = useAuthStore((s) => s.user)
   const { showToast } = useToast()
 
   const [reviews, setReviews] = useState([])
   const [total, setTotal] = useState(0)
-  const [avgRating, setAvgRating] = useState(initialAvgRating)
+  const [avgRating, setAvgRating] = useState(Number(initialAvgRating) || 0)
   const [loading, setLoading] = useState(true)
 
   // Form states
@@ -28,25 +28,21 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
     fetchProductReviews(productId)
       .then((data) => {
         if (!active) return
-        setReviews(data.reviews || [])
-        setTotal(data.total || (data.reviews ? data.reviews.length : 0))
-        if (data.avgRating && data.avgRating > 0) {
-          setAvgRating(data.avgRating)
+        const revList = data?.reviews || []
+        const count = Number(data?.total ?? revList.length)
+        setReviews(revList)
+        setTotal(count)
+        if (count > 0 && data?.avgRating && Number(data.avgRating) > 0) {
+          setAvgRating(Number(data.avgRating))
+        } else {
+          setAvgRating(0)
         }
       })
       .catch(() => {
-        // Fallback đánh giá cục bộ nếu không có backend
         if (!active) return
-        setReviews([
-          {
-            id: 'rev_local',
-            user_name: 'Nguyễn Văn Minh',
-            rating: 5,
-            comment: 'Chất vải dày dặn mặc rất đứng dáng, đường kim mũi chỉ tỉ mỉ. Rất đáng tiền!',
-            created_at: new Date().toISOString(),
-          },
-        ])
-        setTotal(1)
+        setReviews([])
+        setTotal(0)
+        setAvgRating(0)
       })
       .finally(() => {
         if (active) setLoading(false)
@@ -117,8 +113,10 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
         {/* Khối tóm tắt điểm đánh giá */}
         <div className="flex items-center gap-4 bg-paper border border-stone-dark/40 px-4 py-3 rounded-sm shadow-xs">
           <div className="text-center border-r border-stone pr-4">
-            <span className="font-display text-3xl font-bold text-ink">{avgRating}</span>
-            <span className="text-xs text-ink-soft block">trên 5</span>
+            <span className="font-display text-3xl font-bold text-ink">
+              {total > 0 ? avgRating : 0}
+            </span>
+            <span className="text-xs text-ink-soft block">trên 5 sao</span>
           </div>
           <div>
             <div className="flex items-center gap-1 mb-1">
@@ -126,7 +124,11 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
                 <Star
                   key={star}
                   size={16}
-                  className={star <= Math.round(avgRating) ? 'fill-gold text-gold' : 'text-stone-dark'}
+                  className={
+                    total > 0 && star <= Math.round(avgRating)
+                      ? 'fill-gold text-gold'
+                      : 'text-stone-dark'
+                  }
                 />
               ))}
             </div>

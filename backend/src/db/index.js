@@ -80,6 +80,7 @@ async function init() {
       stock INTEGER DEFAULT 100,
       image_url TEXT,
       avg_rating ${REAL} DEFAULT 0,
+      review_count INTEGER DEFAULT 0,
       created_at ${TS}
     )`,
     `CREATE TABLE IF NOT EXISTS interactions (
@@ -161,6 +162,11 @@ async function init() {
   try {
     await query("ALTER TABLE products ADD COLUMN IF NOT EXISTS gender TEXT DEFAULT 'Unisex'")
   } catch (err) {}
+  try {
+    await query("ALTER TABLE products ADD COLUMN IF NOT EXISTS review_count INTEGER DEFAULT 0")
+  } catch (err) {
+    try { await query("ALTER TABLE products ADD COLUMN review_count INTEGER DEFAULT 0") } catch (e) {}
+  }
   try {
     await query("ALTER TABLE reviews ADD COLUMN IF NOT EXISTS user_id TEXT")
   } catch (err) {

@@ -125,7 +125,7 @@ export default function ProductDetail() {
             </span>
           </div>
           <h1 className="font-display text-3xl mb-2">{product.name}</h1>
-          <Rating value={product.rating} />
+          <Rating value={product.avg_rating || product.rating || 0} />
           <div className="flex items-center gap-3 mt-4 mb-6">
             <span className="text-2xl font-semibold">{formatCurrency(product.price)}</span>
             {product.oldPrice && (
@@ -218,7 +218,7 @@ export default function ProductDetail() {
       {/* Đánh giá & Bình luận khách hàng */}
       <ProductReviews
         productId={product.id}
-        initialAvgRating={Number(product.rating || product.avg_rating || 5)}
+        initialAvgRating={Number(product.avg_rating || product.rating || 0)}
       />
 
       {(loadingRelated || related.length > 0) && (
