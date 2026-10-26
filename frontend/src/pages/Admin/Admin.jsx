@@ -7,13 +7,13 @@ import {
 } from 'lucide-react'
 import OrdersManagement from './OrdersManagement'
 import {
-  fetchAdminDashboard, fetchAdminOrders, updateOrderStatus, fetchMlStatus, triggerRetrain,
+  fetchAdminDashboard, fetchAdminOrders, fetchMlStatus, triggerRetrain,
   fetchAdminCategories, createAdminCategory, updateAdminCategory, deleteAdminCategory,
   fetchAdminVouchers, createAdminVoucher, updateAdminVoucher, deleteAdminVoucher,
   fetchBanners, updateAdminBanner,
   fetchAdminProducts, createAdminProduct, updateAdminProduct, deleteAdminProduct,
 } from '../../api/client'
-import { statusLabels, paymentLabels } from '../../data/orders'
+import { statusLabels } from '../../data/orders'
 import { formatCurrency, formatDate } from '../../utils/format'
 import { useToast } from '../../components/common/Toast'
 import { useCategoryStore } from '../../store/categoryStore'
@@ -308,18 +308,6 @@ export default function Admin() {
       loadMl()
     } catch (err) {
       showToast(err.response?.status === 409 ? 'Đang huấn luyện, vui lòng đợi' : 'Không thể bắt đầu huấn luyện')
-    }
-  }
-
-  // Update Order Status
-  const handleStatusChange = async (order, status) => {
-    try {
-      await updateOrderStatus(order.numericId, status)
-      setOrders((list) => list.map((o) => (o.numericId === order.numericId ? { ...o, status } : o)))
-      showToast(`Đơn ${order.id}: ${statusLabels[status]}`)
-      fetchAdminDashboard().then(setDash).catch(() => {})
-    } catch {
-      showToast('Cập nhật trạng thái thất bại')
     }
   }
 
@@ -823,72 +811,6 @@ export default function Admin() {
               )}
             </Panel>
           </div>
-
-          <Panel title={`Đơn hàng (${orders.length})`}>
-            {orders.length === 0 ? (
-              <p className="text-sm text-ink-soft">Chưa có đơn hàng nào.</p>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm min-w-[720px]">
-                  <thead>
-                    <tr className="text-left text-ink-soft border-b border-stone">
-                      <th className="py-2 pr-3 font-medium">Mã</th>
-                      <th className="py-2 pr-3 font-medium">Khách hàng</th>
-                      <th className="py-2 pr-3 font-medium">Ngày đặt</th>
-                      <th className="py-2 pr-3 font-medium">Thanh toán</th>
-                      <th className="py-2 pr-3 font-medium text-right">Tổng tiền</th>
-                      <th className="py-2 font-medium">Trạng thái</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orders.map((o) => (
-                      <tr key={o.id} className="border-b border-stone last:border-0 hover:bg-stone-light/20 transition-colors">
-                        <td className="py-3 pr-3 font-medium">{o.id}</td>
-                        <td className="py-3 pr-3">
-                          {o.customerName || '—'}
-                          <span className="block text-xs text-ink-soft">{o.customerEmail}</span>
-                          {o.shipping?.note && (
-                            <span className="block text-[11px] text-clay line-clamp-1">{o.shipping.note}</span>
-                          )}
-                        </td>
-                        <td className="py-3 pr-3">{formatDate(o.date)}</td>
-                        <td className="py-3 pr-3">{paymentLabels[o.paymentMethod] || '—'}</td>
-                        <td className="py-3 pr-3 text-right">{formatCurrency(o.total)}</td>
-                        <td className="py-3 whitespace-nowrap">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium border ${
-                                o.status === 'pending'
-                                  ? 'bg-amber-50 text-amber-700 border-amber-200'
-                                  : o.status === 'paid'
-                                  ? 'bg-sky-50 text-sky-700 border-sky-200'
-                                  : o.status === 'shipped'
-                                  ? 'bg-purple-50 text-purple-700 border-purple-200'
-                                  : o.status === 'completed'
-                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                  : 'bg-rose-50 text-rose-700 border-rose-200'
-                              }`}
-                            >
-                              {statusLabels[o.status] || o.status}
-                            </span>
-                            <select
-                              value={o.status}
-                              onChange={(e) => handleStatusChange(o, e.target.value)}
-                              className="border border-stone-dark rounded-sm px-2 py-1 bg-paper text-xs outline-none focus:border-ink cursor-pointer"
-                            >
-                              {Object.entries(statusLabels).map(([value, label]) => (
-                                <option key={value} value={value}>{label}</option>
-                              ))}
-                            </select>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </Panel>
         </div>
       )}
 
