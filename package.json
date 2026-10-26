@@ -1,0 +1,23 @@
+{
+  "name": "sttn-recommend",
+  "version": "1.0.0",
+  "description": "Hệ thống gợi ý sản phẩm thương mại điện tử ứng dụng Machine Learning, theo kiến trúc Chương 3 báo cáo thực tập.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoanDucVuong/DevOps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DoanDucVuong/DevOps/issues"
+  },
+  "homepage": "https://github.com/DoanDucVuong/DevOps#readme",
+  "dependencies": {
+    "node-ssh": "^13.2.1"
+  }
+}
