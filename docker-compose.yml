@@ -1,6 +1,7 @@
 services:
   # 1. Frontend Service (React / Vite + Nginx)
   frontend:
+    image: doanducvuong/sttn-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -17,6 +18,7 @@ services:
 
   # 2. Backend Service (Node.js / Express + SQLite)
   backend:
+    image: doanducvuong/sttn-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -42,6 +44,7 @@ services:
 
   # 3. ML Recommendation Service (Python / FastAPI)
   ml-service:
+    image: doanducvuong/sttn-ml-service:latest
     build:
       context: ./ml-service
       dockerfile: Dockerfile
