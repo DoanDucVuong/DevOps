@@ -5,7 +5,7 @@
 
 -- Nạp 100 sản phẩm mới
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
-VALUES ('p01', 'Áo Thun Nam Cotton Basic Trắng', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 270000, 80, 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80', 4.2, 'Nam');
+VALUES ('p01', 'Áo Thun Cổ Tròn Big Size Navy', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 270000, 80, 'https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2763.jpg', 4.2, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
 VALUES ('p02', 'Áo Thun Nam Polo Cổ Bẻ Xanh Navy', 'Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh.', 'ao-thun', 'Maison', 300000, 87, 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80', 4.5, 'Nam');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
@@ -204,6 +204,8 @@ INSERT INTO products (id, name, description, category, brand, price, stock, imag
 VALUES ('p99', 'Quần Jean Skinny Nữ Co Giãn Siêu Hack Chân', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 860000, 98, 'https://images.unsplash.com/photo-1597196526281-fe4861daa915?w=600&auto=format&fit=crop&q=80', 4.8, 'Nữ');
 INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
 VALUES ('p100', 'Quần Tây Nữ Dáng Lửng Thời Thượng', 'Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh.', 'quan', 'Maison', 890000, 109, 'https://images.unsplash.com/photo-1605763240000-7e93b172d754?w=600&auto=format&fit=crop&q=80', 4.3, 'Nữ');
+INSERT INTO products (id, name, description, category, brand, price, stock, image_url, avg_rating, gender)
+VALUES ('p101', 'Áo Thun Nam Tshirt Basic USA', 'Thiết kế thời trang nam cao cấp từ Maison. Phom dáng trẻ trung năng động, chất liệu cotton thoáng mát thấm hút mồ hôi tốt.', 'ao-thun', 'Maison', 350000, 100, 'https://polomanor.vn/cdn/shop/files/ao-thun-nam-tshirt-basic-usa-reunhat_92bff59f-5724-4172-9e2b-0d6e1281aed0.jpg?format=webp&v=1762012955&width=900', 0, 'Nam');
 
 -- Thêm đánh giá mẫu
 INSERT INTO reviews (product_id, user_name, rating, comment, created_at)

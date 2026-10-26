@@ -1,13 +1,13 @@
 {
   "source": "real+synthetic",
-  "n_real": 75,
-  "n_real_users": 7,
+  "n_real": 20,
+  "n_real_users": 4,
   "n_synthetic": 836,
-  "rmse_cv_mean": 0.9118825508775258,
-  "mae_cv_mean": 0.7503491748622386,
-  "rmse_holdout": 1.0424707522543433,
-  "mae_holdout": 0.8140481998002392,
-  "n_ratings_used": 481,
-  "n_users": 67,
-  "trained_at": "2026-10-26T08:36:36.846284+00:00"
+  "rmse_cv_mean": 0.9051263655925104,
+  "mae_cv_mean": 0.746984927116894,
+  "rmse_holdout": 0.9580111364398104,
+  "mae_holdout": 0.7896237208881779,
+  "n_ratings_used": 477,
+  "n_users": 64,
+  "trained_at": "2026-10-26T09:55:35.421464+00:00"
 }

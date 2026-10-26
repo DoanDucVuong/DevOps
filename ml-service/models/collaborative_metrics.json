@@ -1,8 +1,8 @@
 {
-  "rmse_cv_mean": 0.9118825508775258,
-  "mae_cv_mean": 0.7503491748622386,
-  "rmse_holdout": 1.0424707522543433,
-  "mae_holdout": 0.8140481998002392,
-  "n_ratings_used": 481,
-  "n_users": 67
+  "rmse_cv_mean": 0.9051263655925104,
+  "mae_cv_mean": 0.746984927116894,
+  "rmse_holdout": 0.9580111364398104,
+  "mae_holdout": 0.7896237208881779,
+  "n_ratings_used": 477,
+  "n_users": 64
 }

@@ -1,8 +1,8 @@
-// Danh sách 103 sản phẩm thời trang tự động đồng bộ theo thời gian thực từ Database
+// Danh sách 101 sản phẩm thời trang tự động đồng bộ theo thời gian thực từ Database
 export const products = [
   {
     "id": "p01",
-    "name": "Áo Thun Cổ Tròn Big Size Navy BS2763",
+    "name": "Áo Thun Cổ Tròn Big Size Navy",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -30,37 +30,6 @@ export const products = [
     "isNew": true,
     "isFeatured": false,
     "description": "Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh."
-  },
-  {
-    "id": "p015",
-    "name": "Áo Thun Nam Tay Ngắn Form Vừa TS26SS13P-RGAT",
-    "gender": "Nam",
-    "category": "ao-thun",
-    "brand": "Maison",
-    "price": 350000,
-    "oldPrice": null,
-    "stock": 100,
-    "rating": 5,
-    "avg_rating": 5,
-    "review_count": 50,
-    "colors": [
-      "den",
-      "trang",
-      "be"
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "image_url": "https://cdn.hstatic.net/products/1000402464/ts26ss13p-rgat_white__1__20ac2fe88a674033b2950c2e11e29984_master.jpg",
-    "images": [
-      "https://cdn.hstatic.net/products/1000402464/ts26ss13p-rgat_white__1__20ac2fe88a674033b2950c2e11e29984_master.jpg"
-    ],
-    "isNew": true,
-    "isFeatured": false,
-    "description": ""
   },
   {
     "id": "p02",
@@ -374,15 +343,15 @@ export const products = [
   },
   {
     "id": "p101",
-    "name": "Áo Polo Test Tự Động Tăng Mã",
+    "name": "Áo Thun Nam Tshirt Basic USA",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
-    "price": 320000,
+    "price": 350000,
     "oldPrice": null,
     "stock": 100,
-    "rating": 5,
-    "avg_rating": 5,
+    "rating": 0,
+    "avg_rating": 0,
     "review_count": 50,
     "colors": [
       "den",
@@ -395,44 +364,13 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80",
+    "image_url": "https://polomanor.vn/cdn/shop/files/ao-thun-nam-tshirt-basic-usa-reunhat_92bff59f-5724-4172-9e2b-0d6e1281aed0.jpg?format=webp&v=1762012955&width=900",
     "images": [
-      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80"
+      "https://polomanor.vn/cdn/shop/files/ao-thun-nam-tshirt-basic-usa-reunhat_92bff59f-5724-4172-9e2b-0d6e1281aed0.jpg?format=webp&v=1762012955&width=900"
     ],
     "isNew": true,
     "isFeatured": false,
-    "description": "Sản phẩm test auto-increment ID"
-  },
-  {
-    "id": "p102",
-    "name": "Áo Thun Basic Tự Tăng Mã",
-    "gender": "Nam",
-    "category": "ao-thun",
-    "brand": "Maison",
-    "price": 290000,
-    "oldPrice": null,
-    "stock": 100,
-    "rating": 5,
-    "avg_rating": 5,
-    "review_count": 50,
-    "colors": [
-      "den",
-      "trang",
-      "be"
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "image_url": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80"
-    ],
-    "isNew": true,
-    "isFeatured": false,
-    "description": "Kiểm thử tính năng tự động tăng ID dạng pXX"
+    "description": ""
   },
   {
     "id": "p11",
