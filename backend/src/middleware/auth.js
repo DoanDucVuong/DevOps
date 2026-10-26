@@ -11,12 +11,9 @@ function optionalAuth(req, res, next) {
     }
   }
 
-  // Hỗ trợ môi trường dev / local hoặc khi có header x-admin-role
-  if (!req.user) {
-    const isLocal = req.ip === '127.0.0.1' || req.ip === '::1' || req.ip === '::ffff:127.0.0.1' || req.hostname === 'localhost'
-    if (isLocal || req.headers['x-admin-role'] === 'admin') {
-      req.user = { id: 1, email: 'admin@sttn.vn', role: 'admin' }
-    }
+  // Hỗ trợ header x-admin-role cho quyền quản trị
+  if (!req.user && req.headers['x-admin-role'] === 'admin') {
+    req.user = { id: 1, email: 'admin@sttn.vn', role: 'admin' }
   }
   next()
 }

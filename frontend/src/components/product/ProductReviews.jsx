@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Star, MessageSquare, CheckCircle2, Send, User } from 'lucide-react'
 import { fetchProductReviews, submitProductReview } from '../../api/client'
 import { useAuthStore } from '../../store/authStore'
@@ -15,7 +16,6 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
   const [loading, setLoading] = useState(true)
 
   // Form states
-  const [userName, setUserName] = useState(user?.name || user?.full_name || '')
   const [rating, setRating] = useState(5)
   const [hoverRating, setHoverRating] = useState(0)
   const [comment, setComment] = useState('')
@@ -57,19 +57,8 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
     }
   }, [productId])
 
-  // Cập nhật tên mặc định khi đăng nhập
-  useEffect(() => {
-    if (user && !userName) {
-      setUserName(user.name || user.full_name || '')
-    }
-  }, [user])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!userName.trim()) {
-      showToast('Vui lòng nhập tên của bạn')
-      return
-    }
     if (!comment.trim()) {
       showToast('Vui lòng nhập nội dung đánh giá')
       return
@@ -78,19 +67,18 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
     setSubmitting(true)
     try {
       const payload = {
-        userName: userName.trim(),
         rating,
         comment: comment.trim(),
-        userId: user?.id || user?.email,
       }
       const res = await submitProductReview(productId, payload)
 
       const newReview = {
         id: Date.now(),
         product_id: productId,
-        user_name: userName.trim(),
+        user_name: user?.fullName || user?.name || user?.email || 'Bạn',
         rating,
         comment: comment.trim(),
+        is_verified_buyer: true,
         created_at: new Date().toISOString(),
       }
 
@@ -105,8 +93,9 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
 
       setComment('')
       showToast('Cảm ơn bạn đã gửi đánh giá!')
-    } catch {
-      showToast('Gửi đánh giá thất bại, vui lòng thử lại sau.')
+    } catch (err) {
+      const errMsg = err?.response?.data?.message || err.message || 'Gửi đánh giá thất bại, vui lòng thử lại sau.'
+      showToast(errMsg)
     } finally {
       setSubmitting(false)
     }
@@ -217,75 +206,95 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
               Ý kiến của bạn giúp chúng tôi và các khách hàng khác lựa chọn tốt hơn.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-ink-soft mb-1.5">
-                  Tên của bạn <span className="text-clay">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  placeholder="Ví dụ: Hoàng Nam"
-                  className="w-full border border-stone-dark rounded-sm px-3 py-2 text-sm bg-white outline-none focus:border-ink transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-ink-soft mb-1.5">
-                  Đánh giá số sao <span className="text-clay">*</span>
-                </label>
-                <div className="flex items-center gap-1 py-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setRating(star)}
-                      onMouseEnter={() => setHoverRating(star)}
-                      onMouseLeave={() => setHoverRating(0)}
-                      className="p-1 hover:scale-110 transition-transform"
-                      aria-label={`${star} sao`}
-                    >
-                      <Star
-                        size={22}
-                        className={
-                          star <= (hoverRating || rating)
-                            ? 'fill-gold text-gold cursor-pointer'
-                            : 'text-stone-dark cursor-pointer'
-                        }
-                      />
-                    </button>
-                  ))}
-                  <span className="text-xs text-ink-soft ml-2 font-medium">
-                    {rating === 5 ? 'Rất hài lòng (5/5)' : rating === 4 ? 'Hài lòng (4/5)' : rating === 3 ? 'Bình thường (3/5)' : 'Chưa ưng ý'}
-                  </span>
+            {!user ? (
+              <div className="border border-dashed border-stone-dark/60 rounded-sm p-6 text-center bg-stone/10">
+                <div className="h-10 w-10 mx-auto rounded-full bg-stone/40 text-ink-soft flex items-center justify-center mb-3">
+                  <User size={20} />
                 </div>
+                <p className="text-sm font-medium text-ink mb-2">
+                  Vui lòng đăng nhập và mua sản phẩm để chia sẻ đánh giá.
+                </p>
+                <p className="text-xs text-ink-soft mb-4">
+                  Chỉ những khách hàng đã mua sản phẩm thành công mới có thể gửi đánh giá.
+                </p>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-ink text-ivory text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-ink-soft transition-colors"
+                >
+                  Đăng nhập ngay
+                </Link>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="flex items-center gap-2.5 p-2.5 bg-stone/20 border border-stone-dark/30 rounded-sm">
+                  <div className="h-8 w-8 rounded-full bg-ink text-ivory text-xs font-semibold flex items-center justify-center uppercase shrink-0">
+                    {(user.fullName || user.name || user.email || 'U').charAt(0)}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-xs font-semibold text-ink block truncate">
+                      {user.fullName || user.name || user.email}
+                    </span>
+                    <span className="text-[11px] text-moss font-medium flex items-center gap-1">
+                      <CheckCircle2 size={12} /> Tài khoản đánh giá
+                    </span>
+                  </div>
+                </div>
 
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-ink-soft mb-1.5">
-                  Nội dung bình luận <span className="text-clay">*</span>
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Chia sẻ cảm nhận về form áo, độ vừa vặn, chất liệu vải..."
-                  className="w-full border border-stone-dark rounded-sm px-3 py-2 text-sm bg-white outline-none focus:border-ink transition-colors resize-none"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-ink-soft mb-1.5">
+                    Đánh giá số sao <span className="text-clay">*</span>
+                  </label>
+                  <div className="flex items-center gap-1 py-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setRating(star)}
+                        onMouseEnter={() => setHoverRating(star)}
+                        onMouseLeave={() => setHoverRating(0)}
+                        className="p-1 hover:scale-110 transition-transform"
+                        aria-label={`${star} sao`}
+                      >
+                        <Star
+                          size={22}
+                          className={
+                            star <= (hoverRating || rating)
+                              ? 'fill-gold text-gold cursor-pointer'
+                              : 'text-stone-dark cursor-pointer'
+                          }
+                        />
+                      </button>
+                    ))}
+                    <span className="text-xs text-ink-soft ml-2 font-medium">
+                      {rating === 5 ? 'Rất hài lòng (5/5)' : rating === 4 ? 'Hài lòng (4/5)' : rating === 3 ? 'Bình thường (3/5)' : 'Chưa ưng ý'}
+                    </span>
+                  </div>
+                </div>
 
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full py-2.5 bg-ink text-ivory text-sm font-medium rounded-sm hover:bg-ink-soft transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
-              >
-                <Send size={15} />
-                <span>{submitting ? 'Đang gửi...' : 'Gửi đánh giá ngay'}</span>
-              </button>
-            </form>
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-ink-soft mb-1.5">
+                    Nội dung bình luận <span className="text-clay">*</span>
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Chia sẻ cảm nhận về form áo, độ vừa vặn, chất liệu vải..."
+                    className="w-full border border-stone-dark rounded-sm px-3 py-2 text-sm bg-white outline-none focus:border-ink transition-colors resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full py-2.5 bg-ink text-ivory text-sm font-medium rounded-sm hover:bg-ink-soft transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
+                >
+                  <Send size={15} />
+                  <span>{submitting ? 'Đang gửi...' : 'Gửi đánh giá ngay'}</span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

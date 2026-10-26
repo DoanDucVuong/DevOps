@@ -66,7 +66,7 @@ export const fetchSimilarProducts = (id, topK = 4) =>
 export const fetchProductReviews = (id) =>
   IS_BACKEND ? api.get(`/products/${id}/reviews`).then(data) : Promise.resolve({ reviews: [], total: 0, avgRating: 5 })
 export const submitProductReview = (id, payload) =>
-  IS_BACKEND ? api.post(`/products/${id}/reviews`, payload).then(data) : Promise.resolve({ success: true })
+  api.post(`/products/${id}/reviews`, payload).then(data)
 
 // ---- Recommendations (ML) ----
 export const fetchRecommendations = (userId, topK = 8) =>

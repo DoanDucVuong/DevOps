@@ -1,15 +1,15 @@
 [
   {
     "id": "p01",
-    "name": "Áo Thun Cổ Tròn Big Size Navy",
+    "name": "Áo Thun Cổ Tròn Big Size Navy1901",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
     "price": 270000,
     "oldPrice": null,
     "stock": 80,
-    "rating": 4.2,
-    "avg_rating": 4.2,
+    "rating": 5,
+    "avg_rating": 5,
     "review_count": 50,
     "colors": [
       "den",
@@ -342,15 +342,15 @@
   },
   {
     "id": "p101",
-    "name": "Áo Thun Nam Tshirt Basic USA",
+    "name": "Áo Thun Nam Tshirt Basic USa",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
     "price": 350000,
     "oldPrice": null,
     "stock": 100,
-    "rating": 0,
-    "avg_rating": 0,
+    "rating": 5,
+    "avg_rating": 5,
     "review_count": 50,
     "colors": [
       "den",
@@ -363,13 +363,13 @@
       "L",
       "XL"
     ],
-    "image_url": "https://polomanor.vn/cdn/shop/files/ao-thun-nam-tshirt-basic-usa-reunhat_92bff59f-5724-4172-9e2b-0d6e1281aed0.jpg?format=webp&v=1762012955&width=900",
+    "image_url": "https://polomanor.vn/cdn/shop/files/ao-thun-nam-galor-mau-do.webp?v=1769405204&width=1080",
     "images": [
-      "https://polomanor.vn/cdn/shop/files/ao-thun-nam-tshirt-basic-usa-reunhat_92bff59f-5724-4172-9e2b-0d6e1281aed0.jpg?format=webp&v=1762012955&width=900"
+      "https://polomanor.vn/cdn/shop/files/ao-thun-nam-galor-mau-do.webp?v=1769405204&width=1080"
     ],
     "isNew": true,
     "isFeatured": false,
-    "description": ""
+    "description": "Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh."
   },
   {
     "id": "p11",

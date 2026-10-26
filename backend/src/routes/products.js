@@ -3,6 +3,7 @@ const axios = require('axios')
 const { query, one } = require('../db')
 const { getMlServiceUrl } = require('../mlConfig')
 const { syncAllProductData } = require('../services/syncService')
+const { requireAuth } = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -123,25 +124,51 @@ router.get('/:id/reviews', async (req, res) => {
 })
 
 // POST /api/products/:id/reviews
-router.post('/:id/reviews', async (req, res) => {
+router.post('/:id/reviews', requireAuth, async (req, res) => {
   const prodId = req.params.id
-  const { userName, rating, comment, userId } = req.body
-  if (!userName || !rating || !comment) {
-    return res.status(400).json({ message: 'Vui lòng nhập tên, chọn số sao và nội dung bình luận.' })
+  const userId = req.user.id
+  const { rating, comment } = req.body
+
+  if (!rating || !comment || !String(comment).trim()) {
+    return res.status(400).json({ message: 'Vui lòng chọn số sao và nhập nội dung bình luận.' })
   }
+
+  // 1. Kiểm tra đơn hàng hợp lệ: user đã có đơn hàng chứa product_id hiện tại và trạng thái thuộc (paid, shipped, completed)
+  const orders = await query(
+    `SELECT id, items_json FROM orders WHERE user_id = ? AND status IN ('paid', 'shipped', 'completed')`,
+    [String(userId)]
+  )
+
+  let hasPurchased = false
+  for (const ord of orders) {
+    try {
+      const items = typeof ord.items_json === 'string' ? JSON.parse(ord.items_json) : ord.items_json
+      if (Array.isArray(items) && items.some((item) => item.productId === prodId || item.product_id === prodId || item.id === prodId)) {
+        hasPurchased = true
+        break
+      }
+    } catch {}
+  }
+
+  if (!hasPurchased) {
+    return res.status(403).json({ message: 'Bạn cần mua sản phẩm này để có thể đánh giá.' })
+  }
+
+  // 2. Bỏ trường nhập tên tự do, tự động lấy user_name từ bảng users theo req.user.id
+  const userRecord = await one('SELECT full_name FROM users WHERE id = ?', [userId])
+  const cleanUser = userRecord?.full_name || req.user.fullName || req.user.name || 'Khách hàng'
   const numRating = Math.max(1, Math.min(5, Number(rating) || 5))
-  const cleanUser = String(userName).trim()
   const cleanComment = String(comment).trim()
-  const cleanUserId = userId || (req.user?.id ? String(req.user.id) : null)
+  const cleanUserId = String(userId)
 
   try {
-    // 1. Lưu bình luận vào bảng reviews (kèm user_id)
+    // 3. Lưu bình luận vào bảng reviews (kèm user_id)
     await query(
       'INSERT INTO reviews (product_id, user_id, user_name, rating, comment) VALUES (?, ?, ?, ?, ?)',
       [prodId, cleanUserId, cleanUser, numRating, cleanComment]
     )
 
-    // 2. Tính toán lại điểm trung bình từ reviews: SELECT AVG(rating) FROM reviews WHERE product_id = ?
+    // 4. Tính toán lại điểm trung bình từ reviews: SELECT AVG(rating) FROM reviews WHERE product_id = ?
     const stats = await one(
       'SELECT AVG(rating) AS avg, COUNT(*) AS total FROM reviews WHERE product_id = ?',
       [prodId]
@@ -150,17 +177,17 @@ router.post('/:id/reviews', async (req, res) => {
       ? Number(Number(stats.avg).toFixed(1))
       : numRating
 
-    // 3. Cập nhật avg_rating vào bảng products
+    // 5. Cập nhật avg_rating vào bảng products
     await query('UPDATE products SET avg_rating = ? WHERE id = ?', [newAvg, prodId])
 
     try {
       await query(
         "INSERT INTO interactions (user_id, product_id, interaction_type, rating_value) VALUES (?, ?, 'rating', ?)",
-        [cleanUserId || `guest_${cleanUser.toLowerCase()}`, prodId, numRating]
+        [cleanUserId, prodId, numRating]
       )
     } catch {}
 
-    // 4. BẮT BUỘC gọi syncService để đồng bộ số sao mới ra CSDL và các file tĩnh JSON/JS
+    // 6. BẮT BUỘC gọi syncService để đồng bộ số sao mới ra CSDL và các file tĩnh JSON/JS
     await syncAllProductData()
 
     res.status(201).json({
@@ -172,6 +199,7 @@ router.post('/:id/reviews', async (req, res) => {
         user_name: cleanUser,
         rating: numRating,
         comment: cleanComment,
+        is_verified_buyer: true,
       }
     })
   } catch (err) {
