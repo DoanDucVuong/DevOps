@@ -203,30 +203,47 @@ router.post('/products', requireAdmin, async (req, res) => {
 
 // PUT /api/admin/products/:id
 router.put('/products/:id', requireAdmin, async (req, res) => {
+  console.log("Payload nhận được:", req.body)
   const { id } = req.params
   const { name, description = '', category, gender = 'Chung', price, brand = 'Maison' } = req.body
-  const rawImg = (req.body.image_url || req.body.image || req.body.img || '').trim()
+  const rawImg = (req.body.image_url !== undefined ? req.body.image_url : (req.body.image || req.body.img || '')).trim()
+
   if (!name || !name.trim()) return res.status(400).json({ message: 'Tên sản phẩm không được để trống.' })
   if (!category || !category.trim()) return res.status(400).json({ message: 'Danh mục không được để trống.' })
   const numPrice = Number(price)
   if (isNaN(numPrice) || numPrice < 0) return res.status(400).json({ message: 'Giá sản phẩm không hợp lệ.' })
 
-  const existing = await one('SELECT id FROM products WHERE id = ?', [id])
-  if (!existing) return res.status(404).json({ message: 'Không tìm thấy sản phẩm.' })
+  try {
+    const existing = await one('SELECT id FROM products WHERE id = ?', [id])
+    if (!existing) return res.status(404).json({ message: 'Không tìm thấy sản phẩm.' })
 
-  const rows = await query(
-    `UPDATE products
-     SET name = ?, description = ?, category = ?, gender = ?, brand = ?, price = ?, image_url = ?
-     WHERE id = ?
-     RETURNING *`,
-    [name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, rawImg, id]
-  )
+    const rows = await query(
+      `UPDATE products
+       SET name = ?, description = ?, category = ?, gender = ?, brand = ?, price = ?, image_url = ?
+       WHERE id = ?
+       RETURNING *`,
+      [name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, rawImg, id]
+    )
 
-  const updated = rows[0] || { id, name, description, category, gender, brand, price: numPrice, image_url: rawImg }
-  res.json({ message: 'Cập nhật sản phẩm thành công!', product: updated })
+    const updated = rows[0] || {
+      id,
+      name: name.trim(),
+      description: description.trim(),
+      category: category.trim(),
+      gender,
+      brand: brand.trim(),
+      price: numPrice,
+      image_url: rawImg,
+    }
 
-  // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
-  syncAllProductData().catch((err) => console.error('[admin/update] Lỗi auto-sync:', err))
+    // Đồng bộ toàn diện sang SQLite, PostgreSQL phụ, seed-products.json, products.js, ML Service
+    await syncAllProductData()
+
+    return res.status(200).json({ message: 'Cập nhật sản phẩm thành công!', product: updated })
+  } catch (err) {
+    console.error('[admin/update] Lỗi UPDATE products:', err)
+    return res.status(500).json({ message: 'Lỗi cập nhật CSDL: ' + err.message, error: err.message })
+  }
 })
 
 // DELETE /api/admin/products/:id

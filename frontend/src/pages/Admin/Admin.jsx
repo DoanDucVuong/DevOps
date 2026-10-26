@@ -443,7 +443,7 @@ export default function Admin() {
   const handleSaveProduct = async (e) => {
     e.preventDefault()
     setSavingProduct(true)
-    const cleanImg = (productForm.image_url || productForm.image || '').trim()
+    const cleanImg = (productForm.image_url || '').trim()
     const payload = {
       name: productForm.name.trim(),
       description: (productForm.description || '').trim(),
@@ -451,29 +451,37 @@ export default function Admin() {
       gender: productForm.gender,
       price: Number(productForm.price),
       image_url: cleanImg,
-      image: cleanImg,
       brand: productForm.brand || 'Maison',
     }
     try {
       if (editingProduct) {
+        // Tuyệt đối không optimistic: phải await API hoàn tất và trả về status 200 / product hợp lệ
         const res = await updateAdminProduct(editingProduct.id, payload)
-        showToast('Cập nhật sản phẩm thành công!')
-        if (res?.product) {
-          syncProductUpdate(res.product)
+        const updatedProd = res?.product || res?.data?.product
+        if (updatedProd && updatedProd.id) {
+          syncProductUpdate(updatedProd)
+          showToast('Cập nhật sản phẩm thành công!')
+        } else {
+          throw new Error(res?.message || 'Không nhận được dữ liệu sản phẩm từ máy chủ')
         }
       } else {
         const res = await createAdminProduct({ ...payload, id: productForm.id })
-        showToast('Thêm sản phẩm mới thành công!')
-        if (res?.product) {
-          syncProductUpdate(res.product)
+        const createdProd = res?.product || res?.data?.product
+        if (createdProd && createdProd.id) {
+          syncProductUpdate(createdProd)
+          showToast('Thêm sản phẩm mới thành công!')
+        } else {
+          throw new Error(res?.message || 'Không thể tạo mới sản phẩm')
         }
       }
       setProductModalOpen(false)
-      loadAdminProducts()
-      loadCategories() // Refresh category product counts
-      refreshStoreProducts() // Refresh customer storefront
+      await loadAdminProducts()
+      await loadCategories()
+      await refreshStoreProducts()
     } catch (err) {
-      showToast(err.response?.data?.message || err.message || 'Lỗi khi lưu sản phẩm')
+      const detail = err.response?.data?.message || err.message || 'Lỗi khi lưu sản phẩm'
+      console.error('[handleSaveProduct error]', detail, err)
+      showToast(`Lỗi: ${detail}`)
     } finally {
       setSavingProduct(false)
     }

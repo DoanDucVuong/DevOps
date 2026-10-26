@@ -50,6 +50,7 @@ services:
       - DATABASE_SSL=false
     volumes:
       - ./backend/src/db:/app/src/db
+      - ./frontend/src/data:/app/frontend/src/data
       - ./frontend/src/data:/app/frontend-data
       - ./ml-service/data:/app/ml-data
     depends_on:

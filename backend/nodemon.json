@@ -1,0 +1,15 @@
+{
+  "watch": ["src"],
+  "ext": "js,mjs,json",
+  "ignore": [
+    "src/db/sttn.db*",
+    "src/db/*.json",
+    "src/db/*.sql",
+    "src/db/*.db",
+    "src/db/*.db-wal",
+    "src/db/*.db-shm",
+    "*.test.js",
+    "node_modules"
+  ],
+  "delay": "1000"
+}
