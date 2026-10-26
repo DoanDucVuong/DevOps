@@ -19,13 +19,14 @@ export default function Checkout() {
   const items = useCartStore((s) => s.items)
   const totalPrice = useCartStore((s) => s.totalPrice())
   const clearCart = useCartStore((s) => s.clearCart)
+  const cartVoucher = useCartStore((s) => s.appliedVoucher)
   const user = useAuthStore((s) => s.user)
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
-    fullName: user?.name || '',
-    phone: '',
-    address: '',
+    fullName: user?.fullName || user?.name || '',
+    phone: user?.phone || '',
+    address: user?.address || '',
     city: '',
     note: '',
   })
@@ -35,14 +36,14 @@ export default function Checkout() {
   const [error, setError] = useState('')
   const addOrder = useOrderStore((s) => s.addOrder)
 
-  // Voucher state
+  // Voucher state - tự động thừa hưởng nếu đã áp dụng ở giỏ hàng
   const [voucherInput, setVoucherInput] = useState('')
-  const [appliedVoucher, setAppliedVoucher] = useState(null)
+  const [appliedVoucher, setAppliedVoucher] = useState(cartVoucher)
   const [voucherError, setVoucherError] = useState('')
   const [applyingVoucher, setApplyingVoucher] = useState(false)
 
   const shippingFee = totalPrice >= 500000 || totalPrice === 0 ? 0 : 30000
-  const discountAmount = appliedVoucher ? appliedVoucher.discountAmount : 0
+  const discountAmount = appliedVoucher ? Number(appliedVoucher.discountAmount || appliedVoucher.discount_amount || 0) : 0
   const grandTotal = Math.max(0, totalPrice - discountAmount + shippingFee)
 
   const handleApplyVoucher = async (e) => {
@@ -53,9 +54,13 @@ export default function Checkout() {
     try {
       const res = await applyVoucher(voucherInput.trim(), totalPrice)
       setAppliedVoucher(res)
-      showToast(`Áp dụng mã ${res.voucher.code} thành công (-${formatCurrency(res.discountAmount)})`)
+      const codeName = res.code || res.voucher?.code || voucherInput.trim().toUpperCase()
+      const savedAmount = res.discountAmount || res.discount_amount || 0
+      showToast(`Áp dụng mã ${codeName} thành công (-${formatCurrency(savedAmount)})`)
     } catch (err) {
-      setVoucherError(err.response?.data?.message || 'Mã giảm giá không hợp lệ hoặc chưa đủ điều kiện.')
+      const errMsg = err.response?.data?.message || 'Mã giảm giá không hợp lệ hoặc chưa đủ điều kiện.'
+      setVoucherError(errMsg)
+      showToast(errMsg)
       setAppliedVoucher(null)
     } finally {
       setApplyingVoucher(false)
@@ -66,6 +71,7 @@ export default function Checkout() {
     setAppliedVoucher(null)
     setVoucherInput('')
     setVoucherError('')
+    showToast('Đã hủy áp dụng mã giảm giá.')
   }
 
   const handleConfirm = async (e) => {
@@ -74,16 +80,27 @@ export default function Checkout() {
     setSubmitting(true)
     try {
       if (IS_BACKEND) {
-        // Backend tự tính lại giá/tổng tiền từ database, client gửi sản phẩm + số lượng + voucherCode
         const res = await createOrder({
           items: items.map((i) => ({
-            productId: i.productId, color: i.color, size: i.size, quantity: i.quantity, image: i.image,
+            productId: i.productId || i.id,
+            name: i.name,
+            price: i.price,
+            color: i.color,
+            size: i.size,
+            quantity: i.quantity,
+            image: i.image,
           })),
+          shipping_info: form,
           shipping: form,
+          payment_method: payment,
           paymentMethod: payment,
-          voucherCode: appliedVoucher?.voucher?.code || undefined,
+          voucher_code: appliedVoucher?.code || appliedVoucher?.voucher?.code || undefined,
+          voucherCode: appliedVoucher?.code || appliedVoucher?.voucher?.code || undefined,
+          total_amount: grandTotal,
         })
-        setOrderId(res.code)
+        const newOrderId = res.code || (res.orderId ? `DH${String(res.orderId).padStart(6, '0')}` : res.id)
+        setOrderId(newOrderId)
+        showToast('Đặt hàng thành công!')
       } else {
         const id = 'DH' + Date.now().toString().slice(-8)
         addOrder({
@@ -97,14 +114,16 @@ export default function Checkout() {
           status: 'pending',
         })
         setOrderId(id)
+        showToast('Đặt hàng thành công!')
       }
       clearCart()
     } catch (err) {
-      setError(
+      const errMsg =
         err.response?.status === 401
           ? 'Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại.'
           : err.response?.data?.message || 'Không thể đặt hàng lúc này, vui lòng thử lại.'
-      )
+      setError(errMsg)
+      showToast(errMsg)
     } finally {
       setSubmitting(false)
     }

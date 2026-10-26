@@ -67,6 +67,14 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="orders/success"
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
             <Route path="404" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Route>

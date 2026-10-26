@@ -19,35 +19,56 @@ const parseOrder = (r) => ({
   items: JSON.parse(r.items_json),
 })
 
-// POST /api/orders  { items:[{productId,color,size,quantity,image?}], shipping:{...}, paymentMethod, voucherCode }
-// Giá và tổng tiền được tính lại ở server từ bảng products (không tin dữ liệu giá từ client).
+// POST /api/orders
+// Nhận payload: shipping_info, payment_method (cod, bank, wallet), items, voucher_code, total_amount.
 router.post('/', requireAuth, async (req, res) => {
-  const { items, shipping, paymentMethod, voucherCode } = req.body
+  const shippingInfo = req.body.shipping_info || req.body.shipping || {}
+  const paymentMethod = req.body.payment_method || req.body.paymentMethod || 'cod'
+  const voucherCode = req.body.voucher_code || req.body.voucherCode
+  const items = req.body.items || []
+
   if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
     return res.status(400).json({ message: 'Giỏ hàng trống hoặc không hợp lệ.' })
   }
-  if (!shipping || !['fullName', 'phone', 'address', 'city'].every((k) => String(shipping[k] || '').trim())) {
-    return res.status(400).json({ message: 'Thiếu thông tin giao hàng.' })
+
+  const fullName = String(shippingInfo.fullName || shippingInfo.full_name || shippingInfo.name || '').trim()
+  const phone = String(shippingInfo.phone || '').trim()
+  const address = String(shippingInfo.address || '').trim()
+  const city = String(shippingInfo.city || '').trim()
+  const note = String(shippingInfo.note || '').slice(0, 500)
+
+  if (!fullName || !phone || !address || !city) {
+    return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin giao hàng (họ tên, số điện thoại, địa chỉ, tỉnh/thành phố).' })
   }
+
   if (!PAYMENT_METHODS.includes(paymentMethod)) {
     return res.status(400).json({ message: 'Phương thức thanh toán không hợp lệ.' })
   }
 
-  const ids = [...new Set(items.map((i) => i.productId))]
-  const products = await query(`SELECT * FROM products WHERE id IN (${ids.map(() => '?').join(',')})`, ids)
+  const pids = [...new Set(items.map((i) => i.productId || i.product_id || i.id).filter(Boolean))]
+  const products = pids.length > 0 ? await query(`SELECT * FROM products WHERE id IN (${pids.map(() => '?').join(',')})`, pids) : []
   const map = Object.fromEntries(products.map((p) => [p.id, p]))
 
   const lines = []
   for (const it of items) {
-    const p = map[it.productId]
+    const pid = it.productId || it.product_id || it.id
+    const p = map[pid]
     const qty = Number(it.quantity)
-    if (!p || !Number.isInteger(qty) || qty < 1 || qty > 99) {
-      return res.status(400).json({ message: `Sản phẩm không hợp lệ: ${it.productId}` })
+    if (!Number.isInteger(qty) || qty < 1 || qty > 99) {
+      return res.status(400).json({ message: `Số lượng sản phẩm không hợp lệ: ${pid}` })
     }
+    const price = p ? Number(p.price) : Number(it.price || 0)
+    const name = p ? p.name : String(it.name || 'Sản phẩm')
+    const img = it.image || (p ? p.image_url : null)
+
     lines.push({
-      productId: p.id, name: p.name, price: Number(p.price), quantity: qty,
-      size: String(it.size || ''), color: String(it.color || ''),
-      image: typeof it.image === 'string' && it.image.startsWith('http') ? it.image.slice(0, 500) : null,
+      productId: pid,
+      name,
+      price,
+      quantity: qty,
+      size: String(it.size || ''),
+      color: String(it.color || ''),
+      image: typeof img === 'string' && img.startsWith('http') ? img.slice(0, 500) : null,
     })
   }
 
@@ -56,7 +77,7 @@ router.post('/', requireAuth, async (req, res) => {
   let discountAmount = 0
   let appliedVoucher = null
 
-  if (voucherCode && typeof voucherCode === 'string') {
+  if (voucherCode && typeof voucherCode === 'string' && voucherCode.trim()) {
     const cleanCode = voucherCode.trim().toUpperCase()
     const vouchers = await query('SELECT * FROM vouchers WHERE UPPER(code) = ? AND is_active = 1', [cleanCode])
     if (vouchers.length > 0) {
@@ -77,16 +98,20 @@ router.post('/', requireAuth, async (req, res) => {
         }
         discountAmount = Math.min(discountAmount, subtotal)
         appliedVoucher = v
-        await query('UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?', [v.id])
+
+        // Cập nhật lượt dùng voucher: UPDATE vouchers SET used_count = used_count + 1 WHERE code = ?
+        await query('UPDATE vouchers SET used_count = used_count + 1 WHERE UPPER(code) = UPPER(?)', [v.code])
       }
     }
   }
 
   const total = Math.max(0, subtotal - discountAmount + shippingFee)
   const cleanShipping = {
-    fullName: String(shipping.fullName).trim(), phone: String(shipping.phone).trim(),
-    address: String(shipping.address).trim(), city: String(shipping.city).trim(),
-    note: String(shipping.note || '').slice(0, 500),
+    fullName,
+    phone,
+    address,
+    city,
+    note,
   }
   if (appliedVoucher) {
     cleanShipping.voucher = {
@@ -97,19 +122,35 @@ router.post('/', requireAuth, async (req, res) => {
   }
 
   const rows = await query(
-    `INSERT INTO orders (user_id, total_amount, shipping_fee, payment_method, shipping_json, items_json)
-     VALUES (?, ?, ?, ?, ?, ?) RETURNING id`,
+    `INSERT INTO orders (user_id, total_amount, shipping_fee, payment_method, shipping_json, items_json, status)
+     VALUES (?, ?, ?, ?, ?, ?, 'pending') RETURNING id`,
     [String(req.user.id), total, shippingFee, paymentMethod, JSON.stringify(cleanShipping), JSON.stringify(lines)]
   )
 
+  const id = rows[0].id
+  const orderCode = `DH${String(id).padStart(6, '0')}`
+
   // Mỗi sản phẩm đã mua = 1 interaction "purchase" -> dữ liệu huấn luyện ML
   for (const l of lines) {
-    await query("INSERT INTO interactions (user_id, product_id, interaction_type) VALUES (?, ?, 'purchase')",
-      [String(req.user.id), l.productId])
+    if (l.productId) {
+      try {
+        await query("INSERT INTO interactions (user_id, product_id, interaction_type) VALUES (?, ?, 'purchase')",
+          [String(req.user.id), l.productId])
+      } catch {}
+    }
   }
 
-  const id = rows[0].id
-  res.status(201).json({ orderId: id, code: `DH${String(id).padStart(6, '0')}`, total, shippingFee, discountAmount, status: 'pending' })
+  res.status(201).json({
+    success: true,
+    orderId: id,
+    id: id,
+    code: orderCode,
+    total,
+    shippingFee,
+    discountAmount,
+    status: 'pending',
+    message: 'Đặt hàng thành công!'
+  })
 })
 
 // GET /api/orders/me
