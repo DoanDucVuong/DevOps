@@ -19,6 +19,14 @@ app.use('/api/banners', require('./routes/banners'))
 app.use('/api/interactions', require('./routes/interactions'))
 app.use('/api/recommendations', require('./routes/recommendations'))
 app.use('/api/orders', require('./routes/orders'))
+app.use('/api/reviews', (req, res, next) => {
+  const prodId = req.body?.product_id || req.body?.productId
+  if (req.method === 'POST' && prodId) {
+    req.url = `/${prodId}/reviews`
+    return require('./routes/products')(req, res, next)
+  }
+  next()
+})
 app.use('/api/admin', require('./routes/admin'))
 app.use('/api/internal', require('./routes/internal'))
 

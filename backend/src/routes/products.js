@@ -2,6 +2,7 @@ const express = require('express')
 const axios = require('axios')
 const { query, one } = require('../db')
 const { getMlServiceUrl } = require('../mlConfig')
+const { syncAllProductData } = require('../services/syncService')
 
 const router = express.Router()
 
@@ -57,56 +58,125 @@ router.get('/:id/similar', async (req, res) => {
 
 // GET /api/products/:id/reviews
 router.get('/:id/reviews', async (req, res) => {
+  const prodId = req.params.id
   try {
     const reviews = await query(
-      'SELECT id, product_id, user_name, rating, comment, created_at FROM reviews WHERE product_id = ? ORDER BY created_at DESC',
-      [req.params.id]
+      'SELECT id, product_id, user_id, user_name, rating, comment, created_at FROM reviews WHERE product_id = ? ORDER BY created_at DESC',
+      [prodId]
     )
     const stats = await one(
       'SELECT COUNT(*) AS total, AVG(rating) AS avg FROM reviews WHERE product_id = ?',
-      [req.params.id]
+      [prodId]
     )
+
+    // Lấy các đơn hàng đã thanh toán hoặc hoàn thành để xác thực người mua thật (verified buyer)
+    const paidOrders = await query(
+      `SELECT user_id, shipping_json, items_json FROM orders WHERE status IN ('completed', 'paid', 'shipped')`
+    )
+
+    const enrichedReviews = reviews.map((rev) => {
+      let isVerified = false
+      for (const order of paidOrders) {
+        let hasProduct = false
+        try {
+          const items = typeof order.items_json === 'string' ? JSON.parse(order.items_json) : (order.items_json || [])
+          hasProduct = items.some((it) => String(it.productId || it.id) === String(prodId))
+        } catch {}
+
+        if (!hasProduct) continue
+
+        let shippingName = ''
+        try {
+          const shipping = typeof order.shipping_json === 'string' ? JSON.parse(order.shipping_json) : (order.shipping_json || {})
+          shippingName = String(shipping.fullName || '').trim().toLowerCase()
+        } catch {}
+
+        const revUserId = rev.user_id ? String(rev.user_id).trim().toLowerCase() : ''
+        const revName = rev.user_name ? String(rev.user_name).trim().toLowerCase() : ''
+        const orderUserId = order.user_id ? String(order.user_id).trim().toLowerCase() : ''
+
+        if (
+          (revUserId && revUserId === orderUserId) ||
+          (revName && revName === orderUserId) ||
+          (revName && shippingName && revName === shippingName)
+        ) {
+          isVerified = true
+          break
+        }
+      }
+
+      return {
+        ...rev,
+        is_verified_buyer: isVerified,
+      }
+    })
+
     res.json({
-      reviews,
+      reviews: enrichedReviews,
       total: Number(stats?.total || 0),
       avgRating: Number(Number(stats?.avg || 0).toFixed(1)),
     })
   } catch (err) {
+    console.error('[products/reviews/get] Lỗi:', err)
     res.status(500).json({ message: 'Không thể tải danh sách đánh giá.' })
   }
 })
 
 // POST /api/products/:id/reviews
 router.post('/:id/reviews', async (req, res) => {
+  const prodId = req.params.id
   const { userName, rating, comment, userId } = req.body
   if (!userName || !rating || !comment) {
     return res.status(400).json({ message: 'Vui lòng nhập tên, chọn số sao và nội dung bình luận.' })
   }
   const numRating = Math.max(1, Math.min(5, Number(rating) || 5))
+  const cleanUser = String(userName).trim()
+  const cleanComment = String(comment).trim()
+  const cleanUserId = userId || (req.user?.id ? String(req.user.id) : null)
 
   try {
+    // 1. Lưu bình luận vào bảng reviews (kèm user_id)
     await query(
-      'INSERT INTO reviews (product_id, user_name, rating, comment) VALUES (?, ?, ?, ?)',
-      [req.params.id, String(userName).trim(), numRating, String(comment).trim()]
+      'INSERT INTO reviews (product_id, user_id, user_name, rating, comment) VALUES (?, ?, ?, ?, ?)',
+      [prodId, cleanUserId, cleanUser, numRating, cleanComment]
     )
 
+    // 2. Tính toán lại điểm trung bình từ reviews: SELECT AVG(rating) FROM reviews WHERE product_id = ?
     const stats = await one(
-      'SELECT AVG(rating) AS avg FROM reviews WHERE product_id = ?',
-      [req.params.id]
+      'SELECT AVG(rating) AS avg, COUNT(*) AS total FROM reviews WHERE product_id = ?',
+      [prodId]
     )
-    const newAvg = Number(Number(stats?.avg || numRating).toFixed(1))
-    await query('UPDATE products SET avg_rating = ? WHERE id = ?', [newAvg, req.params.id])
+    const newAvg = (stats && stats.avg !== null && stats.avg !== undefined)
+      ? Number(Number(stats.avg).toFixed(1))
+      : numRating
+
+    // 3. Cập nhật avg_rating vào bảng products
+    await query('UPDATE products SET avg_rating = ? WHERE id = ?', [newAvg, prodId])
 
     try {
       await query(
         "INSERT INTO interactions (user_id, product_id, interaction_type, rating_value) VALUES (?, ?, 'rating', ?)",
-        [userId || `guest_${String(userName).trim().toLowerCase()}`, req.params.id, numRating]
+        [cleanUserId || `guest_${cleanUser.toLowerCase()}`, prodId, numRating]
       )
     } catch {}
 
-    res.status(201).json({ message: 'Đánh giá thành công!', avgRating: newAvg })
+    // 4. BẮT BUỘC gọi syncService để đồng bộ số sao mới ra CSDL và các file tĩnh JSON/JS
+    await syncAllProductData()
+
+    res.status(201).json({
+      message: 'Đánh giá thành công!',
+      avgRating: newAvg,
+      review: {
+        product_id: prodId,
+        user_id: cleanUserId,
+        user_name: cleanUser,
+        rating: numRating,
+        comment: cleanComment,
+      }
+    })
   } catch (err) {
-    res.status(500).json({ message: 'Không thể lưu đánh giá.' })
+    console.error('[products/reviews/post] Lỗi lưu đánh giá:', err)
+    res.status(500).json({ message: 'Không thể lưu đánh giá: ' + err.message })
   }
 })
 

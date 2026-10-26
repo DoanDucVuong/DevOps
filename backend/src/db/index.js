@@ -112,6 +112,7 @@ async function init() {
     `CREATE TABLE IF NOT EXISTS reviews (
       id ${ID},
       product_id TEXT NOT NULL,
+      user_id TEXT,
       user_name TEXT NOT NULL,
       rating INTEGER NOT NULL CHECK(rating >= 1 AND rating <= 5),
       comment TEXT NOT NULL,
@@ -159,8 +160,11 @@ async function init() {
   for (const stmt of ddl) await query(stmt)
   try {
     await query("ALTER TABLE products ADD COLUMN IF NOT EXISTS gender TEXT DEFAULT 'Unisex'")
+  } catch (err) {}
+  try {
+    await query("ALTER TABLE reviews ADD COLUMN IF NOT EXISTS user_id TEXT")
   } catch (err) {
-    // Bỏ qua nếu cột đã tồn tại hoặc SQLite không hỗ trợ IF NOT EXISTS
+    try { await query("ALTER TABLE reviews ADD COLUMN user_id TEXT") } catch (e) {}
   }
 
   await seedCategories()

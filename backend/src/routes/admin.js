@@ -171,34 +171,67 @@ router.get('/products', requireAdmin, async (req, res) => {
 
 // POST /api/admin/products
 router.post('/products', requireAdmin, async (req, res) => {
+  console.log("Payload thêm sản phẩm nhận được:", req.body)
   const { id, name, description = '', category, gender = 'Chung', price, brand = 'Maison' } = req.body
-  const rawImg = (req.body.image_url || req.body.image || req.body.img || '').trim()
+  const rawImg = (req.body.image_url !== undefined ? req.body.image_url : (req.body.image || req.body.img || '')).trim()
+
   if (!name || !name.trim()) return res.status(400).json({ message: 'Tên sản phẩm không được để trống.' })
   if (!category || !category.trim()) return res.status(400).json({ message: 'Danh mục không được để trống.' })
   const numPrice = Number(price)
   if (isNaN(numPrice) || numPrice < 0) return res.status(400).json({ message: 'Giá sản phẩm không hợp lệ.' })
 
-  // Tạo ID nếu chưa có
-  const cleanId = (id && id.trim())
-    ? id.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-')
-    : `${category}-${Date.now().toString().slice(-6)}`
+  // Tự sinh mã ID nếu client không gửi (tiền tố 'p', ví dụ: p01 -> p14 -> p15)
+  let cleanId = (id && String(id).trim())
+    ? String(id).trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-')
+    : ''
 
-  // Kiểm tra trùng ID
-  const existing = await one('SELECT id FROM products WHERE id = ?', [cleanId])
-  if (existing) return res.status(409).json({ message: `Mã sản phẩm "${cleanId}" đã tồn tại.` })
+  if (!cleanId) {
+    const allRows = await query('SELECT id FROM products')
+    let maxNum = 0
+    for (const r of allRows) {
+      const match = String(r.id).match(/^p(\d+)$/i)
+      if (match) {
+        const num = parseInt(match[1], 10)
+        if (num > maxNum) maxNum = num
+      }
+    }
+    const nextNum = maxNum + 1
+    cleanId = nextNum < 10 ? `p0${nextNum}` : `p${nextNum}`
+  }
 
-  const rows = await query(
-    `INSERT INTO products (id, name, description, category, gender, brand, price, image_url)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-     RETURNING *`,
-    [cleanId, name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, rawImg]
-  )
+  try {
+    // Kiểm tra trùng ID
+    const existing = await one('SELECT id FROM products WHERE id = ?', [cleanId])
+    if (existing) return res.status(409).json({ message: `Mã sản phẩm "${cleanId}" đã tồn tại.` })
 
-  const created = rows[0] || { id: cleanId, name, description, category, gender, brand, price: numPrice, image_url: rawImg }
-  res.status(201).json({ message: 'Thêm sản phẩm thành công!', product: created })
+    const rows = await query(
+      `INSERT INTO products (id, name, description, category, gender, brand, price, image_url, avg_rating, stock)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0.0, 100)
+       RETURNING *`,
+      [cleanId, name.trim(), description.trim(), category.trim(), gender, brand.trim(), numPrice, rawImg]
+    )
 
-  // Tự động đồng bộ toàn diện sang SQLite, seed-products.json, products.js, ML Service
-  syncAllProductData().catch((err) => console.error('[admin/create] Lỗi auto-sync:', err))
+    const created = rows[0] || {
+      id: cleanId,
+      name: name.trim(),
+      description: description.trim(),
+      category: category.trim(),
+      gender,
+      brand: brand.trim(),
+      price: numPrice,
+      image_url: rawImg,
+      avg_rating: 0.0,
+      stock: 100,
+    }
+
+    // Tự động đồng bộ toàn diện sang CẢ HAI CSDL (PostgreSQL & SQLite) và các file JSON/JS
+    await syncAllProductData()
+
+    return res.status(201).json({ message: 'Thêm sản phẩm thành công!', product: created })
+  } catch (err) {
+    console.error('[admin/create] Lỗi INSERT products:', err)
+    return res.status(500).json({ message: 'Lỗi thêm sản phẩm vào CSDL: ' + err.message, error: err.message })
+  }
 })
 
 // PUT /api/admin/products/:id

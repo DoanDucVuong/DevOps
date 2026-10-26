@@ -1,8 +1,8 @@
-// Danh sách 100 sản phẩm thời trang tự động đồng bộ theo thời gian thực từ Database
+// Danh sách 103 sản phẩm thời trang tự động đồng bộ theo thời gian thực từ Database
 export const products = [
   {
     "id": "p01",
-    "name": "Test Update 123",
+    "name": "Áo Thun Cổ Tròn Big Size Navy BS2763",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -23,9 +23,40 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80",
+    "image_url": "https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2763.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80"
+      "https://thoitrangbigsize.vn/wp-content/uploads/2024/06/BS2763.jpg"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh."
+  },
+  {
+    "id": "p015",
+    "name": "Áo Thun Nam Tay Ngắn Form Vừa TS26SS13P-RGAT",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "brand": "Maison",
+    "price": 350000,
+    "oldPrice": null,
+    "stock": 100,
+    "rating": 5,
+    "avg_rating": 5,
+    "review_count": 50,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://cdn.hstatic.net/products/1000402464/ts26ss13p-rgat_white__1__20ac2fe88a674033b2950c2e11e29984_master.jpg",
+    "images": [
+      "https://cdn.hstatic.net/products/1000402464/ts26ss13p-rgat_white__1__20ac2fe88a674033b2950c2e11e29984_master.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -342,6 +373,68 @@ export const products = [
     "description": "Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh."
   },
   {
+    "id": "p101",
+    "name": "Áo Polo Test Tự Động Tăng Mã",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "brand": "Maison",
+    "price": 320000,
+    "oldPrice": null,
+    "stock": 100,
+    "rating": 5,
+    "avg_rating": 5,
+    "review_count": 50,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Sản phẩm test auto-increment ID"
+  },
+  {
+    "id": "p102",
+    "name": "Áo Thun Basic Tự Tăng Mã",
+    "gender": "Nam",
+    "category": "ao-thun",
+    "brand": "Maison",
+    "price": 290000,
+    "oldPrice": null,
+    "stock": 100,
+    "rating": 5,
+    "avg_rating": 5,
+    "review_count": 50,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Kiểm thử tính năng tự động tăng ID dạng pXX"
+  },
+  {
     "id": "p11",
     "name": "Áo Thun Nam Cổ Tim Phong Cách Casual",
     "gender": "Nam",
@@ -474,8 +567,8 @@ export const products = [
     "price": 600000,
     "oldPrice": null,
     "stock": 178,
-    "rating": 4.4,
-    "avg_rating": 4.4,
+    "rating": 5,
+    "avg_rating": 5,
     "review_count": 50,
     "colors": [
       "den",

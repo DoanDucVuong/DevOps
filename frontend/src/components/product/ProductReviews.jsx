@@ -179,9 +179,11 @@ export default function ProductReviews({ productId, initialAvgRating = 4.8 }) {
                         <span className="text-sm font-medium text-ink block leading-none">
                           {rev.user_name}
                         </span>
-                        <span className="text-[11px] text-moss font-medium flex items-center gap-1 mt-0.5">
-                          <CheckCircle2 size={12} /> Đã mua hàng
-                        </span>
+                        {rev.is_verified_buyer && (
+                          <span className="text-[11px] text-moss font-medium flex items-center gap-1 mt-0.5">
+                            <CheckCircle2 size={12} /> Đã mua hàng
+                          </span>
+                        )}
                       </div>
                     </div>
 
