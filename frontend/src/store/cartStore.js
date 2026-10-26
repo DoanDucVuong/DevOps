@@ -7,6 +7,10 @@ export const useCartStore = create(
   persist(
     (set, get) => ({
       items: [],
+      appliedVoucher: null,
+
+      setAppliedVoucher: (voucher) => set({ appliedVoucher: voucher }),
+      removeAppliedVoucher: () => set({ appliedVoucher: null }),
 
       addItem: (item) => {
         const key = lineKey(item)
@@ -31,7 +35,7 @@ export const useCartStore = create(
         })
       },
 
-      clearCart: () => set({ items: [] }),
+      clearCart: () => set({ items: [], appliedVoucher: null }),
 
       totalItems: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
       totalPrice: () => get().items.reduce((sum, i) => sum + i.quantity * i.price, 0),

@@ -1,30 +1,32 @@
 const express = require('express')
 const { query, one } = require('../db')
-const { requireAdmin } = require('../middleware/auth')
+const { requireAuth, requireAdmin } = require('../middleware/auth')
 
 const router = express.Router()
 
-// POST /api/vouchers/apply - Kiểm tra và áp dụng mã giảm giá (public / checkout)
-router.post('/apply', async (req, res) => {
-  const { code, order_total = 0 } = req.body
-  if (!code || !code.trim()) {
+// POST /api/vouchers/apply - Kiểm tra và áp dụng mã giảm giá (yêu cầu đăng nhập JWT)
+router.post('/apply', requireAuth, async (req, res) => {
+  const { code, order_total = 0, orderTotal = 0, total = 0 } = req.body
+  const rawTotal = Number(order_total || orderTotal || total) || 0
+
+  if (!code || !String(code).trim()) {
     return res.status(400).json({ message: 'Vui lòng nhập mã giảm giá.' })
   }
 
-  const cleanCode = code.trim().toUpperCase()
+  const cleanCode = String(code).trim().toUpperCase()
 
   try {
     const voucher = await one('SELECT * FROM vouchers WHERE UPPER(code) = ? AND is_active = 1', [cleanCode])
     if (!voucher) {
-      return res.status(404).json({ message: 'Mã giảm giá không tồn tại hoặc đã hết hạn.' })
+      return res.status(404).json({ message: 'Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa.' })
     }
 
-    // Kiểm tra lượt dùng
+    // 1. Kiểm tra lượt dùng
     if (voucher.usage_limit && voucher.used_count >= voucher.usage_limit) {
       return res.status(400).json({ message: 'Mã giảm giá đã hết lượt sử dụng.' })
     }
 
-    // Kiểm tra hạn sử dụng
+    // 2. Kiểm tra hạn sử dụng
     if (voucher.expires_at) {
       const expDate = new Date(voucher.expires_at)
       if (expDate < new Date()) {
@@ -32,18 +34,17 @@ router.post('/apply', async (req, res) => {
       }
     }
 
-    // Kiểm tra giá trị đơn hàng tối thiểu
-    const total = Number(order_total) || 0
-    if (voucher.min_order_value && total < Number(voucher.min_order_value)) {
+    // 3. Kiểm tra giá trị đơn hàng tối thiểu
+    if (voucher.min_order_value && rawTotal < Number(voucher.min_order_value)) {
       return res.status(400).json({
         message: `Mã này chỉ áp dụng cho đơn hàng từ ${Number(voucher.min_order_value).toLocaleString('vi-VN')} đ trở lên.`
       })
     }
 
-    // Tính toán số tiền giảm
+    // 4. Tính toán số tiền giảm
     let discountAmount = 0
     if (voucher.discount_type === 'percent') {
-      discountAmount = Math.round((total * Number(voucher.discount_value)) / 100)
+      discountAmount = Math.round((rawTotal * Number(voucher.discount_value)) / 100)
       if (voucher.max_discount && discountAmount > Number(voucher.max_discount)) {
         discountAmount = Number(voucher.max_discount)
       }
@@ -52,24 +53,30 @@ router.post('/apply', async (req, res) => {
       discountAmount = Number(voucher.discount_value)
     }
 
-    if (discountAmount > total) {
-      discountAmount = total
+    if (discountAmount > rawTotal) {
+      discountAmount = rawTotal
     }
 
+    const finalTotal = Math.max(0, rawTotal - discountAmount)
+
     res.json({
+      success: true,
       valid: true,
+      code: voucher.code,
+      discount_amount: discountAmount,
+      final_total: finalTotal,
       voucher: {
         id: voucher.id,
         code: voucher.code,
         discount_type: voucher.discount_type,
-        discount_value: voucher.discount_value
-      },
-      discount_amount: discountAmount,
-      final_total: Math.max(0, total - discountAmount)
+        discount_value: Number(voucher.discount_value),
+        min_order_value: Number(voucher.min_order_value || 0),
+        max_discount: voucher.max_discount ? Number(voucher.max_discount) : null,
+      }
     })
   } catch (err) {
     console.error('[vouchers/apply]', err)
-    res.status(500).json({ message: 'Lỗi kiểm tra mã giảm giá.' })
+    res.status(500).json({ message: 'Lỗi kiểm tra mã giảm giá: ' + err.message })
   }
 })
 
