@@ -3,11 +3,11 @@
   "n_real": 77,
   "n_real_users": 7,
   "n_synthetic": 836,
-  "rmse_cv_mean": 0.9079598299261086,
-  "mae_cv_mean": 0.7425286898615875,
+  "rmse_cv_mean": 0.9236075562210451,
+  "mae_cv_mean": 0.7604332057080232,
   "rmse_holdout": 0.8881136573654013,
   "mae_holdout": 0.7033374550602897,
   "n_ratings_used": 490,
   "n_users": 67,
-  "trained_at": "2026-10-26T13:40:50.588615+00:00"
+  "trained_at": "2026-10-26T13:47:32.328202+00:00"
 }

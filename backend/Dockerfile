@@ -1,18 +1,20 @@
-# Backend Service — Node.js/Express (mục 3.2.2 báo cáo)
-# Dùng PostgreSQL (pg thuần JS) nên bỏ qua better-sqlite3 -> không cần trình biên dịch native.
-FROM node:20-alpine AS builder
+# Backend Service — Node.js / Express
+FROM node:20-alpine
+
 WORKDIR /app
+
+# Cài đặt công cụ biên dịch C++ native cho better-sqlite3 trên Alpine Linux
+RUN apk add --no-cache python3 make g++ sqlite
+
+# Cài đặt dependencies (bao gồm better-sqlite3)
 COPY package*.json ./
-RUN npm install --omit=dev --omit=optional
+RUN npm install
+
+# Copy toàn bộ mã nguồn Backend
 COPY . .
 
-FROM node:20-alpine AS runner
-WORKDIR /app
-RUN apk add --no-cache sqlite
-ENV NODE_ENV=production
-ENV PORT=4000
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/src ./src
+# Phơi port 4000
 EXPOSE 4000
-CMD ["node", "src/server.js"]
+
+# Lệnh khởi chạy chính thức
+CMD ["npm", "start"]

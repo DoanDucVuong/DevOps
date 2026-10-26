@@ -1,23 +1,22 @@
-# ML Serving Service — Python/FastAPI (mục 3.2.2 báo cáo)
-FROM python:3.11-slim AS base
+# ML Recommendation Service — Python FastAPI
+FROM python:3.9-slim
 
-# scikit-surprise cần biên dịch (Cython) -> cần build-essential
+# Cài đặt build-essential để biên dịch các thư viện học máy C/Cython (scikit-surprise)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
+# Cài đặt Python dependencies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy toàn bộ mã nguồn ML Service
 COPY . .
 
-# Huấn luyện mô hình ngay lúc build image để container khởi động là có sẵn model
-# (Production nên tách bước này ra một job huấn luyện riêng + Model Registry MLflow,
-#  xem ghi chú trong README ở thư mục gốc).
-RUN cd data && python products.py && python generate_interactions.py && cd .. && python train.py
-
-ENV PORT=8001
+# Phơi port 8001
 EXPOSE 8001
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8001}"]
+
+# Lệnh khởi chạy uvicorn theo yêu cầu kỹ thuật
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8001"]
