@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import {
   RefreshCw, Brain, LayoutDashboard, Folders, Ticket, Image as ImageIcon,
   Plus, Edit2, Trash2, Check, X, AlertCircle, Eye, EyeOff, Loader2, Sparkles,
-  ExternalLink, Package, Search, Filter, ChevronLeft, ChevronRight, ShoppingBag
+  ExternalLink, Package, Search, Filter, ChevronLeft, ChevronRight, ShoppingBag, Star
 } from 'lucide-react'
 import OrdersManagement from './OrdersManagement'
 import {
@@ -995,8 +995,18 @@ export default function Admin() {
                           <td className="py-2.5 pr-3 text-right font-semibold text-ink">
                             {formatCurrency(p.price)}
                           </td>
-                          <td className="py-2.5 pr-3 text-center text-xs text-ink-soft">
-                            ⭐ {p.avg_rating || 4.5}
+                          <td className="py-2.5 pr-3 text-center text-xs whitespace-nowrap">
+                            {Number(p.avg_rating || 0) > 0 ? (
+                              <span className="inline-flex items-center gap-1 font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                                <Star size={12} className="fill-amber-500 text-amber-500" />
+                                {Number(p.avg_rating).toFixed(1)}
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-ink-soft bg-stone/40 px-2 py-0.5 rounded-full border border-stone">
+                                <Star size={12} className="text-stone-dark" />
+                                0
+                              </span>
+                            )}
                           </td>
                           <td className="py-2.5 text-right">
                             <div className="flex items-center justify-end gap-1.5">
