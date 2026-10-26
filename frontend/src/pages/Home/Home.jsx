@@ -68,16 +68,17 @@ export default function Home() {
     setLoadingRec(true)
     fetchRecommendations(userId, 8)
       .then((data) => {
-        const mapped = data.items.map((it) => getProductById(it.id)).filter(Boolean)
+        const items = data?.items || []
+        const mapped = items.map((it) => getProductById(it.id) || it).filter(Boolean)
         setRecommended(mapped)
-        setAlgorithm(data.algorithm)
+        setAlgorithm(data?.algorithm || null)
       })
-      .catch(() => {
-        // Backend/ML service chưa chạy -> ẩn khu vực gợi ý thay vì làm vỡ trang chủ
+      .catch((err) => {
+        console.warn('[Home] Không tải được gợi ý AI:', err.message)
         setRecommended([])
       })
       .finally(() => setLoadingRec(false))
-  }, [user])
+  }, [user, getProductById])
 
   const handleRecommendedClick = (productId) => {
     trackRecommendationClick(getEffectiveUserId(user), productId)
@@ -128,10 +129,11 @@ export default function Home() {
           )}
           {loadingRec ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[3/4] bg-stone rounded-sm mb-3" />
-                  <div className="h-3 bg-stone rounded w-3/4" />
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="animate-pulse space-y-2">
+                  <div className="aspect-[3/4] bg-stone/70 rounded-sm" />
+                  <div className="h-3.5 bg-stone/80 rounded-xs w-4/5" />
+                  <div className="h-3 bg-stone/50 rounded-xs w-2/5" />
                 </div>
               ))}
             </div>

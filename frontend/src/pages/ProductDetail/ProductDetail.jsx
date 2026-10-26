@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { Heart, Minus, Plus, Truck, RefreshCw } from 'lucide-react'
+import { Heart, Minus, Plus, Truck, RefreshCw, Sparkles } from 'lucide-react'
 import { useProductStore } from '../../store/productStore'
 import { colors as colorData } from '../../data/categories'
 import { useCartStore } from '../../store/cartStore'
@@ -24,6 +24,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1)
   const [related, setRelated] = useState([])
   const [relatedAlgo, setRelatedAlgo] = useState(null)
+  const [loadingRelated, setLoadingRelated] = useState(true)
 
   const addItem = useCartStore((s) => s.addItem)
   const isWished = useWishlistStore((s) => product && s.isWished(product.id))
@@ -39,21 +40,24 @@ export default function ProductDetail() {
   // "Sản phẩm tương tự / You May Also Like" — Content-based Filtering thật từ ML Service
   useEffect(() => {
     if (!product) return
+    setLoadingRelated(true)
     fetchSimilarProducts(product.id, 4)
       .then((data) => {
-        const mapped = data.items.map((it) => getProductById(it.id)).filter(Boolean)
+        const items = data?.items || []
+        const mapped = items.map((it) => getProductById(it.id) || it).filter(Boolean)
         setRelated(mapped.length > 0 ? mapped : fallbackRelated())
-        setRelatedAlgo(data.algorithm)
+        setRelatedAlgo(data?.algorithm || null)
       })
       .catch(() => {
         setRelated(fallbackRelated())
         setRelatedAlgo(null)
       })
+      .finally(() => setLoadingRelated(false))
 
     function fallbackRelated() {
       return products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4)
     }
-  }, [product?.id])
+  }, [product?.id, product?.category])
 
   if (!product) return <Navigate to="/404" replace />
 
@@ -217,9 +221,12 @@ export default function ProductDetail() {
         initialAvgRating={Number(product.rating || product.avg_rating || 5)}
       />
 
-      {related.length > 0 && (
+      {(loadingRelated || related.length > 0) && (
         <section className="mt-20">
-          <h2 className="font-display text-2xl mb-1">Có thể bạn cũng thích</h2>
+          <div className="flex items-center gap-2 mb-1">
+            <Sparkles size={18} className="text-clay" />
+            <h2 className="font-display text-2xl">Sản phẩm tương tự</h2>
+          </div>
           {relatedAlgo ? (
             <p className="text-xs text-ink-soft mb-6">
               Gợi ý bằng Content-based Filtering (TF-IDF + Cosine Similarity)
@@ -227,11 +234,24 @@ export default function ProductDetail() {
           ) : (
             <div className="mb-6" />
           )}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
-            {related.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+
+          {loadingRelated ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="animate-pulse space-y-2">
+                  <div className="aspect-[3/4] bg-stone/70 rounded-sm" />
+                  <div className="h-3.5 bg-stone/80 rounded-xs w-4/5" />
+                  <div className="h-3 bg-stone/50 rounded-xs w-2/5" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+              {related.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          )}
         </section>
       )}
     </div>

@@ -69,8 +69,11 @@ export const submitProductReview = (id, payload) =>
   api.post(`/products/${id}/reviews`, payload).then(data)
 
 // ---- Recommendations (ML) ----
-export const fetchRecommendations = (userId, topK = 8) =>
-  IS_BACKEND ? api.get(`/recommendations/${encodeURIComponent(userId)}`, { params: { top_k: topK } }).then(data) : noBackend()
+export const fetchRecommendations = (userId, topK = 8) => {
+  if (!IS_BACKEND) return noBackend()
+  const endpoint = userId ? `/recommendations/${encodeURIComponent(userId)}` : '/recommendations'
+  return api.get(endpoint, { params: { top_k: topK } }).then(data)
+}
 export const trackRecommendationClick = (userId, productId) =>
   IS_BACKEND ? api.post('/recommendations/click', { userId, productId }).catch(() => {}) : Promise.resolve()
 
