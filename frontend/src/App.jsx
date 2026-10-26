@@ -13,6 +13,7 @@ import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
 import Checkout from './pages/Checkout/Checkout'
 import Profile from './pages/Profile/Profile'
+import OrderHistory from './pages/Profile/OrderHistory'
 import Orders from './pages/Orders/Orders'
 import NotFound from './pages/NotFound/NotFound'
 import Admin from './pages/Admin/Admin'
@@ -63,7 +64,15 @@ export default function App() {
               path="orders"
               element={
                 <ProtectedRoute>
-                  <Orders />
+                  <OrderHistory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile/orders"
+              element={
+                <ProtectedRoute>
+                  <OrderHistory />
                 </ProtectedRoute>
               }
             />
@@ -71,7 +80,7 @@ export default function App() {
               path="orders/success"
               element={
                 <ProtectedRoute>
-                  <Orders />
+                  <OrderHistory />
                 </ProtectedRoute>
               }
             />
