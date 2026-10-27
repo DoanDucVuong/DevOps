@@ -12,6 +12,7 @@ import Wishlist from './pages/Wishlist/Wishlist'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
 import Checkout from './pages/Checkout/Checkout'
+import VNPayResult from './pages/Checkout/VNPayResult'
 import Profile from './pages/Profile/Profile'
 import OrderHistory from './pages/Profile/OrderHistory'
 import Orders from './pages/Orders/Orders'
@@ -52,6 +53,8 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="checkout/vnpay-result" element={<VNPayResult />} />
+            <Route path="checkout/vnpay_return" element={<VNPayResult />} />
             <Route
               path="profile"
               element={

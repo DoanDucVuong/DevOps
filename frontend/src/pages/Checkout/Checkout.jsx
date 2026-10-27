@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CheckCircle2, Truck, Landmark, Wallet, Ticket, Tag, X } from 'lucide-react'
+import { CheckCircle2, Truck, Landmark, Wallet, Ticket, Tag, X, CreditCard } from 'lucide-react'
 import { useCartStore } from '../../store/cartStore'
 import { useAuthStore } from '../../store/authStore'
 import { useOrderStore } from '../../store/orderStore'
-import { createOrder, applyVoucher, IS_BACKEND } from '../../api/client'
+import { createOrder, createPaymentUrl, applyVoucher, IS_BACKEND } from '../../api/client'
 import { formatCurrency } from '../../utils/format'
 import { useToast } from '../../components/common/Toast'
 
 const PAYMENT_METHODS = [
-  { id: 'cod', label: 'Thanh toán khi nhận hàng (COD)', icon: Truck },
-  { id: 'bank', label: 'Chuyển khoản ngân hàng', icon: Landmark },
-  { id: 'wallet', label: 'Ví điện tử', icon: Wallet },
+  { id: 'cod', label: 'Thanh toán khi nhận hàng (COD)', icon: Truck, desc: 'Thanh toán bằng tiền mặt khi nhận kiện hàng' },
+  { id: 'vnpay', label: 'Cổng thanh toán VNPAY (ATM / QR / Visa)', icon: CreditCard, badge: 'Khuyên dùng', desc: 'Thanh toán tức thì qua thẻ ATM nội địa, QR Pay hoặc thẻ Quốc tế' },
+  { id: 'bank', label: 'Chuyển khoản ngân hàng', icon: Landmark, desc: 'Chuyển khoản thủ công qua số tài khoản ngân hàng' },
+  { id: 'wallet', label: 'Ví điện tử', icon: Wallet, desc: 'Thanh toán qua ví MoMo, ZaloPay' },
 ]
 
 export default function Checkout() {
@@ -79,6 +80,35 @@ export default function Checkout() {
     setError('')
     setSubmitting(true)
     try {
+      if (payment === 'vnpay' && IS_BACKEND) {
+        const orderPayload = {
+          items: items.map((i) => ({
+            productId: i.productId || i.id,
+            name: i.name,
+            price: i.price,
+            color: i.color,
+            size: i.size,
+            quantity: i.quantity,
+            image: i.image,
+          })),
+          shipping_info: form,
+          shipping: form,
+          payment_method: 'vnpay',
+          paymentMethod: 'vnpay',
+          voucher_code: appliedVoucher?.code || appliedVoucher?.voucher?.code || undefined,
+          voucherCode: appliedVoucher?.code || appliedVoucher?.voucher?.code || undefined,
+          total_amount: grandTotal,
+          frontend_url: window.location.origin,
+        }
+        const res = await createPaymentUrl(orderPayload)
+        if (res.paymentUrl) {
+          clearCart()
+          showToast('Đang chuyển hướng tới cổng thanh toán VNPAY...')
+          window.location.href = res.paymentUrl
+          return
+        }
+      }
+
       if (IS_BACKEND) {
         const res = await createOrder({
           items: items.map((i) => ({
@@ -230,8 +260,8 @@ export default function Checkout() {
               {PAYMENT_METHODS.map((m) => (
                 <label
                   key={m.id}
-                  className={`flex items-center gap-3 border rounded-sm px-4 py-3 cursor-pointer ${
-                    payment === m.id ? 'border-ink' : 'border-stone-dark'
+                  className={`flex items-start gap-3.5 border rounded-sm p-3.5 cursor-pointer transition-all ${
+                    payment === m.id ? 'border-ink bg-stone/10 shadow-xs' : 'border-stone-dark hover:border-ink/50'
                   }`}
                 >
                   <input
@@ -239,10 +269,20 @@ export default function Checkout() {
                     name="payment"
                     checked={payment === m.id}
                     onChange={() => setPayment(m.id)}
-                    className="accent-clay"
+                    className="accent-clay mt-1"
                   />
-                  <m.icon size={18} className="text-ink-soft" />
-                  <span className="text-sm">{m.label}</span>
+                  <m.icon size={20} className={payment === m.id ? 'text-clay mt-0.5' : 'text-ink-soft mt-0.5'} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-ink">{m.label}</span>
+                      {m.badge && (
+                        <span className="px-2 py-0.5 text-[10px] uppercase font-semibold bg-clay/10 text-clay rounded-full">
+                          {m.badge}
+                        </span>
+                      )}
+                    </div>
+                    {m.desc && <p className="text-xs text-ink-soft mt-0.5">{m.desc}</p>}
+                  </div>
                 </label>
               ))}
             </div>
@@ -341,9 +381,18 @@ export default function Checkout() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full mt-6 py-3 bg-ink text-ivory text-sm rounded-sm hover:bg-ink-soft transition-colors disabled:opacity-60"
+            className="w-full mt-6 py-3 bg-ink text-ivory text-sm rounded-sm hover:bg-ink-soft transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
           >
-            {submitting ? 'Đang xử lý...' : 'Xác nhận đặt hàng'}
+            {submitting ? (
+              'Đang xử lý...'
+            ) : payment === 'vnpay' ? (
+              <>
+                <CreditCard size={16} />
+                Thanh toán qua VNPAY ({formatCurrency(grandTotal)})
+              </>
+            ) : (
+              'Xác nhận đặt hàng'
+            )}
           </button>
         </div>
       </form>

@@ -57,6 +57,7 @@ export const STATUS_CONFIG = {
 
 const PAYMENT_LABELS = {
   cod: 'Thanh toán khi nhận hàng (COD)',
+  vnpay: 'Cổng VNPAY (ATM/QR/Visa)',
   bank: 'Chuyển khoản ngân hàng',
   wallet: 'Ví điện tử',
 }

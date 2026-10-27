@@ -104,6 +104,7 @@ const normalizeOrder = (o) => ({
   customerName: o.customerName, customerEmail: o.customerEmail, numericId: o.id,
 })
 export const createOrder = (payload) => api.post('/orders', payload).then(data)
+export const createPaymentUrl = (payload) => api.post('/orders/create_payment_url', payload).then(data)
 export const fetchMyOrders = () => api.get('/orders/me').then((r) => r.data.map(normalizeOrder))
 
 // ---- Admin ----

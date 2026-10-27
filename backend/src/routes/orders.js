@@ -1,11 +1,12 @@
 const express = require('express')
 const { query } = require('../db')
 const { requireAuth } = require('../middleware/auth')
+const vnpayService = require('../services/vnpayService')
 
 const router = express.Router()
 const FREE_SHIP_THRESHOLD = 500000
 const SHIPPING_FEE = 30000
-const PAYMENT_METHODS = ['cod', 'bank', 'wallet']
+const PAYMENT_METHODS = ['cod', 'vnpay', 'bank', 'wallet']
 
 const parseOrder = (r) => ({
   id: r.id,
@@ -19,16 +20,58 @@ const parseOrder = (r) => ({
   items: JSON.parse(r.items_json),
 })
 
-// POST /api/orders
-// Nhận payload: shipping_info, payment_method (cod, bank, wallet), items, voucher_code, total_amount.
-router.post('/', requireAuth, async (req, res) => {
+function getClientIp(req) {
+  let ip = req.headers['x-forwarded-for'] ||
+           req.connection?.remoteAddress ||
+           req.socket?.remoteAddress ||
+           '127.0.0.1'
+  if (ip && ip.includes(',')) {
+    ip = ip.split(',')[0].trim()
+  }
+  if (ip === '::1' || ip === '::ffff:127.0.0.1') {
+    ip = '127.0.0.1'
+  }
+  return ip || '127.0.0.1'
+}
+
+function getFrontendUrl(req, orderShipping = null) {
+  if (orderShipping && orderShipping.frontendUrl) {
+    return orderShipping.frontendUrl.replace(/\/+$/, '')
+  }
+  if (process.env.FRONTEND_URL) {
+    return process.env.FRONTEND_URL.replace(/\/+$/, '')
+  }
+  const host = req.get('host') || ''
+  if (host.includes('54.79.14.7')) {
+    return 'http://54.79.14.7'
+  }
+  if (host.includes('localhost:4000') || host.includes('127.0.0.1:4000')) {
+    return 'http://localhost:5173'
+  }
+  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'http'
+  return `${proto}://${host}`
+}
+
+function getVNPayReturnUrl(req) {
+  if (process.env.VNP_RETURN_URL) {
+    return process.env.VNP_RETURN_URL
+  }
+  const host = req.get('host') || 'localhost:4000'
+  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'http'
+  return `${proto}://${host}/api/orders/vnpay_return`
+}
+
+/**
+ * Hàm khởi tạo và lưu trữ đơn hàng vào CSDL
+ */
+async function createOrderRecord(req, forcedPaymentMethod) {
   const shippingInfo = req.body.shipping_info || req.body.shipping || {}
-  const paymentMethod = req.body.payment_method || req.body.paymentMethod || 'cod'
+  const paymentMethod = forcedPaymentMethod || req.body.payment_method || req.body.paymentMethod || 'cod'
   const voucherCode = req.body.voucher_code || req.body.voucherCode
   const items = req.body.items || []
 
   if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
-    return res.status(400).json({ message: 'Giỏ hàng trống hoặc không hợp lệ.' })
+    throw { status: 400, message: 'Giỏ hàng trống hoặc không hợp lệ.' }
   }
 
   const fullName = String(shippingInfo.fullName || shippingInfo.full_name || shippingInfo.name || '').trim()
@@ -38,11 +81,11 @@ router.post('/', requireAuth, async (req, res) => {
   const note = String(shippingInfo.note || '').slice(0, 500)
 
   if (!fullName || !phone || !address || !city) {
-    return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin giao hàng (họ tên, số điện thoại, địa chỉ, tỉnh/thành phố).' })
+    throw { status: 400, message: 'Vui lòng điền đầy đủ thông tin giao hàng (họ tên, số điện thoại, địa chỉ, tỉnh/thành phố).' }
   }
 
   if (!PAYMENT_METHODS.includes(paymentMethod)) {
-    return res.status(400).json({ message: 'Phương thức thanh toán không hợp lệ.' })
+    throw { status: 400, message: 'Phương thức thanh toán không hợp lệ.' }
   }
 
   const pids = [...new Set(items.map((i) => i.productId || i.product_id || i.id).filter(Boolean))]
@@ -55,7 +98,7 @@ router.post('/', requireAuth, async (req, res) => {
     const p = map[pid]
     const qty = Number(it.quantity)
     if (!Number.isInteger(qty) || qty < 1 || qty > 99) {
-      return res.status(400).json({ message: `Số lượng sản phẩm không hợp lệ: ${pid}` })
+      throw { status: 400, message: `Số lượng sản phẩm không hợp lệ: ${pid}` }
     }
     const price = p ? Number(p.price) : Number(it.price || 0)
     const name = p ? p.name : String(it.name || 'Sản phẩm')
@@ -99,7 +142,6 @@ router.post('/', requireAuth, async (req, res) => {
         discountAmount = Math.min(discountAmount, subtotal)
         appliedVoucher = v
 
-        // Cập nhật lượt dùng voucher: UPDATE vouchers SET used_count = used_count + 1 WHERE code = ?
         await query('UPDATE vouchers SET used_count = used_count + 1 WHERE UPPER(code) = UPPER(?)', [v.code])
       }
     }
@@ -112,6 +154,7 @@ router.post('/', requireAuth, async (req, res) => {
     address,
     city,
     note,
+    frontendUrl: req.headers.origin || req.headers.referer || null,
   }
   if (appliedVoucher) {
     cleanShipping.voucher = {
@@ -140,17 +183,124 @@ router.post('/', requireAuth, async (req, res) => {
     }
   }
 
-  res.status(201).json({
-    success: true,
-    orderId: id,
-    id: id,
-    code: orderCode,
+  return {
+    id,
+    orderCode,
     total,
     shippingFee,
     discountAmount,
-    status: 'pending',
-    message: 'Đặt hàng thành công!'
-  })
+    shipping: cleanShipping,
+    items: lines,
+  }
+}
+
+// POST /api/orders (Tạo đơn hàng COD hoặc các phương thức khác)
+router.post('/', requireAuth, async (req, res) => {
+  try {
+    const result = await createOrderRecord(req)
+    res.status(201).json({
+      success: true,
+      orderId: result.id,
+      id: result.id,
+      code: result.orderCode,
+      total: result.total,
+      shippingFee: result.shippingFee,
+      discountAmount: result.discountAmount,
+      status: 'pending',
+      message: 'Đặt hàng thành công!'
+    })
+  } catch (err) {
+    if (err.status) {
+      return res.status(err.status).json({ message: err.message })
+    }
+    console.error('[create order error]', err)
+    res.status(500).json({ message: 'Lỗi máy chủ khi tạo đơn hàng.' })
+  }
+})
+
+// POST /api/orders/create_payment_url (Tạo đơn VNPay & trả về URL chuyển hướng sang cổng VNPay)
+router.post('/create_payment_url', requireAuth, async (req, res) => {
+  try {
+    let orderId = req.body.orderId || req.body.id
+    let totalAmount = 0
+    let orderCode = ''
+
+    if (orderId) {
+      const rows = await query('SELECT * FROM orders WHERE id = ? AND user_id = ?', [orderId, String(req.user.id)])
+      if (rows.length === 0) {
+        return res.status(404).json({ message: 'Không tìm thấy đơn hàng.' })
+      }
+      totalAmount = Number(rows[0].total_amount)
+      orderCode = `DH${String(orderId).padStart(6, '0')}`
+    } else {
+      const result = await createOrderRecord(req, 'vnpay')
+      orderId = result.id
+      totalAmount = result.total
+      orderCode = result.orderCode
+    }
+
+    const ipAddr = getClientIp(req)
+    const returnUrl = getVNPayReturnUrl(req)
+
+    const paymentUrl = vnpayService.createPaymentUrl({
+      orderId,
+      amount: totalAmount,
+      orderInfo: `Thanh toan don hang ${orderCode}`,
+      ipAddr,
+      returnUrl,
+      bankCode: req.body.bankCode || '',
+    })
+
+    res.json({
+      success: true,
+      paymentUrl,
+      orderId,
+      code: orderCode,
+      total: totalAmount,
+      message: 'Tạo URL thanh toán VNPay thành công.'
+    })
+  } catch (err) {
+    if (err.status) {
+      return res.status(err.status).json({ message: err.message })
+    }
+    console.error('[create_payment_url error]', err)
+    res.status(500).json({ message: 'Không thể khởi tạo cổng thanh toán VNPay lúc này.' })
+  }
+})
+
+// GET /api/orders/vnpay_return (Callback từ VNPay khi người dùng hoàn tất thanh toán)
+router.get('/vnpay_return', async (req, res) => {
+  try {
+    const result = vnpayService.verifyReturnUrl(req.query)
+    const orderId = result.orderId
+    const orderCode = `DH${String(orderId).padStart(6, '0')}`
+
+    let order = null
+    if (orderId) {
+      const rows = await query('SELECT * FROM orders WHERE id = ?', [orderId])
+      if (rows.length > 0) order = rows[0]
+    }
+
+    const shipping = order?.shipping_json ? JSON.parse(order.shipping_json) : null
+    const frontendBase = getFrontendUrl(req, shipping)
+
+    if (result.isValid && result.isSuccess) {
+      if (order) {
+        await query("UPDATE orders SET status = 'paid' WHERE id = ?", [orderId])
+      }
+      return res.redirect(
+        `${frontendBase}/checkout/vnpay-result?status=success&orderId=${orderCode}&numericId=${orderId}&amount=${result.amount}&transNo=${result.transactionNo}&bank=${result.bankCode}`
+      )
+    } else {
+      return res.redirect(
+        `${frontendBase}/checkout/vnpay-result?status=failed&orderId=${orderCode}&numericId=${orderId}&code=${result.responseCode || '97'}`
+      )
+    }
+  } catch (err) {
+    console.error('[vnpay_return error]', err)
+    const frontendBase = getFrontendUrl(req)
+    return res.redirect(`${frontendBase}/checkout/vnpay-result?status=failed&message=server_error`)
+  }
 })
 
 // GET /api/orders/me
