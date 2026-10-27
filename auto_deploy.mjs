@@ -6,21 +6,21 @@ import path from 'path';
 // 🛠️ THIẾT LẬP CẤU HÌNH KẾT NỐI AWS EC2 (USER TỰ ĐIỀN THÔNG TIN TẠI ĐÂY)
 // ==============================================================================
 const CONFIG = {
-  // Điền địa chỉ IPv4 Public của máy ảo EC2 (Ví dụ: '54.254.120.88')
-  HOST_IP: '',
+  // Điền địa chỉ IPv4 Public của máy ảo EC2
+  HOST_IP: '54.79.14.7',
 
   // Tên tài khoản đăng nhập (mặc định cho Ubuntu trên AWS là 'ubuntu')
   USERNAME: 'ubuntu',
 
-  // Đường dẫn tới tệp Private Key (.pem) trên máy tính của bạn (Ví dụ: 'C:/Users/Admin/my-key.pem' hoặc './my-key.pem')
-  PRIVATE_KEY_PATH: '',
+  // Đường dẫn tới tệp Private Key (.pem)
+  PRIVATE_KEY_PATH: './sttn-key.pem',
 
   // Cổng kết nối SSH (mặc định là 22)
   PORT: 22,
 
   // Đường dẫn thư mục dự án trên máy ảo EC2
   REPO_URL: 'https://github.com/DoanDucVuong/DevOps.git',
-  PROJECT_DIR: 'DevOps/sttn-recommend',
+  PROJECT_DIR: 'DevOps',
 };
 
 // ==============================================================================

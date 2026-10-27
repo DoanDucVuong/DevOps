@@ -104,7 +104,7 @@ Kéo repository dự án về thư mục làm việc của EC2:
 git clone https://github.com/DoanDucVuong/DevOps.git
 
 # Di chuyển vào thư mục dự án
-cd DevOps/sttn-recommend
+cd DevOps
 ```
 
 ---
