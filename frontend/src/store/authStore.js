@@ -2,10 +2,8 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { loginUser, registerUser } from '../api/client'
 
-// Chế độ hoạt động:
-// - Có VITE_API_URL  -> dùng Backend thật (JWT, user.id thật trong DB)
-// - Không có         -> auth giả lập bằng LocalStorage (deploy frontend độc lập)
-const USE_BACKEND = Boolean(import.meta.env.VITE_API_URL)
+// Luôn sử dụng Backend thật (JWT, SQLite DB)
+const USE_BACKEND = true
 
 export const useAuthStore = create(
   persist(

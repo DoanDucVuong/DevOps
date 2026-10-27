@@ -1,12 +1,23 @@
 import axios from 'axios'
 
 let rawUrl = import.meta.env.VITE_API_URL
+
+// Tự động nhận diện môi trường:
+// - Nếu chạy dev cục bộ (npm run dev, port 5173/3000): mặc định http://localhost:4000/api
+// - Nếu chạy trong Docker/Production (truy cập qua IP hoặc domain): dùng relative '/api' qua Nginx proxy
+if (typeof window !== 'undefined') {
+  const isLocalDev = window.location.port === '5173' || window.location.port === '3000'
+  if (!isLocalDev && (!rawUrl || rawUrl.includes('localhost') || rawUrl.includes('127.0.0.1'))) {
+    rawUrl = '/api'
+  }
+}
+
 if (rawUrl) {
-  if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
+  if (!rawUrl.startsWith('/') && !rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
     rawUrl = 'https://' + rawUrl
   }
   try {
-    const parsed = new URL(rawUrl)
+    const parsed = new URL(rawUrl, typeof window !== 'undefined' ? window.location.origin : 'http://localhost')
     if (parsed.hostname === 'sttn-backend') {
       parsed.hostname = 'sttn-backend.onrender.com'
       rawUrl = parsed.toString()
@@ -14,15 +25,15 @@ if (rawUrl) {
   } catch (e) {
     // fallback
   }
-  if (!rawUrl.endsWith('/api')) {
+  if (!rawUrl.endsWith('/api') && !rawUrl.startsWith('/api')) {
     rawUrl = rawUrl.replace(/\/+$/, '') + '/api'
   }
 }
 
-export const IS_BACKEND = Boolean(rawUrl)
+export const IS_BACKEND = true
 
 export const api = axios.create({
-  baseURL: rawUrl || 'http://localhost:4000/api',
+  baseURL: rawUrl || '/api',
   timeout: 15000,
 })
 

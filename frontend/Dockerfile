@@ -10,8 +10,8 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Khai báo build argument cho API URL (có thể ghi đè lúc build trên EC2)
-ARG VITE_API_URL=http://localhost:4000/api
+# Khai báo build argument cho API URL (mặc định '/api' để Nginx reverse-proxy sang backend)
+ARG VITE_API_URL=/api
 ENV VITE_API_URL=$VITE_API_URL
 
 # Build static assets ra thư mục dist
