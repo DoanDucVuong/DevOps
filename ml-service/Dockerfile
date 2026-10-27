@@ -1,11 +1,6 @@
 # ML Recommendation Service — Python FastAPI
 FROM python:3.11-slim
 
-# Cài đặt công cụ cần thiết cho môi trường chạy Python
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
 # Cài đặt Python dependencies (Python 3.11 hỗ trợ 100% prebuilt wheels cho scikit-surprise, numpy, pandas)
