@@ -7,22 +7,43 @@ export default function TabAddresses({ user }) {
   const { showToast } = useToast()
   const [modalOpen, setModalOpen] = useState(false)
 
-  const [addresses, setAddresses] = useState([
-    {
-      id: 'addr-1',
-      recipientName: user?.fullName || user?.name || 'Khách hàng Maison',
-      phone: user?.phone || '0901 234 567',
-      address: user?.address || '123 Lê Duẩn, Phường Thạch Thang, Quận Hải Châu, Đà Nẵng',
-      isDefault: true,
-    },
-  ])
+  const [addresses, setAddresses] = useState(() => {
+    try {
+      const saved = localStorage.getItem('maison-user-addresses')
+      if (saved) return JSON.parse(saved)
+    } catch (e) {
+      // fallback
+    }
+    return [
+      {
+        id: 'addr-1',
+        recipientName: user?.fullName || user?.name || 'Khách hàng Maison',
+        phone: user?.phone || '0901 234 567',
+        address: user?.address || '123 Lê Duẩn, Phường Thạch Thang',
+        city: 'Đà Nẵng',
+        district: 'Hải Châu',
+        isDefault: true,
+      },
+    ]
+  })
+
+  const saveAddresses = (list) => {
+    setAddresses(list)
+    try {
+      localStorage.setItem('maison-user-addresses', JSON.stringify(list))
+    } catch (e) {
+      // ignore
+    }
+  }
 
   const handleAddAddress = (newAddr) => {
+    let next
     if (newAddr.isDefault) {
-      setAddresses([newAddr, ...addresses.map((a) => ({ ...a, isDefault: false }))])
+      next = [newAddr, ...addresses.map((a) => ({ ...a, isDefault: false }))]
     } else {
-      setAddresses([...addresses, newAddr])
+      next = [...addresses, newAddr]
     }
+    saveAddresses(next)
     showToast('Đã thêm địa chỉ giao hàng mới')
   }
 
@@ -31,17 +52,17 @@ export default function TabAddresses({ user }) {
       showToast('Cần giữ lại ít nhất 1 địa chỉ giao hàng')
       return
     }
-    setAddresses(addresses.filter((a) => a.id !== id))
+    const next = addresses.filter((a) => a.id !== id)
+    saveAddresses(next)
     showToast('Đã xóa địa chỉ')
   }
 
   const handleSetDefault = (id) => {
-    setAddresses(
-      addresses.map((a) => ({
-        ...a,
-        isDefault: a.id === id,
-      }))
-    )
+    const next = addresses.map((a) => ({
+      ...a,
+      isDefault: a.id === id,
+    }))
+    saveAddresses(next)
     showToast('Đã đặt làm địa chỉ mặc định')
   }
 

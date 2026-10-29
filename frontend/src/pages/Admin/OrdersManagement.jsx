@@ -251,18 +251,18 @@ export default function OrdersManagement() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs md:text-sm">
+          <div className="w-full overflow-x-auto scrollbar-thin pb-2">
+            <table className="w-full text-left border-collapse text-xs md:text-sm min-w-[1000px]">
               <thead>
                 <tr className="bg-stone-light/60 border-b border-stone text-ink-soft font-medium">
-                  <th className="py-3 px-4">Mã đơn</th>
-                  <th className="py-3 px-4">Khách hàng</th>
-                  <th className="py-3 px-4">Ngày đặt</th>
-                  <th className="py-3 px-4">Sản phẩm</th>
-                  <th className="py-3 px-4">Thanh toán</th>
-                  <th className="py-3 px-4 text-right">Tổng tiền</th>
-                  <th className="py-3 px-4 text-center">Trạng thái (Badge & Cập nhật)</th>
-                  <th className="py-3 px-4 text-center">Chi tiết</th>
+                  <th className="py-3.5 px-4 whitespace-nowrap w-24">Mã đơn</th>
+                  <th className="py-3.5 px-4 whitespace-nowrap min-w-[180px]">Khách hàng</th>
+                  <th className="py-3.5 px-4 whitespace-nowrap min-w-[110px]">Ngày đặt</th>
+                  <th className="py-3.5 px-4 whitespace-nowrap min-w-[200px]">Sản phẩm</th>
+                  <th className="py-3.5 px-4 whitespace-nowrap min-w-[140px]">Thanh toán</th>
+                  <th className="py-3.5 px-4 text-right whitespace-nowrap min-w-[120px]">Tổng tiền</th>
+                  <th className="py-3.5 px-4 text-center whitespace-nowrap min-w-[190px]">Trạng thái (Badge & Cập nhật)</th>
+                  <th className="py-3.5 px-4 text-center whitespace-nowrap min-w-[90px]">Chi tiết</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone">
@@ -277,12 +277,12 @@ export default function OrdersManagement() {
                       className="hover:bg-stone-light/20 transition-colors"
                     >
                       {/* Mã đơn */}
-                      <td className="py-3 px-4 font-mono font-medium text-ink whitespace-nowrap">
+                      <td className="py-3.5 px-4 font-mono font-medium text-ink whitespace-nowrap">
                         {order.id}
                       </td>
 
                       {/* Khách hàng */}
-                      <td className="py-3 px-4">
+                      <td className="py-3.5 px-4 whitespace-nowrap">
                         <div className="font-medium text-ink">
                           {order.customerName || order.shipping?.name || 'Khách vãng lai'}
                         </div>
@@ -297,13 +297,13 @@ export default function OrdersManagement() {
                       </td>
 
                       {/* Ngày đặt */}
-                      <td className="py-3 px-4 whitespace-nowrap text-ink-soft">
+                      <td className="py-3.5 px-4 whitespace-nowrap text-ink-soft">
                         {formatDate(order.date)}
                       </td>
 
                       {/* Sản phẩm tóm tắt */}
-                      <td className="py-3 px-4 max-w-[220px]">
-                        <span className="text-xs text-ink block line-clamp-1">
+                      <td className="py-3.5 px-4 max-w-[240px]">
+                        <span className="text-xs text-ink block truncate" title={order.items?.map((it) => `${it.name || it.product_name} (x${it.quantity})`).join(', ')}>
                           {order.items && order.items.length > 0
                             ? order.items.map((it) => `${it.name || it.product_name} (x${it.quantity})`).join(', ')
                             : 'Không có chi tiết'}
@@ -314,18 +314,18 @@ export default function OrdersManagement() {
                       </td>
 
                       {/* Thanh toán */}
-                      <td className="py-3 px-4 whitespace-nowrap text-xs text-ink-soft">
+                      <td className="py-3.5 px-4 whitespace-nowrap text-xs text-ink-soft">
                         {PAYMENT_LABELS[order.paymentMethod] || order.paymentMethod || 'COD'}
                       </td>
 
                       {/* Tổng tiền */}
-                      <td className="py-3 px-4 text-right font-display font-medium text-ink whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-right font-medium text-ink whitespace-nowrap">
                         {formatCurrency(order.total)}
                       </td>
 
-                      {/* Cột Trạng thái: Dropdown select & Badge màu đồng bộ */}
-                      <td className="py-3 px-4 text-center whitespace-nowrap">
-                        <div className="inline-flex flex-col items-center gap-1.5">
+                      {/* Cột Trạng thái: Dropdown select & Badge màu đồng bộ (min-w-[190px] chống tràn/cắt xén) */}
+                      <td className="py-3.5 px-4 text-center whitespace-nowrap min-w-[190px]">
+                        <div className="inline-flex flex-col items-center gap-1.5 w-full max-w-[170px] mx-auto">
                           {/* Badge màu sắc chuẩn với User UI */}
                           <span
                             className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${statusInfo.badgeClass}`}
@@ -335,12 +335,12 @@ export default function OrdersManagement() {
                           </span>
 
                           {/* Thẻ select cập nhật trạng thái */}
-                          <div className="relative">
+                          <div className="relative w-full">
                             <select
                               value={order.status}
                               disabled={isUpdating}
                               onChange={(e) => handleStatusChange(order, e.target.value)}
-                              className="text-xs border border-stone-dark rounded-sm px-2.5 py-1 bg-paper text-ink outline-none focus:border-ink hover:border-ink transition-colors cursor-pointer disabled:opacity-50 pr-7 appearance-none"
+                              className="w-full text-xs border border-stone-dark rounded px-2.5 py-1 bg-paper text-ink outline-none focus:border-ink hover:border-ink transition-colors cursor-pointer disabled:opacity-50 pr-7 appearance-none shadow-2xs font-medium"
                             >
                               <option value="pending">Đang xử lý</option>
                               <option value="paid">Đã thanh toán</option>
@@ -364,7 +364,7 @@ export default function OrdersManagement() {
                       </td>
 
                       {/* Nút Xem chi tiết */}
-                      <td className="py-3 px-4 text-center whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-center whitespace-nowrap min-w-[90px]">
                         <button
                           onClick={() => setSelectedOrder(order)}
                           className="inline-flex items-center gap-1 text-xs text-clay hover:underline font-medium p-1.5 hover:bg-stone-light/50 rounded-sm transition-colors"

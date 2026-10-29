@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
+import initialProvinces from '../../utils/vietnamProvinces.json'
 import {
   CheckCircle2,
   Truck,
@@ -19,6 +20,7 @@ import {
   Sparkles,
   ShoppingBag,
   ArrowLeft,
+  MapPin,
 } from 'lucide-react'
 import { useCartStore, lineKey } from '../../store/cartStore'
 import { useAuthStore } from '../../store/authStore'
@@ -69,14 +71,68 @@ const QUICK_VOUCHERS = [
 
 export default function Checkout() {
   const { showToast } = useToast()
-  const items = useCartStore((s) => s.items)
-  const totalPrice = useCartStore((s) => s.totalPrice())
+  const location = useLocation()
+  const rawBuyNowItem = location.state?.buyNowItem
+
+  const [buyNowItem, setBuyNowItem] = useState(() => {
+    if (!rawBuyNowItem) return null
+    return {
+      ...rawBuyNowItem,
+      id: rawBuyNowItem.id || rawBuyNowItem.productId,
+      productId: rawBuyNowItem.productId || rawBuyNowItem.id,
+      color: rawBuyNowItem.color || rawBuyNowItem.selectedColor || 'den',
+      size: rawBuyNowItem.size || rawBuyNowItem.selectedSize || 'M',
+      quantity: Number(rawBuyNowItem.quantity) || 1,
+    }
+  })
+
+  const isBuyNow = Boolean(buyNowItem)
+  const cartItems = useCartStore((s) => s.items)
+  const cartTotalPrice = useCartStore((s) => s.totalPrice())
   const clearCart = useCartStore((s) => s.clearCart)
-  const removeItem = useCartStore((s) => s.removeItem)
-  const updateQuantity = useCartStore((s) => s.updateQuantity)
+  const cartRemoveItem = useCartStore((s) => s.removeItem)
+  const cartUpdateQuantity = useCartStore((s) => s.updateQuantity)
   const cartVoucher = useCartStore((s) => s.appliedVoucher)
   const user = useAuthStore((s) => s.user)
   const navigate = useNavigate()
+
+  // 1. Danh sách sản phẩm thanh toán:
+  // Nếu là đơn "Mua ngay" -> Chỉ lấy duy nhất [buyNowItem]
+  // Nếu là thanh toán từ giỏ hàng -> Lấy cartItems
+  const items = isBuyNow ? (buyNowItem ? [buyNowItem] : []) : cartItems
+
+  // 2. Tính tiền tạm tính (subtotal) dựa trên danh sách sản phẩm thanh toán
+  const totalPrice = isBuyNow
+    ? Math.round(Number(buyNowItem?.price || 0) * Number(buyNowItem?.quantity || 1))
+    : cartTotalPrice
+
+  const handleUpdateItemQuantity = (targetItem, newQty) => {
+    if (isBuyNow) {
+      if (newQty < 1) {
+        setBuyNowItem(null)
+      } else {
+        setBuyNowItem((prev) => (prev ? { ...prev, quantity: newQty } : null))
+      }
+    } else {
+      const key = lineKey(targetItem)
+      if (newQty < 1) {
+        cartRemoveItem(key)
+      } else {
+        cartUpdateQuantity(key, newQty)
+      }
+    }
+  }
+
+  const handleRemoveSingleItem = (targetItem) => {
+    if (isBuyNow) {
+      setBuyNowItem(null)
+      showToast(`Đã xóa ${targetItem.name} khỏi thanh toán`)
+    } else {
+      const key = lineKey(targetItem)
+      cartRemoveItem(key)
+      showToast(`Đã xóa ${targetItem.name} khỏi giỏ hàng`)
+    }
+  }
 
   const [form, setForm] = useState({
     fullName: user?.fullName || user?.name || '',
@@ -86,6 +142,171 @@ export default function Checkout() {
     district: '',
     note: '',
   })
+  const [showAddressModal, setShowAddressModal] = useState(false)
+  const [provinces, setProvinces] = useState(initialProvinces || [])
+  const [districts, setDistricts] = useState([])
+  const [loadingProvinces, setLoadingProvinces] = useState(false)
+
+  // 1. Tải danh sách 63 tỉnh thành & quận huyện từ Open API Việt Nam
+  useEffect(() => {
+    let active = true
+    const fetchProvinces = async () => {
+      try {
+        setLoadingProvinces(true)
+        const res = await fetch('https://provinces.open-api.vn/api/?depth=2')
+        if (!res.ok) throw new Error('API fetch error')
+        const data = await res.json()
+        if (active && Array.isArray(data) && data.length > 0) {
+          const formatted = data.map((p) => ({
+            name: p.name,
+            code: p.code,
+            districts: Array.isArray(p.districts)
+              ? p.districts.map((d) => (typeof d === 'string' ? d : d.name))
+              : [],
+          }))
+          setProvinces(formatted)
+        }
+      } catch (err) {
+        console.warn('Lỗi tải API tỉnh thành, dùng 63 tỉnh thành dự phòng:', err)
+      } finally {
+        if (active) setLoadingProvinces(false)
+      }
+    }
+
+    fetchProvinces()
+    return () => {
+      active = false
+    }
+  }, [])
+
+  // 2. Cập nhật state districts khi form.city thay đổi
+  useEffect(() => {
+    if (!form.city) {
+      setDistricts([])
+      return
+    }
+
+    const matchedProvince = provinces.find(
+      (p) =>
+        p.name.toLowerCase() === form.city.toLowerCase() ||
+        p.name.replace(/^(Thành phố|Tỉnh)\s+/i, '').toLowerCase() ===
+          form.city.replace(/^(Thành phố|Tỉnh)\s+/i, '').toLowerCase() ||
+        form.city.toLowerCase().includes(p.name.replace(/^(Thành phố|Tỉnh)\s+/i, '').toLowerCase())
+    )
+
+    if (matchedProvince && Array.isArray(matchedProvince.districts)) {
+      const list = matchedProvince.districts.map((d) => (typeof d === 'string' ? d : d.name))
+      setDistricts(list)
+    } else {
+      setDistricts([])
+    }
+  }, [form.city, provinces])
+
+  const getSavedAddresses = () => {
+    try {
+      const saved = localStorage.getItem('maison-user-addresses')
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed
+      }
+    } catch (e) {
+      // ignore
+    }
+    return [
+      {
+        id: 'addr-default',
+        recipientName: user?.fullName || user?.name || 'Khách hàng Maison',
+        phone: user?.phone || '0901 234 567',
+        address: user?.address || '123 Lê Duẩn, Phường Thạch Thang',
+        city: 'Thành phố Đà Nẵng',
+        district: 'Quận Hải Châu',
+        isDefault: true,
+      },
+      {
+        id: 'addr-office',
+        recipientName: user?.fullName || user?.name || 'Khách hàng Maison',
+        phone: user?.phone || '0901 234 567',
+        address: 'Tòa nhà Bitexco, 2 Hải Triều, Phường Bến Nghé',
+        city: 'Thành phố Hồ Chí Minh',
+        district: 'Quận 1',
+        isDefault: false,
+      },
+    ]
+  }
+
+  // Tự động lưu địa chỉ vào Sổ địa chỉ nếu chưa tồn tại
+  const saveAddressIfNew = (addressData) => {
+    try {
+      if (!addressData.address?.trim() || !addressData.phone?.trim()) return
+      const currentList = getSavedAddresses()
+      const normPhone = addressData.phone.replace(/\s+/g, '')
+      const normAddr = addressData.address.trim().toLowerCase()
+
+      const isExisted = currentList.some((item) => {
+        const itemPhone = (item.phone || '').replace(/\s+/g, '')
+        const itemAddr = (item.address || '').trim().toLowerCase()
+        return itemPhone === normPhone && itemAddr === normAddr
+      })
+
+      if (!isExisted) {
+        const newAddressItem = {
+          id: 'addr-' + Date.now(),
+          recipientName: addressData.fullName?.trim() || user?.fullName || user?.name || 'Khách hàng',
+          phone: addressData.phone?.trim() || '',
+          address: addressData.address?.trim() || '',
+          city: addressData.city?.trim() || '',
+          district: addressData.district?.trim() || '',
+          isDefault: currentList.length === 0,
+        }
+        const updated = [...currentList, newAddressItem]
+        localStorage.setItem('maison-user-addresses', JSON.stringify(updated))
+      }
+    } catch (err) {
+      console.warn('Could not auto-save address to localStorage:', err)
+    }
+  }
+
+  const handleSelectSavedAddress = (addr) => {
+    const rawCity = (addr.city || '').trim()
+    const rawDistrict = (addr.district || '').trim()
+
+    // Khớp tên tỉnh trong danh sách 63 tỉnh thành
+    const matchedProv = provinces.find(
+      (p) =>
+        p.name.toLowerCase() === rawCity.toLowerCase() ||
+        p.name.replace(/^(Thành phố|Tỉnh)\s+/i, '').toLowerCase() ===
+          rawCity.replace(/^(Thành phố|Tỉnh)\s+/i, '').toLowerCase() ||
+        rawCity.toLowerCase().includes(p.name.replace(/^(Thành phố|Tỉnh)\s+/i, '').toLowerCase())
+    )
+
+    const finalCity = matchedProv ? matchedProv.name : rawCity
+    let finalDistrict = rawDistrict
+
+    if (matchedProv && Array.isArray(matchedProv.districts)) {
+      const distNames = matchedProv.districts.map((d) => (typeof d === 'string' ? d : d.name))
+      const matchedDist = distNames.find(
+        (d) =>
+          d.toLowerCase() === rawDistrict.toLowerCase() ||
+          d.replace(/^(Quận|Huyện|Thị xã)\s+/i, '').toLowerCase() ===
+            rawDistrict.replace(/^(Quận|Huyện|Thị xã)\s+/i, '').toLowerCase() ||
+          rawDistrict.toLowerCase().includes(d.replace(/^(Quận|Huyện|Thị xã)\s+/i, '').toLowerCase())
+      )
+      if (matchedDist) {
+        finalDistrict = matchedDist
+      }
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      fullName: addr.recipientName || addr.fullName || prev.fullName,
+      phone: addr.phone || prev.phone,
+      address: addr.address || prev.address,
+      city: finalCity,
+      district: finalDistrict,
+    }))
+    setShowAddressModal(false)
+    showToast(`Đã tự động điền địa chỉ của ${addr.recipientName || addr.fullName || 'bạn'}`)
+  }
   const [payment, setPayment] = useState('vietqr')
   const [orderId, setOrderId] = useState(null)
   const [vietQrOrder, setVietQrOrder] = useState(null)
@@ -148,6 +369,9 @@ export default function Checkout() {
       return
     }
 
+    // Tự động lưu địa chỉ mới vào Sổ địa chỉ nếu chưa có
+    saveAddressIfNew(form)
+
     setError('')
     setSubmitting(true)
     try {
@@ -179,7 +403,10 @@ export default function Checkout() {
         }
         const res = await createPaymentUrl(orderPayload)
         if (res.paymentUrl) {
-          clearCart()
+          // Chỉ xóa giỏ hàng nếu thanh toán từ giỏ thông thường, Mua ngay giữ nguyên đồ cũ
+          if (!isBuyNow) {
+            clearCart()
+          }
           showToast('Đang chuyển hướng tới cổng thanh toán VNPAY...')
           window.location.href = res.paymentUrl
           return
@@ -234,7 +461,10 @@ export default function Checkout() {
         })
       }
 
-      clearCart()
+      // Chỉ xóa giỏ hàng nếu thanh toán từ giỏ thông thường, Mua ngay giữ nguyên đồ cũ
+      if (!isBuyNow) {
+        clearCart()
+      }
 
       // Hiển thị giao diện tương ứng theo phương thức
       if (payment === 'vietqr' || payment === 'bank') {
@@ -517,42 +747,55 @@ export default function Checkout() {
           <div className="lg:col-span-7 space-y-6">
             {/* 1. Khối Thông tin khách hàng & Địa chỉ */}
             <div className="bg-white border border-stone-200/90 rounded-2xl p-5 sm:p-6 shadow-2xs">
-              <h2 className="text-base font-bold text-stone-900 mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-blue-50 text-[#1e3a8a] text-xs font-extrabold flex items-center justify-center">
-                  1
-                </span>
-                Thông tin nhận hàng
-              </h2>
+              <div className="flex items-center justify-between mb-5 flex-wrap gap-2 pb-3 border-b border-stone-100">
+                <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-blue-50 text-[#1e3a8a] text-xs font-extrabold flex items-center justify-center">
+                    1
+                  </span>
+                  Thông tin nhận hàng
+                </h2>
+
+                <button
+                  type="button"
+                  onClick={() => setShowAddressModal(true)}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-blue-600 text-blue-700 hover:bg-blue-50 text-xs font-semibold transition-all shadow-2xs cursor-pointer active:scale-95"
+                >
+                  <span className="text-sm">📍</span>
+                  <span>Chọn từ sổ địa chỉ của bạn</span>
+                </button>
+              </div>
 
               <div className="space-y-4">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-stone-700 mb-1.5">
-                      Họ và tên <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      required
-                      placeholder="Nguyễn Văn A"
-                      value={form.fullName}
-                      onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                      className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-sm text-stone-900 outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all placeholder:text-stone-400"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-stone-700 mb-1.5">
-                      Số điện thoại <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      required
-                      type="tel"
-                      placeholder="0912345678"
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-sm text-stone-900 outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all placeholder:text-stone-400"
-                    />
-                  </div>
+                {/* Họ tên: Dòng riêng biệt */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                    Họ và tên <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    required
+                    placeholder="Nguyễn Văn A"
+                    value={form.fullName}
+                    onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none transition-colors text-stone-700 bg-white"
+                  />
                 </div>
 
+                {/* Số điện thoại: Dòng riêng biệt */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                    Số điện thoại <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    required
+                    type="tel"
+                    placeholder="0912345678"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none transition-colors text-stone-700 bg-white"
+                  />
+                </div>
+
+                {/* Địa chỉ nhận hàng: Dòng riêng biệt */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 mb-1.5">
                     Địa chỉ nhận hàng (Số nhà, tên đường, thôn/xóm) <span className="text-rose-500">*</span>
@@ -562,37 +805,68 @@ export default function Checkout() {
                     placeholder="Số 123 đường Lê Lợi, Phường Bến Nghé"
                     value={form.address}
                     onChange={(e) => setForm({ ...form, address: e.target.value })}
-                    className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-sm text-stone-900 outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all placeholder:text-stone-400"
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none transition-colors text-stone-700 bg-white"
                   />
                 </div>
 
-                {/* Bố trí Tỉnh/Thành - Quận/Huyện trên cùng 1 hàng */}
-                <div className="grid sm:grid-cols-2 gap-4">
+                {/* Bố trí Dropdown Tỉnh/Thành - Quận/Huyện trên cùng 1 hàng */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-stone-700 mb-1.5">
                       Tỉnh / Thành phố <span className="text-rose-500">*</span>
                     </label>
-                    <input
+                    <select
                       required
-                      placeholder="TP. Hồ Chí Minh / Hà Nội..."
                       value={form.city}
-                      onChange={(e) => setForm({ ...form, city: e.target.value })}
-                      className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-sm text-stone-900 outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all placeholder:text-stone-400"
-                    />
+                      onChange={(e) => {
+                        const newCity = e.target.value
+                        setForm((prev) => ({ ...prev, city: newCity, district: '' }))
+                      }}
+                      className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none transition-colors text-stone-700 bg-white"
+                    >
+                      <option value="">
+                        {loadingProvinces && provinces.length === 0
+                          ? '-- Đang tải danh sách tỉnh thành... --'
+                          : '-- Chọn Tỉnh / Thành phố --'}
+                      </option>
+                      {provinces.map((p) => (
+                        <option key={p.code || p.name} value={p.name}>
+                          {p.name}
+                        </option>
+                      ))}
+                      {form.city && !provinces.some((p) => p.name === form.city) && (
+                        <option value={form.city}>{form.city}</option>
+                      )}
+                    </select>
                   </div>
+
                   <div>
                     <label className="block text-xs font-semibold text-stone-700 mb-1.5">
                       Quận / Huyện
                     </label>
-                    <input
-                      placeholder="Quận 1 / Quận Cầu Giấy..."
+                    <select
                       value={form.district}
-                      onChange={(e) => setForm({ ...form, district: e.target.value })}
-                      className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-sm text-stone-900 outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all placeholder:text-stone-400"
-                    />
+                      onChange={(e) => setForm((prev) => ({ ...prev, district: e.target.value }))}
+                      className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none transition-colors text-stone-700 bg-white"
+                    >
+                      <option value="">
+                        {!form.city
+                          ? '-- Vui lòng chọn Tỉnh/Thành trước --'
+                          : '-- Chọn Quận / Huyện --'}
+                      </option>
+                      {districts.map((d) => (
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
+                      ))}
+                      {form.district && !districts.includes(form.district) && (
+                        <option value={form.district}>{form.district}</option>
+                      )}
+                    </select>
                   </div>
                 </div>
 
+                {/* Ghi chú đơn hàng: Dòng riêng biệt */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 mb-1.5">
                     Ghi chú đơn hàng (tuỳ chọn)
@@ -602,7 +876,7 @@ export default function Checkout() {
                     value={form.note}
                     onChange={(e) => setForm({ ...form, note: e.target.value })}
                     rows={2}
-                    className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 text-sm text-stone-900 outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all resize-none placeholder:text-stone-400"
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none transition-colors text-stone-700 bg-white resize-none"
                   />
                 </div>
               </div>
@@ -720,17 +994,26 @@ export default function Checkout() {
           <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
             <div className="bg-white border border-stone-200/90 rounded-2xl p-5 sm:p-6 shadow-2xs space-y-5">
               {/* Header giỏ hàng */}
-              <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-                <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
-                  <ShoppingBag size={18} className="text-[#1e3a8a]" />
-                  Đơn hàng ({items.reduce((sum, it) => sum + it.quantity, 0)} sản phẩm)
-                </h2>
-                <Link
-                  to="/cart"
-                  className="text-xs text-[#1e3a8a] font-semibold hover:underline"
-                >
-                  Sửa giỏ hàng
-                </Link>
+              <div className="flex items-center justify-between pb-3 border-b border-stone-100 flex-wrap gap-2">
+                <div>
+                  <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                    <ShoppingBag size={18} className="text-[#1e3a8a]" />
+                    Đơn hàng ({items.reduce((sum, it) => sum + (Number(it.quantity) || 1), 0)} sản phẩm)
+                  </h2>
+                  {isBuyNow && (
+                    <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                      <Sparkles size={11} className="text-amber-600" /> Luồng Mua ngay (Độc lập với giỏ hàng)
+                    </span>
+                  )}
+                </div>
+                {!isBuyNow && (
+                  <Link
+                    to="/cart"
+                    className="text-xs text-[#1e3a8a] font-semibold hover:underline"
+                  >
+                    Sửa giỏ hàng
+                  </Link>
+                )}
               </div>
 
               {/* Thanh Progress Bar Freeship */}
@@ -787,13 +1070,7 @@ export default function Checkout() {
                           <div className="flex items-center border border-stone-300 rounded-md h-6 bg-white">
                             <button
                               type="button"
-                              onClick={() => {
-                                if (item.quantity > 1) {
-                                  updateQuantity(key, item.quantity - 1)
-                                } else {
-                                  removeItem(key)
-                                }
-                              }}
+                              onClick={() => handleUpdateItemQuantity(item, (Number(item.quantity) || 1) - 1)}
                               className="w-6 h-full flex items-center justify-center text-stone-600 hover:text-stone-900"
                             >
                               <Minus size={11} />
@@ -803,7 +1080,7 @@ export default function Checkout() {
                             </span>
                             <button
                               type="button"
-                              onClick={() => updateQuantity(key, item.quantity + 1)}
+                              onClick={() => handleUpdateItemQuantity(item, (Number(item.quantity) || 1) + 1)}
                               className="w-6 h-full flex items-center justify-center text-stone-600 hover:text-stone-900"
                             >
                               <Plus size={11} />
@@ -818,10 +1095,7 @@ export default function Checkout() {
                       {/* Nút xóa sản phẩm */}
                       <button
                         type="button"
-                        onClick={() => {
-                          removeItem(key)
-                          showToast(`Đã xóa ${item.name} khỏi giỏ hàng`)
-                        }}
+                        onClick={() => handleRemoveSingleItem(item)}
                         className="p-1 text-stone-400 hover:text-rose-600 transition-colors"
                         title="Xóa sản phẩm"
                       >
@@ -1009,6 +1283,90 @@ export default function Checkout() {
             </button>
           </div>
         </div>
+
+        {/* Modal Chọn địa chỉ đã lưu */}
+        {showAddressModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 max-h-[85vh] flex flex-col">
+              {/* Header Modal */}
+              <div className="flex items-center justify-between pb-3 border-b border-stone-100 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">📍</span>
+                  <h3 className="text-base font-bold text-stone-900">
+                    Sổ địa chỉ nhận hàng của bạn
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAddressModal(false)}
+                  className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+                  aria-label="Đóng"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Danh sách thẻ địa chỉ */}
+              <div className="overflow-y-auto flex-1 pr-1">
+                {getSavedAddresses().map((addr) => (
+                  <div
+                    key={addr.id}
+                    onClick={() => handleSelectSavedAddress(addr)}
+                    className="border border-stone-200 rounded-xl p-4 mb-4 hover:border-blue-500 transition-colors cursor-pointer group bg-stone-50/20 hover:bg-white"
+                  >
+                    {/* Dòng 1: In đậm Tên + SĐT, badge Mặc định */}
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-bold text-sm text-stone-900">
+                          {addr.recipientName || addr.fullName || 'Khách hàng'}
+                        </span>
+                        <span className="text-stone-300">•</span>
+                        <span className="font-bold text-sm text-stone-900 font-mono">
+                          {addr.phone}
+                        </span>
+                      </div>
+                      {addr.isDefault && (
+                        <span className="bg-yellow-400 text-xs px-2 py-1 rounded font-semibold text-stone-900 shrink-0">
+                          Mặc định
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Dòng 2: Text địa chỉ chi tiết màu xám */}
+                    <p className="text-xs text-stone-500 leading-relaxed mb-3">
+                      {[addr.address, addr.district, addr.city].filter(Boolean).join(', ')}
+                    </p>
+
+                    {/* Dòng 3: Nút text căn phải */}
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleSelectSavedAddress(addr)
+                        }}
+                        className="text-blue-700 font-medium text-xs hover:underline cursor-pointer"
+                      >
+                        Sử dụng địa chỉ này →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Cuối Modal */}
+              <div className="mt-2 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                <span>Quản lý thêm tại trang Hồ sơ cá nhân</span>
+                <Link
+                  to="/profile"
+                  className="text-xs font-semibold text-blue-700 hover:underline"
+                >
+                  Đến Sổ địa chỉ →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   )

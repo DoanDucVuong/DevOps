@@ -147,6 +147,13 @@ export default function Products() {
         list.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
         break
       default:
+        // Mặc định ưu tiên hiển thị trang phục quần áo (Đồ Nam/Nữ: Áo khoác, Áo sơ mi, Áo thun, Quần, Váy) lên đầu, phụ kiện xếp sau
+        list.sort((a, b) => {
+          const aIsAccessory = a.category === 'phu-kien' ? 1 : 0
+          const bIsAccessory = b.category === 'phu-kien' ? 1 : 0
+          if (aIsAccessory !== bIsAccessory) return aIsAccessory - bIsAccessory
+          return 0
+        })
         break
     }
     return list

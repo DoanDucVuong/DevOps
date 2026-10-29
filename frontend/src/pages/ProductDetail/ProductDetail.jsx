@@ -173,13 +173,16 @@ export default function ProductDetail() {
     oldPrice > product.price ? Math.round(((oldPrice - product.price) / oldPrice) * 100) : 0
 
   const handleAddToCart = () => {
+    const colorToUse = selectedColor || availableColors[0] || 'den'
+    const sizeToUse = selectedSize || availableSizes[0] || 'M'
+
     addItem({
       productId: product.id,
       name: product.name,
       price: product.price,
       image: galleryImages[0] || defaultImg,
-      color: selectedColor,
-      size: selectedSize,
+      color: colorToUse,
+      size: sizeToUse,
       quantity,
     })
     recordInteraction(product.id, 'cart')
@@ -187,17 +190,28 @@ export default function ProductDetail() {
   }
 
   const handleBuyNow = () => {
-    addItem({
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      image: galleryImages[0] || defaultImg,
-      color: selectedColor,
-      size: selectedSize,
-      quantity,
-    })
+    const colorToUse = selectedColor || availableColors[0] || 'den'
+    const sizeToUse = selectedSize || availableSizes[0] || 'M'
+
     recordInteraction(product.id, 'cart')
-    navigate('/checkout')
+    // Tách biệt luồng Mua ngay: Không thêm vào giỏ hàng chung, truyền state sang trang Checkout
+    navigate('/checkout', {
+      state: {
+        buyNowItem: {
+          ...product,
+          productId: product.id,
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: galleryImages[0] || defaultImg,
+          quantity,
+          selectedSize: sizeToUse,
+          selectedColor: colorToUse,
+          size: sizeToUse,
+          color: colorToUse,
+        },
+      },
+    })
   }
 
   const handleCopyVoucher = (code) => {
