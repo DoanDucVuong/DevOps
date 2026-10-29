@@ -85,6 +85,14 @@ else \
 fi`,
   },
   {
+    title: 'Giải phóng dung lượng đĩa & Dọn dẹp Docker cache trên EC2',
+    command: `echo "=== Dung lượng trước khi dọn dẹp ===" && df -h / && \
+sudo docker system prune -af || true && \
+sudo docker builder prune -af || true && \
+sudo apt-get clean || true && \
+echo "=== Dung lượng sau khi dọn dẹp ===" && df -h /`,
+  },
+  {
     title: 'Cấu hình Public IP cho Frontend & Khởi chạy Docker Compose Microservices',
     command: `cd ${CONFIG.PROJECT_DIR} && \
 EC2_IP=$(curl -s http://checkip.amazonaws.com || curl -s https://api.ipify.org || echo "localhost") && \
