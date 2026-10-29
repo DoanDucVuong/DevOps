@@ -61,6 +61,11 @@ export const useAuthStore = create(
         localStorage.removeItem('sttn-token')
         set({ user: null, token: null })
       },
+
+      updateUser: (updatedData) => {
+        const current = get().user || {}
+        set({ user: { ...current, ...updatedData } })
+      },
     }),
     { name: 'sttn-auth' }
   )

@@ -72,6 +72,7 @@ const data = (r) => r.data
 
 // ---- Products ----
 export const fetchProducts = (params) => (IS_BACKEND ? api.get('/products', { params }).then(data) : noBackend())
+export const fetchProductById = (id) => (IS_BACKEND ? api.get(`/products/${id}`).then(data) : noBackend())
 export const fetchSimilarProducts = (id, topK = 4) =>
   IS_BACKEND ? api.get(`/products/${id}/similar`, { params: { top_k: topK } }).then(data) : noBackend()
 export const fetchProductReviews = (id) =>
@@ -95,6 +96,8 @@ export const recordInteraction = (productId, type, ratingValue) =>
 // ---- Auth ----
 export const registerUser = (payload) => api.post('/auth/register', payload).then(data)
 export const loginUser = (payload) => api.post('/auth/login', payload).then(data)
+export const fetchCurrentUser = () => api.get('/auth/me').then(data)
+export const updateUserProfile = (payload) => api.put('/auth/profile', payload).then(data)
 
 // ---- Orders ----
 // Chuẩn hoá về cùng một hình dạng với đơn hàng lưu cục bộ: { id, date, items, total, status }

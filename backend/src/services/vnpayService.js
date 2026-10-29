@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const querystring = require('qs')
 
 /**
  * Định dạng ngày theo chuẩn VNPay: YYYYMMDDHHmmss (GMT+7)
@@ -15,19 +16,22 @@ function formatVNPayDate(date = new Date()) {
 }
 
 /**
- * Sắp xếp các tham số theo thứ tự alphabet theo chuẩn VNPay
+ * Sắp xếp các tham số theo thứ tự alphabet theo chuẩn VNPay v2.1.0
  */
 function sortObject(obj) {
-  const sorted = {}
-  const str = []
-  for (const key in obj) {
+  let sorted = {}
+  let str = []
+  let key
+  for (key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      str.push(encodeURIComponent(key))
+      if (obj[key] !== '' && obj[key] !== null && obj[key] !== undefined) {
+        str.push(encodeURIComponent(key))
+      }
     }
   }
   str.sort()
-  for (let key = 0; key < str.length; key++) {
-    sorted[str[key]] = encodeURIComponent(String(obj[str[key]])).replace(/%20/g, '+')
+  for (key = 0; key < str.length; key++) {
+    sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, '+')
   }
   return sorted
 }
@@ -44,11 +48,13 @@ function createPaymentUrl({
   locale = 'vn',
   returnUrl,
 }) {
-  const tmnCode = process.env.VNP_TMNCODE || '2QXUI4J4'
-  const secretKey = process.env.VNP_HASHSECRET || 'RAHMDARFGNIRXGQAUZAZVWGBBBGHIFZA'
-  const vnpUrl = process.env.VNP_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'
+  const tmnCode = (process.env.VNP_TMNCODE || '2QXUI4J4').trim()
+  const secretKey = (process.env.VNP_HASHSECRET || 'RAHMDARFGNIRXGQAUZAZVWGBBBGHIFZA').trim()
+  const vnpUrl = (process.env.VNP_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html').trim()
 
-  const createDate = formatVNPayDate(new Date())
+  const date = new Date()
+  const createDate = formatVNPayDate(date)
+  const expireDate = formatVNPayDate(new Date(date.getTime() + 15 * 60 * 1000))
 
   let vnp_Params = {
     vnp_Version: '2.1.0',
@@ -57,40 +63,44 @@ function createPaymentUrl({
     vnp_Locale: locale,
     vnp_CurrCode: 'VND',
     vnp_TxnRef: String(orderId),
-    vnp_OrderInfo: orderInfo || `Thanh toan don hang DH${String(orderId).padStart(6, '0')}`,
+    vnp_OrderInfo: 'ThanhToanDonHang_' + String(orderId),
     vnp_OrderType: 'other',
     vnp_Amount: Math.round(Number(amount) * 100), // VNPay quy định nhân 100
     vnp_ReturnUrl: returnUrl,
-    vnp_IpAddr: ipAddr,
+    vnp_IpAddr: ipAddr === '::1' ? '127.0.0.1' : ipAddr,
     vnp_CreateDate: createDate,
+    vnp_ExpireDate: expireDate,
   }
 
   if (bankCode) {
     vnp_Params['vnp_BankCode'] = bankCode
   }
 
+  // 1. Sắp xếp object tham số theo chuẩn alphabet
   vnp_Params = sortObject(vnp_Params)
 
-  const signData = Object.keys(vnp_Params)
-    .map((k) => `${k}=${vnp_Params[k]}`)
-    .join('&')
-
+  // 2. Tạo chuỗi signData với qs ({ encode: false } do sortObject đã encode values)
+  const signData = querystring.stringify(vnp_Params, { encode: false })
   const hmac = crypto.createHmac('sha512', secretKey)
   const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex')
   vnp_Params['vnp_SecureHash'] = signed
 
-  const queryStr = Object.keys(vnp_Params)
-    .map((k) => `${k}=${vnp_Params[k]}`)
-    .join('&')
+  // 3. Tạo query string cuối cùng để chuyển hướng sang VNPay
+  const redirectUrl = `${vnpUrl}?${querystring.stringify(vnp_Params, { encode: false })}`
 
-  return `${vnpUrl}?${queryStr}`
+  console.log('=== DEBUG VNPAY ===')
+  console.log('1. vnp_Params (Đã sort):', vnp_Params)
+  console.log('2. signData (Chuỗi trước khi băm):', signData)
+  console.log('3. SecureHash sinh ra:', signed)
+
+  return redirectUrl
 }
 
 /**
  * Xác thực Checksum (Hash Signature) khi VNPay redirect callback trả về
  */
 function verifyReturnUrl(query) {
-  const secretKey = process.env.VNP_HASHSECRET || 'RAHMDARFGNIRXGQAUZAZVWGBBBGHIFZA'
+  const secretKey = (process.env.VNP_HASHSECRET || 'RAHMDARFGNIRXGQAUZAZVWGBBBGHIFZA').trim()
 
   let vnp_Params = { ...query }
   const secureHash = vnp_Params['vnp_SecureHash']
@@ -100,10 +110,7 @@ function verifyReturnUrl(query) {
 
   vnp_Params = sortObject(vnp_Params)
 
-  const signData = Object.keys(vnp_Params)
-    .map((k) => `${k}=${vnp_Params[k]}`)
-    .join('&')
-
+  const signData = querystring.stringify(vnp_Params, { encode: false })
   const hmac = crypto.createHmac('sha512', secretKey)
   const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex')
 

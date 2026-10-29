@@ -172,6 +172,11 @@ async function init() {
   } catch (err) {
     try { await query("ALTER TABLE reviews ADD COLUMN user_id TEXT") } catch (e) {}
   }
+  try {
+    await query("ALTER TABLE products ADD COLUMN IF NOT EXISTS sold_count INTEGER DEFAULT 0")
+  } catch (err) {
+    try { await query("ALTER TABLE products ADD COLUMN sold_count INTEGER DEFAULT 0") } catch (e) {}
+  }
 
   await seedCategories()
   await seedVouchers()

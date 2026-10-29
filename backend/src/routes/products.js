@@ -212,9 +212,32 @@ router.post('/:id/reviews', requireAuth, async (req, res) => {
 
 // GET /api/products/:id
 router.get('/:id', async (req, res) => {
-  const product = await one('SELECT * FROM products WHERE id = ?', [req.params.id])
+  const prodId = req.params.id
+  const product = await one('SELECT * FROM products WHERE id = ?', [prodId])
   if (!product) return res.status(404).json({ message: 'Không tìm thấy sản phẩm.' })
-  res.json(product)
+
+  // Tính tổng số lượng đã bán thực tế từ các đơn hàng hợp lệ
+  let countFromOrders = 0
+  try {
+    const orders = await query("SELECT items_json FROM orders WHERE status != 'cancelled'")
+    for (const ord of orders) {
+      try {
+        const items = typeof ord.items_json === 'string' ? JSON.parse(ord.items_json) : (ord.items_json || [])
+        for (const it of items) {
+          if (String(it.productId || it.product_id || it.id) === String(prodId)) {
+            countFromOrders += Number(it.quantity || 1)
+          }
+        }
+      } catch {}
+    }
+  } catch {}
+
+  const finalSoldCount = Math.max(Number(product.sold_count || 0), countFromOrders)
+
+  res.json({
+    ...product,
+    sold_count: finalSoldCount,
+  })
 })
 
 module.exports = router

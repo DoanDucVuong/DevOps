@@ -1,8 +1,8 @@
-// Danh sách 101 sản phẩm thời trang tự động đồng bộ theo thời gian thực từ Database
+// Danh sách 115 sản phẩm thời trang tự động đồng bộ theo thời gian thực từ Database
 export const products = [
   {
     "id": "p01",
-    "name": "Áo Thun Cổ Tròn Big Size Navy1805",
+    "name": "Áo Thun Nam Classic Bear Stripe Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -22,9 +22,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://cdn.hstatic.net/products/1000402464/ts26ss19g-rg_navy__1__a80c1c0d07d040f7a880f41f1eb12656_large.jpg",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-classic-bear-stripe-form-regular__2__355ada29160148ecaa79172d031d7890_1024x1024.jpg",
     "images": [
-      "https://cdn.hstatic.net/products/1000402464/ts26ss19g-rg_navy__1__a80c1c0d07d040f7a880f41f1eb12656_large.jpg"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-classic-bear-stripe-form-regular__2__355ada29160148ecaa79172d031d7890_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -32,7 +32,7 @@ export const products = [
   },
   {
     "id": "p02",
-    "name": "Áo Thun Cổ Tròn Big Size Navy BS2763",
+    "name": "Áo Thun Nam Arabica Club Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -52,9 +52,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://cdn.hstatic.net/products/1000402464/ts26ss19g-rg_navy__1__a80c1c0d07d040f7a880f41f1eb12656_large.jpg",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-arabica-club-form-regular__2__cc351a60c2844c1fb122a8e057e18d68_1024x1024.jpg",
     "images": [
-      "https://cdn.hstatic.net/products/1000402464/ts26ss19g-rg_navy__1__a80c1c0d07d040f7a880f41f1eb12656_large.jpg"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-arabica-club-form-regular__2__cc351a60c2844c1fb122a8e057e18d68_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -62,7 +62,7 @@ export const products = [
   },
   {
     "id": "p03",
-    "name": "Áo Thun Nam Oversize Đen Streetwear",
+    "name": "Áo Thun Nam Athletic Club Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -82,9 +82,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-athletic-club-form-regular__2__7afa358c38a447288e3c71f8ba3709fa_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-athletic-club-form-regular__2__7afa358c38a447288e3c71f8ba3709fa_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -92,7 +92,7 @@ export const products = [
   },
   {
     "id": "p04",
-    "name": "T-Shirt Big Size Navy BSX653",
+    "name": "Áo Thun Nam Garfield Faded Vintage Form Boxy",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -112,9 +112,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1618354691792-d1d42acfd860?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-garfield-faded-vintage-form-boxy__1__8a81457b87374e8e9b0a009840b36743_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1618354691792-d1d42acfd860?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-garfield-faded-vintage-form-boxy__1__8a81457b87374e8e9b0a009840b36743_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -122,7 +122,7 @@ export const products = [
   },
   {
     "id": "p05",
-    "name": "Áo Thun Nam Thể Thao Thoáng Khí Pro",
+    "name": "Áo Thun Nam Disney Mighty Mickey Goal Form Boxy",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -142,9 +142,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-disney-mighty-mickey-goal-form-boxy__4__b7c4a1c063bb4ac8a3a4007f0328582b_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-disney-mighty-mickey-goal-form-boxy__4__b7c4a1c063bb4ac8a3a4007f0328582b_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -152,7 +152,7 @@ export const products = [
   },
   {
     "id": "p06",
-    "name": "Áo Thun Nam Graphic Minimalist Hiện Đại",
+    "name": "Áo Thun Nam Pluto Retro Marine Form Boxy",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -172,9 +172,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-pluto-retro-marine-form-boxy__4__b097d23831184018a15fa870b8cdeb2c_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-pluto-retro-marine-form-boxy__4__b097d23831184018a15fa870b8cdeb2c_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -182,7 +182,7 @@ export const products = [
   },
   {
     "id": "p07",
-    "name": "Áo Thun Nam Xám Melange Cổ Tròn",
+    "name": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-emtry-form-boxy__1__a67630fd1c2b4344a036e8e8accff204_1024x1024.jpg",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -202,9 +202,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-emtry-form-boxy__1__a67630fd1c2b4344a036e8e8accff204_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-emtry-form-boxy__1__a67630fd1c2b4344a036e8e8accff204_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -212,7 +212,7 @@ export const products = [
   },
   {
     "id": "p08",
-    "name": "Áo Thun Nam Trắng Dáng Relaxed",
+    "name": "Áo Thun Nam Frontier Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -232,9 +232,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-frontier-form-regular__2__cd0a76c0494e4be4bc25b5b919d75166_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-frontier-form-regular__2__cd0a76c0494e4be4bc25b5b919d75166_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -242,7 +242,7 @@ export const products = [
   },
   {
     "id": "p09",
-    "name": "Áo Thun Nam Cổ Tròn Bo Viền Cao Cấp",
+    "name": "Áo Thun Nam Ramen Club Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -262,9 +262,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-ramen-club-form-regular_adfe08005fea446fb65eb75591fc0fdc_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-ramen-club-form-regular_adfe08005fea446fb65eb75591fc0fdc_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -272,7 +272,7 @@ export const products = [
   },
   {
     "id": "p10",
-    "name": "Áo Thun Nam Vintage Washed Xám Tro",
+    "name": "Áo Thun Nam Midnight Sushi Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -292,9 +292,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-midnight-sushi-form-regular__2__98644c3b3ca44f93ab7166b68f39ca3d_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-midnight-sushi-form-regular__2__98644c3b3ca44f93ab7166b68f39ca3d_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -302,7 +302,7 @@ export const products = [
   },
   {
     "id": "p100",
-    "name": "Quần Tây Nữ Dáng Lửng Thời Thượng",
+    "name": "Quần Dài Ống Cong Barrel Vải Jersey​",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -322,9 +322,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1605763240000-7e93b172d754?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/475344/item/vngoods_30_475344_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1605763240000-7e93b172d754?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/475344/item/vngoods_30_475344_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -332,7 +332,7 @@ export const products = [
   },
   {
     "id": "p101",
-    "name": "Áo Thun Nam Tshirt Basic USa",
+    "name": "Áo Thun Nam Game Day Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -352,17 +352,257 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-game-day-form-regular__2__5b828b58c40f493c88856cac5964e11a_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-game-day-form-regular__2__5b828b58c40f493c88856cac5964e11a_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
     "description": "Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh."
   },
   {
+    "id": "p102",
+    "name": "Mũ Lưỡi Trai Classic Twill Maison",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 290000,
+    "oldPrice": null,
+    "rating": 4.8,
+    "avg_rating": 4.8,
+    "review_count": 8,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Mũ lưỡi trai phong cách tối giản từ chất liệu cotton twill 100% cao cấp, form cứng cáp, khóa kim loại khắc logo Maison sắc sảo, chống nắng và thoáng khí tối đa."
+  },
+  {
+    "id": "p103",
+    "name": "Mũ Bucket Canvas Minimalist Unisex",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 320000,
+    "oldPrice": null,
+    "rating": 4.7,
+    "avg_rating": 4.7,
+    "review_count": 6,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Mũ bucket vải canvas cotton tự nhiên bền bỉ, phong cách dạo phố trẻ trung, vành mũ chuẩn độ rộng che nắng hiệu quả và dễ dàng gấp gọn mang theo."
+  },
+  {
+    "id": "p104",
+    "name": "Thắt Lưng Nam Da Bò Thật Khóa Kim Loại Mờ",
+    "gender": "Nam",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 480000,
+    "oldPrice": null,
+    "rating": 4.9,
+    "avg_rating": 4.9,
+    "review_count": 15,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Thắt lưng nam chế tác từ da bò nguyên tấm cao cấp nhập khẩu, bề mặt da mềm mịn bền màu theo thời gian, kết hợp khóa hợp kim mạ mờ sang trọng cho quý ông."
+  },
+  {
+    "id": "p105",
+    "name": "Thắt Lưng Nữ Bản Nhỏ Da Ý Thanh Lịch",
+    "gender": "Nữ",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 390000,
+    "oldPrice": null,
+    "rating": 4.8,
+    "avg_rating": 4.8,
+    "review_count": 9,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Thắt lưng nữ bản nhỏ 1.8cm tôn dáng vòng eo, phối cùng đầm dài hoặc quần tây công sở thanh thoát. Mặt khóa mạ vàng ánh kim tinh xảo chuẩn phong cách Pháp."
+  },
+  {
+    "id": "p106",
+    "name": "Ví Da Nam Dáng Ngang Saffiano Cao Cấp",
+    "gender": "Nam",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 550000,
+    "oldPrice": null,
+    "rating": 5,
+    "avg_rating": 5,
+    "review_count": 12,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Ví gập da saffiano chống trầy xước và kháng nước nhẹ, thiết kế 8 ngăn thẻ tiện lợi, 2 ngăn tiền rộng rãi và ngăn khóa kéo an toàn. Đẳng cấp thời trang doanh nhân."
+  },
+  {
+    "id": "p107",
+    "name": "Ví Cầm Tay Nữ Da Thuần Chay Đa Năng",
+    "gender": "Nữ",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 460000,
+    "oldPrice": null,
+    "rating": 4.7,
+    "avg_rating": 4.7,
+    "review_count": 7,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Ví dài cầm tay nữ da vegan thân thiện môi trường với vân da tự nhiên, nhiều ngăn đựng điện thoại, tiền mặt và son môi nhỏ gọn khi đi tiệc hoặc cà phê dạo phố."
+  },
+  {
+    "id": "p108",
+    "name": "Túi Tote Canvas Đựng Laptop Phong Cách Maison",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 340000,
+    "oldPrice": null,
+    "rating": 4.9,
+    "avg_rating": 4.9,
+    "review_count": 21,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Túi tote chất vải canvas dày dặn 12oz, có khóa kéo miệng và ngăn lót riêng cho laptop 14 inch, quai xách may chỉ đôi chịu tải trọng tốt, phong cách retro thanh lịch."
+  },
+  {
+    "id": "p109",
+    "name": "Túi Đeo Chéo Mini Crossbody Da Mềm",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 520000,
+    "oldPrice": null,
+    "rating": 4.8,
+    "avg_rating": 4.8,
+    "review_count": 14,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Túi đeo chéo form hộp hiện đại từ da tổng hợp vi sợi siêu mềm dai, khóa từ tiện dụng và dây đeo bản rộng có thể điều chỉnh linh hoạt mọi vóc dáng."
+  },
+  {
     "id": "p11",
-    "name": "Áo Thun Nam Cổ Tim Phong Cách Casual",
+    "name": "Áo Thun Nam Coastal Voyage Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -382,17 +622,227 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1521485714898-f097eb6fc5b9?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-coastal-voyage-form-regular__1__454c7da8c2224dedbb77d42d53c3f78b_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1521485714898-f097eb6fc5b9?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-coastal-voyage-form-regular__1__454c7da8c2224dedbb77d42d53c3f78b_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
     "description": "Thiết kế thời trang nam cao cấp từ Maison. Chất vải dày dặn, phom dáng chuẩn chỉ, tôn vóc dáng mạnh mẽ và lịch lãm cho phái mạnh."
   },
   {
+    "id": "p110",
+    "name": "Kính Mát Unisex Gọng Vuông Titanium UV400",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 590000,
+    "oldPrice": null,
+    "rating": 4.9,
+    "avg_rating": 4.9,
+    "review_count": 11,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Kính mát tròng polarized phân cực chống chói loá và cản 100% tia cực tím UV400, gọng titanium siêu nhẹ ôm sát khuôn mặt không gây vết hằn sống mũi."
+  },
+  {
+    "id": "p111",
+    "name": "HEATTECH Găng Tay Len",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 160000,
+    "oldPrice": null,
+    "rating": 4.9,
+    "avg_rating": 4.9,
+    "review_count": 35,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/486678/item/goods_01_486678_3x4.jpg?width=400",
+    "images": [
+      "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/486678/item/goods_01_486678_3x4.jpg?width=400"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Set 3 đôi vớ cổ cao dệt sợi cotton chải kỹ kết hợp công nghệ ion bạc kháng khuẩn khử mùi, độ đàn hồi ôm vừa vặn gót chân không bai dão sau nhiều lần giặt."
+  },
+  {
+    "id": "p112",
+    "name": "Set 3 Đôi Tất Lười Cổ Ngắn Chống Tụt Gót",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 140000,
+    "oldPrice": null,
+    "rating": 4.8,
+    "avg_rating": 4.8,
+    "review_count": 26,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Set 3 đôi tất tàng hình cổ ngắn thiết kế đệm silicon gót chân chống tụt tuyệt đối khi di chuyển, chất liệu cotton mỏng nhẹ thoáng khí chuyên dùng cho giày lười và sneaker."
+  },
+  {
+    "id": "p113",
+    "name": "Khăn Choàng Cổ Dệt Kim Cashmere Blend",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 620000,
+    "oldPrice": null,
+    "rating": 5,
+    "avg_rating": 5,
+    "review_count": 8,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Khăn choàng dệt kim pha len cashmere mềm mịn ấm áp, tua rua đan tay thủ công tỉ mỉ, bảng màu trung tính trang nhã phù hợp cả nam và nữ trong mùa thu đông."
+  },
+  {
+    "id": "p114",
+    "name": "PEANUTS Mũ Chống Tia UV",
+    "gender": "Nam",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 310000,
+    "oldPrice": null,
+    "rating": 4.8,
+    "avg_rating": 4.8,
+    "review_count": 10,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/485791002/item/goods_69_485791002_3x4.jpg?width=400",
+    "images": [
+      "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/485791002/item/goods_69_485791002_3x4.jpg?width=400"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Phụ kiện nam tinh tế với dây da bò bện xoắn thủ công, chốt khóa nam châm thép không gỉ 316L sáng bóng khắc chữ lồng Maison độc quyền."
+  },
+  {
+    "id": "p115",
+    "name": "Balo Vải Oxford Cao Cấp Chống Trượt Nước",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 820000,
+    "oldPrice": null,
+    "rating": 4.9,
+    "avg_rating": 4.9,
+    "review_count": 18,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Balo thời trang đa dụng với chất vải Oxford 900D kháng nước vượt trội, đệm lưng công thái học tổ ong thoáng khí, ngăn chứa laptop 15.6 inch chống sốc dày dặn."
+  },
+  {
+    "id": "p116",
+    "name": "Túi Bán Nguyệt Mini Đeo Chéo",
+    "gender": "Unisex",
+    "category": "phu-kien",
+    "brand": "Maison",
+    "price": 280000,
+    "oldPrice": null,
+    "rating": 4.8,
+    "avg_rating": 4.8,
+    "review_count": 12,
+    "colors": [
+      "den",
+      "trang",
+      "be"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "image_url": "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/481610/item/goods_14_481610_3x4.jpg?width=400",
+    "images": [
+      "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/481610/item/goods_14_481610_3x4.jpg?width=400"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "description": "Ví kẹp thẻ siêu mỏng gọn da Epi dập vân sắc nét, tích hợp 6 khe cắm thẻ và 1 ngăn giữa để tiền gập, tiện lợi bỏ túi áo sơ mi hoặc túi quần tây mà không gây cộm."
+  },
+  {
     "id": "p12",
-    "name": "Áo Thun Nam Street Style In Họa Tiết",
+    "name": "Áo Thun Nam Archive Form Regular",
     "gender": "Nam",
     "category": "ao-thun",
     "brand": "Maison",
@@ -412,9 +862,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1579038773867-044c48829161?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-archive-form-regular_cefb3bb2082a4a8cba246fbb5776e145_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1579038773867-044c48829161?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-thun-nam-archive-form-regular_cefb3bb2082a4a8cba246fbb5776e145_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -452,7 +902,7 @@ export const products = [
   },
   {
     "id": "p14",
-    "name": "Áo Sơ Mi Nam Vải Đũi Linen Mát Mẻ",
+    "name": "Áo Sơ Mi Nam Tay Ngắn Dark Smoke Form Relaxed",
     "gender": "Nam",
     "category": "ao-so-mi",
     "brand": "Maison",
@@ -472,9 +922,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-dark-smoke-form-relaxed__2__59bc0ef702ef420bb2790efbf84e3d87_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-dark-smoke-form-relaxed__2__59bc0ef702ef420bb2790efbf84e3d87_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -482,7 +932,7 @@ export const products = [
   },
   {
     "id": "p15",
-    "name": "Áo Sơ Mi Dài Tay Xanh Thiết Kế Hoạ Tiết 1SMDH646XAH",
+    "name": "Áo Sơ Mi Nam Tay Ngắn Original Quality Form Boxy",
     "gender": "Nam",
     "category": "ao-so-mi",
     "brand": "Maison",
@@ -502,9 +952,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://cdn.hstatic.net/products/200000053174/1smdh646xah_145c84b438da4ad9a151640e1f0f5aeb_master.jpeg",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-original-quality-form-boxy_5cf811107ec54722945e1f55064344e5_1024x1024.jpg",
     "images": [
-      "https://cdn.hstatic.net/products/200000053174/1smdh646xah_145c84b438da4ad9a151640e1f0f5aeb_master.jpeg"
+      "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-original-quality-form-boxy_5cf811107ec54722945e1f55064344e5_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -512,7 +962,7 @@ export const products = [
   },
   {
     "id": "p16",
-    "name": "Áo Sơ Mi Nam Tay Ngắn Cổ Cuba Retro",
+    "name": "Áo Sơ Mi Nam Tay Ngắn Gallery Form Relaxed",
     "gender": "Nam",
     "category": "ao-so-mi",
     "brand": "Maison",
@@ -532,9 +982,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-gallery-form-relaxed__1__01cd35652e9a4268b4fd1e6a33fc6ff4_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-gallery-form-relaxed__1__01cd35652e9a4268b4fd1e6a33fc6ff4_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -542,7 +992,7 @@ export const products = [
   },
   {
     "id": "p17",
-    "name": "Áo Sơ Mi Nam Kẻ Ca-rô Denim Phóng Khoáng",
+    "name": "Áo Sơ Mi Nam Tay Dài ICON AM Readyday Form Regular",
     "gender": "Nam",
     "category": "ao-so-mi",
     "brand": "Maison",
@@ -562,9 +1012,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/iconam_-_icon__1__1e610d9a41114d9e8cf28714d70a2914_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/iconam_-_icon__1__1e610d9a41114d9e8cf28714d70a2914_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -602,7 +1052,7 @@ export const products = [
   },
   {
     "id": "p19",
-    "name": "Áo Sơ Mi Nam Flannel Dày Dặn Thu Đông",
+    "name": "Áo Sơ Mi Nam Tay Dài Fadeline Form Regular",
     "gender": "Nam",
     "category": "ao-so-mi",
     "brand": "Maison",
@@ -622,9 +1072,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-dai-fadeline-form-regular__1__32efa0f89480406b9194038765bf6ce3_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-dai-fadeline-form-regular__1__32efa0f89480406b9194038765bf6ce3_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -692,7 +1142,7 @@ export const products = [
   },
   {
     "id": "p22",
-    "name": "Áo Sơ Mi Nam Doanh Nhân Cao Cấp",
+    "name": "Áo Sơ Mi Nam Tay Ngắn Cuban Pure Oasis Form Relaxed",
     "gender": "Nam",
     "category": "ao-so-mi",
     "brand": "Maison",
@@ -712,9 +1162,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-cuban-pure-oasis-form-relaxed__2__b97163df43cd4a8a97fe3a9e0243d76b_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/ao-so-mi-nam-tay-ngan-cuban-pure-oasis-form-relaxed__2__b97163df43cd4a8a97fe3a9e0243d76b_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -788,9 +1238,9 @@ export const products = [
     "brand": "Maison",
     "price": 830000,
     "oldPrice": null,
-    "rating": 4,
-    "avg_rating": 4,
-    "review_count": 0,
+    "rating": 4.5,
+    "avg_rating": 4.5,
+    "review_count": 2,
     "colors": [
       "den",
       "trang",
@@ -818,9 +1268,9 @@ export const products = [
     "brand": "Maison",
     "price": 860000,
     "oldPrice": null,
-    "rating": 0,
-    "avg_rating": 0,
-    "review_count": 0,
+    "rating": 5,
+    "avg_rating": 5,
+    "review_count": 1,
     "colors": [
       "den",
       "trang",
@@ -1052,7 +1502,7 @@ export const products = [
   },
   {
     "id": "p34",
-    "name": "Áo Khoác Dạ Đen Phối Hoạ Tiết Cao Cấp, Giữ Ấm, Chống Bụi Bẩn 9ADAC511DEN",
+    "name": "PUFFTECH Áo Parka Chần Bông",
     "gender": "Nam",
     "category": "ao-khoac",
     "brand": "Maison",
@@ -1072,9 +1522,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://cdn.hstatic.net/products/200000053174/kien_-_anh_thump_website__11__26f54f3bbf704698a67b8dacfaafea7c_master.jpg",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/470118/sub/goods_470118_sub14_3x4.jpg?width=400",
     "images": [
-      "https://cdn.hstatic.net/products/200000053174/kien_-_anh_thump_website__11__26f54f3bbf704698a67b8dacfaafea7c_master.jpg"
+      "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/470118/sub/goods_470118_sub14_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1172,7 +1622,7 @@ export const products = [
   },
   {
     "id": "p38",
-    "name": "Quần Jean Nam Xanh Classic Dáng Straight",
+    "name": "Quần Short Cargo Nam Ridge Form Loose",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1192,9 +1642,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-short-cargo-nam-ridge-form-loose__3__d3beb9ce0a11466289fe0f9e6725e75a_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-short-cargo-nam-ridge-form-loose__3__d3beb9ce0a11466289fe0f9e6725e75a_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1202,7 +1652,7 @@ export const products = [
   },
   {
     "id": "p39",
-    "name": "Quần Jean Nam Tối Màu Slim Fit Cao Cấp",
+    "name": "Quần Tây Nam Granite Form Slim",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1222,9 +1672,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-tay-nam-granite-form-slim__7__adc379567e05406784b209d9e9e4093d_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-tay-nam-granite-form-slim__7__adc379567e05406784b209d9e9e4093d_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1232,7 +1682,7 @@ export const products = [
   },
   {
     "id": "p40",
-    "name": "Quần Chino Nam Vải Kaki Co Giãn Màu Be",
+    "name": "Quần Short Cargo Nam Ranger Form Regular",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1252,9 +1702,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-short-cargo-nam-ranger-form-regular__2__4d99e1fbd7f64163baa43ddbbe1c7e85_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-short-cargo-nam-ranger-form-regular__2__4d99e1fbd7f64163baa43ddbbe1c7e85_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1262,7 +1712,7 @@ export const products = [
   },
   {
     "id": "p41",
-    "name": "Quần Jean Nam Rách Xước Nhẹ Retro",
+    "name": "Quần Kaki Nam 5-Pocket Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1282,9 +1732,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-kaki-nam-5-pocket-form-straight__3__709003bcc27a4219a703a7809e912e1f_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-kaki-nam-5-pocket-form-straight__3__709003bcc27a4219a703a7809e912e1f_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1292,7 +1742,7 @@ export const products = [
   },
   {
     "id": "p42",
-    "name": "Quần Jogger Nam Thể Thao Bo Gấu Năng Động",
+    "name": "Quần Smart Jeans Nam Siêu Co Dãn Xanh Trơn Form Smart Fit",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1312,9 +1762,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-smart-jeans-nam-sieu-co-dan-xanh-tron-form-smart-fit__3__f6ac6f77b6cf4e36a83a2f8dc7088a8e_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-smart-jeans-nam-sieu-co-dan-xanh-tron-form-smart-fit__3__f6ac6f77b6cf4e36a83a2f8dc7088a8e_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1322,7 +1772,7 @@ export const products = [
   },
   {
     "id": "p43",
-    "name": "Quần Jean Nam Vải Raw Selvedge Bền Đẹp",
+    "name": "Quần Short Denim Nam Wash Basic Color Form Slim",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1342,9 +1792,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://product.hstatic.net/1000360022/product/quan-short-denim-nam-wash-basic-color-form-slim__9__487530470aa544e0ad459bd1825c305d_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=800&auto=format&fit=crop&q=80"
+      "https://product.hstatic.net/1000360022/product/quan-short-denim-nam-wash-basic-color-form-slim__9__487530470aa544e0ad459bd1825c305d_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1352,7 +1802,7 @@ export const products = [
   },
   {
     "id": "p44",
-    "name": "Quần Túi Hộp Cargo Nam Phong Cách Bụi Bặm",
+    "name": "Quần Jeans Nam Vintage Brown Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1372,9 +1822,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-vintage-brown-form-straight_7dd6736c8dba4d62985500043596e9c4_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-vintage-brown-form-straight_7dd6736c8dba4d62985500043596e9c4_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1382,7 +1832,7 @@ export const products = [
   },
   {
     "id": "p45",
-    "name": "Quần Tây Nam Xếp Ly Công Sở Lịch Lãm",
+    "name": "Quần Tây Nam Ống Ôm Basic Trousers Form Slim",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1402,9 +1852,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/c-quan_48b1a33a89fd442fb9f8044944f92862_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/c-quan_48b1a33a89fd442fb9f8044944f92862_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1412,7 +1862,7 @@ export const products = [
   },
   {
     "id": "p46",
-    "name": "Quần Ống Suông Nam Rộng Thoải Mái",
+    "name": "Quần Cargo Kaki Nam Washed Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1432,9 +1882,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-cargo-nam-washed-khaki-form-straight-2_7fa0c638873a4a9d92fd6bd2da18639f_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-cargo-nam-washed-khaki-form-straight-2_7fa0c638873a4a9d92fd6bd2da18639f_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1442,7 +1892,7 @@ export const products = [
   },
   {
     "id": "p47",
-    "name": "Quần Kaki Nam Lửng Cropped Mắt Cá",
+    "name": "Quần Jeans Nam Ống Suông Scar Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1462,9 +1912,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-ong-suong-scar-form-straight_ab82d3281cc64d198f2d76400cd77d0d_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-ong-suong-scar-form-straight_ab82d3281cc64d198f2d76400cd77d0d_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1472,7 +1922,7 @@ export const products = [
   },
   {
     "id": "p48",
-    "name": "Quần Tây Nam Đen Dáng Slim Doanh Nhân",
+    "name": "Quần Jogger Cargo Nam Military Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1492,9 +1942,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-jogger-cargo-nam-military-form-straight_08155e7a0e444e28895f5efa11d88f85_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-jogger-cargo-nam-military-form-straight_08155e7a0e444e28895f5efa11d88f85_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1502,7 +1952,7 @@ export const products = [
   },
   {
     "id": "p49",
-    "name": "Quần Vải Linen Nam Đũi Suông Thoáng Mát",
+    "name": "Quần Jeans Nam Dune Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1522,9 +1972,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-dune-form-straight_3b0eea8ccb454cab8b0bc9d467f2356a_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-dune-form-straight_3b0eea8ccb454cab8b0bc9d467f2356a_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1532,7 +1982,7 @@ export const products = [
   },
   {
     "id": "p50",
-    "name": "Quần Âu Nam May Đo Cao Cấp",
+    "name": "Quần Jeans Nam Ash Grey Form Straight",
     "gender": "Nam",
     "category": "quan",
     "brand": "Maison",
@@ -1552,9 +2002,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-ash-grey-form-straight__2__3f7e7eeddcca47ce82fc6492a377d8c1_1024x1024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&auto=format&fit=crop&q=80"
+      "https://cdn.hstatic.net/products/1000360022/quan-jeans-nam-ash-grey-form-straight__2__3f7e7eeddcca47ce82fc6492a377d8c1_1024x1024.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1562,7 +2012,7 @@ export const products = [
   },
   {
     "id": "p51",
-    "name": "Đầm Midi Nữ Xòe Dáng Dài Thanh Lịch",
+    "name": "Quần Váy Xẻ Tà",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1582,9 +2032,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/485473/item/vngoods_05_485473_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/485473/item/vngoods_05_485473_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1592,7 +2042,7 @@ export const products = [
   },
   {
     "id": "p52",
-    "name": "Váy Nữ Hoa Nhí Phong Cách Bohemian",
+    "name": "Chân Váy Mini Vải Nhung",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1612,9 +2062,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488204/item/vngoods_08_488204_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488204/item/vngoods_08_488204_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1622,7 +2072,7 @@ export const products = [
   },
   {
     "id": "p53",
-    "name": "Đầm Dạ Hội Nữ Cúp Ngực Quyến Rũ",
+    "name": "Chân Váy Xếp Ly",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1642,9 +2092,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488083/item/vngoods_36_488083_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488083/item/vngoods_36_488083_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1652,7 +2102,7 @@ export const products = [
   },
   {
     "id": "p54",
-    "name": "Đầm Đỏ Nữ Dự Tiệc Đính Nơ Sang Trọng",
+    "name": "Đầm Kiểu Xếp Tầng",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1672,9 +2122,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/489239/item/vngoods_00_489239_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/489239/item/vngoods_00_489239_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1682,7 +2132,7 @@ export const products = [
   },
   {
     "id": "p55",
-    "name": "Váy Hai Dây Nữ Lụa Satin Quyến Rũ",
+    "name": "Đầm Vải Cotton Cổ Trụ",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1702,9 +2152,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488693/item/vngoods_69_488693_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488693/item/vngoods_69_488693_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1712,7 +2162,7 @@ export const products = [
   },
   {
     "id": "p56",
-    "name": "Đầm Chấm Bi Nữ Cổ Điển Vintage",
+    "name": "Đầm Vải Cotton Cổ Trụ | Kẻ Sọc",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1732,9 +2182,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/489452/sub/vngoods_489452_sub3_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/489452/sub/vngoods_489452_sub3_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1742,7 +2192,7 @@ export const products = [
   },
   {
     "id": "p57",
-    "name": "Đầm Nữ Xòe Chữ A Dự Tiệc Cocktail",
+    "name": "Chân Váy Maxi Xếp Tầng",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1762,9 +2212,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/487711/item/vngoods_00_487711_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/487711/item/vngoods_00_487711_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1772,7 +2222,7 @@ export const products = [
   },
   {
     "id": "p58",
-    "name": "Váy Trắng Nữ Đi Biển Hở Lưng Mùa Hè",
+    "name": "Chân Váy Maxi Xếp Tầng | Kẻ Sọc",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1792,9 +2242,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/487712/item/vngoods_69_487712_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/487712/item/vngoods_69_487712_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1802,7 +2252,7 @@ export const products = [
   },
   {
     "id": "p59",
-    "name": "Đầm Suông Nữ Lụa Phối Ren Duyên Dáng",
+    "name": "Chân Váy Satin",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1822,9 +2272,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488345/item/vngoods_01_488345_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488345/item/vngoods_01_488345_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1832,7 +2282,7 @@ export const products = [
   },
   {
     "id": "p60",
-    "name": "Đầm Maxi Nữ Tầng Xếp Dạo Phố",
+    "name": "Chân Váy Midi Vải Chiffon Xếp Ly",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1852,9 +2302,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488811/item/vngoods_69_488811_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488811/item/vngoods_69_488811_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1862,7 +2312,7 @@ export const products = [
   },
   {
     "id": "p61",
-    "name": "Váy Nữ Vải Đũi Linen Thắt Nơ Lưng",
+    "name": "Chân váy nữ dáng dài thu đông",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1882,9 +2332,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://sakurafashion.vn/upload/sanpham/large/654964-chan-vay-nu-dang-dai-thu-dong-chan-vay-xep-ly-ton-dang-phong-cach-thanh-lich-cao-cap-3.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&auto=format&fit=crop&q=80"
+      "https://sakurafashion.vn/upload/sanpham/large/654964-chan-vay-nu-dang-dai-thu-dong-chan-vay-xep-ly-ton-dang-phong-cach-thanh-lich-cao-cap-3.jpg"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1892,7 +2342,7 @@ export const products = [
   },
   {
     "id": "p62",
-    "name": "Đầm Voan Nữ Bồng Bềnh Nữ Tính",
+    "name": "Đầm Len Dệt Hai Da",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1912,9 +2362,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488186/item/vngoods_09_488186_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488186/item/vngoods_09_488186_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -1922,7 +2372,7 @@ export const products = [
   },
   {
     "id": "p63",
-    "name": "Đầm Blazer Nữ Thanh Lịch Hiện Đại",
+    "name": "Đầm Dệt Kim Vải Gân Có Thể Giặt Máy",
     "gender": "Nữ",
     "category": "vay-dam",
     "brand": "Maison",
@@ -1942,39 +2392,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488722/item/vngoods_08_488722_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&auto=format&fit=crop&q=80"
-    ],
-    "isNew": true,
-    "isFeatured": false,
-    "description": "Thiết kế thời trang nữ duyên dáng từ Maison. Phom dáng tôn đường nét thanh lịch của phái đẹp, chất liệu mềm mại, thoáng mát và sang trọng trong mọi hoàn cảnh."
-  },
-  {
-    "id": "p64",
-    "name": "Váy Ôm Body Nữ Dệt Kim Tôn Dáng",
-    "gender": "Nữ",
-    "category": "vay-dam",
-    "brand": "Maison",
-    "price": 700000,
-    "oldPrice": null,
-    "rating": 0,
-    "avg_rating": 0,
-    "review_count": 0,
-    "colors": [
-      "den",
-      "trang",
-      "be"
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "image_url": "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=800&auto=format&fit=crop&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488722/item/vngoods_08_488722_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -2822,7 +3242,7 @@ export const products = [
   },
   {
     "id": "p93",
-    "name": "Quần Tây Nữ Ống Rộng Lưng Cao Tôn Dáng",
+    "name": "Quần Vải Jersey Ống Cong",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -2842,9 +3262,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/492079/sub/goods_492079_sub14_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/492079/sub/goods_492079_sub14_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -2852,7 +3272,7 @@ export const products = [
   },
   {
     "id": "p94",
-    "name": "Chân Váy Nữ Xếp Ly Dài Sang Trọng",
+    "name": "Quần Jeans Baggy Ống Cong Barrel",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -2872,9 +3292,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/480740/sub/goods_480740_sub14_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/480740/sub/goods_480740_sub14_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -2882,7 +3302,7 @@ export const products = [
   },
   {
     "id": "p95",
-    "name": "Chân Váy Lụa Satin Nữ Dáng Suông Dài",
+    "name": "Quần Culottes Vải Denim",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -2902,9 +3322,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488694/sub/vngoods_488694_sub3_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488694/sub/vngoods_488694_sub3_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -2912,7 +3332,7 @@ export const products = [
   },
   {
     "id": "p96",
-    "name": "Chân Váy Nữ Chữ A Dạ Kẻ Caro Trẻ Trung",
+    "name": "Quần Jeans Ống Suông Dáng Rộng",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -2932,9 +3352,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488462/item/vngoods_07_488462_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/488462/item/vngoods_07_488462_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -2942,7 +3362,7 @@ export const products = [
   },
   {
     "id": "p97",
-    "name": "Quần Jean Nữ Ống Đứng Cạp Cao Xanh Sáng",
+    "name": "Quần Jeans Cạp Cao Dáng Rộng",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -2962,9 +3382,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/491104/item/vngoods_69_491104_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/491104/item/vngoods_69_491104_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -2972,7 +3392,7 @@ export const products = [
   },
   {
     "id": "p98",
-    "name": "Quần Nữ Ống Rộng Vải Linen Thoáng Mát",
+    "name": "Quần Dài EZY Vải Denim Dáng Relax",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -2992,9 +3412,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1588117305388-c2631a279f82?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/494543/item/vngoods_08_494543_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1588117305388-c2631a279f82?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/494543/item/vngoods_08_494543_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,
@@ -3002,7 +3422,7 @@ export const products = [
   },
   {
     "id": "p99",
-    "name": "Quần Jean Skinny Nữ Co Giãn Siêu Hack Chân",
+    "name": "Quần Dài Siêu Co Giãn Dáng Rộng",
     "gender": "Nữ",
     "category": "quan",
     "brand": "Maison",
@@ -3022,9 +3442,9 @@ export const products = [
       "L",
       "XL"
     ],
-    "image_url": "https://images.unsplash.com/photo-1597196526281-fe4861daa915?w=800&auto=format&fit=crop&q=80",
+    "image_url": "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/474481/item/vngoods_39_474481_3x4.jpg?width=400",
     "images": [
-      "https://images.unsplash.com/photo-1597196526281-fe4861daa915?w=800&auto=format&fit=crop&q=80"
+      "https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/474481/item/vngoods_39_474481_3x4.jpg?width=400"
     ],
     "isNew": true,
     "isFeatured": false,

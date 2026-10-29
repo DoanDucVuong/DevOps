@@ -31,6 +31,7 @@ export const useProductStore = create((set, get) => ({
             avgRating: Number(p.avg_rating || 0),
             rating: Number(p.avg_rating || 0),
             review_count: Number(p.review_count || 0),
+            sold_count: Number(p.sold_count || 0),
             stock: Number(p.stock ?? 100),
           }
         })
@@ -68,6 +69,7 @@ export const useProductStore = create((set, get) => ({
         avgRating: Number(prod.avg_rating || 0),
         rating: Number(prod.avg_rating || 0),
         review_count: Number(prod.review_count || 0),
+        sold_count: Number(prod.sold_count || 0),
         stock: Number(prod.stock || 100),
       }
       if (exists) {

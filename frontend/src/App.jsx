@@ -18,11 +18,13 @@ import OrderHistory from './pages/Profile/OrderHistory'
 import Orders from './pages/Orders/Orders'
 import NotFound from './pages/NotFound/NotFound'
 import Admin from './pages/Admin/Admin'
+import ScrollToTop from './components/common/ScrollToTop'
 
 export default function App() {
   return (
     <ToastProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Trang Quản Trị Admin tách riêng hoàn toàn, không dùng chung giao diện bán hàng */}
           <Route

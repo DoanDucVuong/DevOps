@@ -6,7 +6,7 @@ const vnpayService = require('../services/vnpayService')
 const router = express.Router()
 const FREE_SHIP_THRESHOLD = 500000
 const SHIPPING_FEE = 30000
-const PAYMENT_METHODS = ['cod', 'vnpay', 'bank', 'wallet']
+const PAYMENT_METHODS = ['cod', 'vnpay', 'bank', 'vietqr', 'wallet']
 
 const parseOrder = (r) => ({
   id: r.id,
@@ -173,12 +173,14 @@ async function createOrderRecord(req, forcedPaymentMethod) {
   const id = rows[0].id
   const orderCode = `DH${String(id).padStart(6, '0')}`
 
-  // Mỗi sản phẩm đã mua = 1 interaction "purchase" -> dữ liệu huấn luyện ML
+  // Mỗi sản phẩm đã mua = 1 interaction "purchase" & tăng sold_count thực tế
   for (const l of lines) {
     if (l.productId) {
       try {
         await query("INSERT INTO interactions (user_id, product_id, interaction_type) VALUES (?, ?, 'purchase')",
           [String(req.user.id), l.productId])
+        await query("UPDATE products SET sold_count = COALESCE(sold_count, 0) + ? WHERE id = ?",
+          [Number(l.quantity || 1), l.productId])
       } catch {}
     }
   }

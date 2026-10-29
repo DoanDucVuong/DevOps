@@ -6,6 +6,7 @@ import {
   ExternalLink, Package, Search, Filter, ChevronLeft, ChevronRight, ShoppingBag, Star
 } from 'lucide-react'
 import OrdersManagement from './OrdersManagement'
+import Dashboard from './Dashboard'
 import {
   fetchAdminDashboard, fetchAdminOrders, fetchMlStatus, triggerRetrain,
   fetchAdminCategories, createAdminCategory, updateAdminCategory, deleteAdminCategory,
@@ -38,9 +39,9 @@ function StatCard({ label, value, hint }) {
 
 function Panel({ title, action, children }) {
   return (
-    <section className="border border-stone rounded-sm p-5 bg-paper shadow-sm">
-      <div className="flex items-center justify-between mb-4 gap-3">
-        <h2 className="font-display text-lg">{title}</h2>
+    <section className="bg-white dark:bg-slate-900 rounded-2xl border border-stone-100 dark:border-slate-800 p-5 sm:p-6 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 pb-3 border-b border-stone-100 dark:border-slate-800 gap-3">
+        <h2 className="text-base font-bold text-stone-900 dark:text-white tracking-tight">{title}</h2>
         {action}
       </div>
       {children}
@@ -68,6 +69,25 @@ export default function Admin() {
   }
 
   const [activeTab, setActiveTab] = useState(getTabFromPath)
+
+  // Đồng bộ activeTab khi chuyển trang qua Sidebar
+  useEffect(() => {
+    setActiveTab(getTabFromPath())
+  }, [location.pathname])
+
+  // Lắng nghe sự kiện Làm mới dữ liệu từ Top Header của AdminLayout
+  useEffect(() => {
+    const handleGlobalRefresh = () => {
+      loadDashboardData()
+      loadMl()
+      loadCategories()
+      loadVouchers()
+      loadBanners()
+      if (location.pathname.includes('/products')) loadAdminProducts()
+    }
+    window.addEventListener('admin:refresh', handleGlobalRefresh)
+    return () => window.removeEventListener('admin:refresh', handleGlobalRefresh)
+  }, [location.pathname])
   const [dash, setDash] = useState(null)
   const [orders, setOrders] = useState([])
   const [ml, setMl] = useState(null)
@@ -589,229 +609,20 @@ export default function Admin() {
   const isMlWakingUp = ml?.status === 'waking_up'
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 space-y-6">
-      {/* Top Header & Refresh */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone">
-        <div>
-          <h1 className="font-display text-3xl">Hệ thống Quản trị</h1>
-          <p className="text-xs text-ink-soft mt-1">Quản lý sản phẩm, danh mục, đơn hàng, mã giảm giá và mô hình gợi ý AI</p>
-        </div>
-        <button
-          onClick={() => {
-            loadDashboardData(); loadMl(); loadCategories(); loadVouchers(); loadBanners()
-            if (activeTab === 'products') loadAdminProducts()
-          }}
-          className="flex items-center gap-2 text-sm text-ink-soft hover:text-clay self-start sm:self-auto bg-paper px-3 py-1.5 border border-stone rounded-sm transition-colors"
-        >
-          <RefreshCw size={15} /> Làm mới dữ liệu
-        </button>
-      </div>
-
-      {/* Admin Tab Navigation */}
-      <div className="flex border-b border-stone gap-2 overflow-x-auto text-sm font-medium">
-        <button
-          onClick={() => switchTab('dashboard')}
-          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-            activeTab === 'dashboard'
-              ? 'border-clay text-clay font-semibold'
-              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
-          }`}
-        >
-          <LayoutDashboard size={17} /> Tổng quan
-        </button>
-        <button
-          onClick={() => switchTab('orders')}
-          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-            activeTab === 'orders'
-              ? 'border-clay text-clay font-semibold'
-              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
-          }`}
-        >
-          <ShoppingBag size={17} /> Quản lý đơn hàng
-          <span className="text-xs bg-clay/10 text-clay font-semibold px-2 py-0.5 rounded-full">{orders.length}</span>
-        </button>
-        <button
-          onClick={() => switchTab('products')}
-          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-            activeTab === 'products'
-              ? 'border-clay text-clay font-semibold'
-              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
-          }`}
-        >
-          <Package size={17} /> Quản lý sản phẩm
-          <span className="text-xs bg-clay/10 text-clay font-semibold px-2 py-0.5 rounded-full">{prodTotal || adminProducts.length}</span>
-        </button>
-        <button
-          onClick={() => switchTab('categories')}
-          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-            activeTab === 'categories'
-              ? 'border-clay text-clay font-semibold'
-              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
-          }`}
-        >
-          <Folders size={17} /> Quản lý danh mục
-          <span className="text-xs bg-stone px-2 py-0.5 rounded-full text-ink-soft">{categories.length}</span>
-        </button>
-        <button
-          onClick={() => switchTab('vouchers')}
-          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-            activeTab === 'vouchers'
-              ? 'border-clay text-clay font-semibold'
-              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
-          }`}
-        >
-          <Ticket size={17} /> Mã giảm giá (Vouchers)
-          <span className="text-xs bg-stone px-2 py-0.5 rounded-full text-ink-soft">{vouchers.length}</span>
-        </button>
-        <button
-          onClick={() => switchTab('banners')}
-          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-            activeTab === 'banners'
-              ? 'border-clay text-clay font-semibold'
-              : 'border-transparent text-ink-soft hover:text-ink hover:border-stone-dark'
-          }`}
-        >
-          <ImageIcon size={17} /> Banner trang chủ
-        </button>
-      </div>
-
+    <div className="space-y-6">
       {/* ========================================================= */}
-      {/* TAB 1: DASHBOARD & ORDERS & MACHINE LEARNING STATUS */}
+      {/* TAB 1: DASHBOARD & MACHINE LEARNING STATUS (MODERN SAAS)  */}
       {/* ========================================================= */}
       {activeTab === 'dashboard' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard label="Doanh thu (không tính đơn huỷ)" value={formatCurrency(dash?.revenue || 0)} />
-            <StatCard label="Đơn hàng" value={dash?.orderCount || 0} />
-            <StatCard label="Khách hàng" value={dash?.userCount || 0} hint={`${dash?.interactionCount || 0} lượt tương tác`} />
-            <StatCard
-              label="CTR gợi ý"
-              value={`${dash?.recommendation?.ctr || 0}%`}
-              hint={`${dash?.recommendation?.clicks || 0} click / ${dash?.recommendation?.impressions || 0} lượt hiển thị`}
-            />
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-6">
-            <Panel title="Doanh thu 7 ngày gần nhất">
-              <div className="flex items-end gap-2 h-44">
-                {dash?.revenueByDay?.map((d) => (
-                  <div key={d.date} className="flex-1 flex flex-col items-center justify-end h-full" title={`${formatCurrency(d.revenue)} · ${d.orders} đơn`}>
-                    <div
-                      className="w-full bg-clay/80 rounded-t-sm min-h-[2px]"
-                      style={{ height: `${(d.revenue / maxRevenue) * 100}%` }}
-                    />
-                    <span className="text-[11px] text-ink-soft mt-2">{d.date.slice(8)}/{d.date.slice(5, 7)}</span>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-
-            <Panel title="CTR theo thuật toán gợi ý">
-              {dash?.recommendation?.byAlgorithm?.length === 0 ? (
-                <p className="text-sm text-ink-soft">Chưa có lượt hiển thị gợi ý nào.</p>
-              ) : (
-                <div className="space-y-4">
-                  {dash?.recommendation?.byAlgorithm?.map((a) => (
-                    <div key={a.algorithm}>
-                      <div className="flex justify-between text-sm mb-1.5">
-                        <span>{ALGO_LABELS[a.algorithm] || a.algorithm}</span>
-                        <span className="text-ink-soft">{a.ctr}% · {a.clicks}/{a.impressions}</span>
-                      </div>
-                      <div className="h-2 bg-stone rounded-full overflow-hidden">
-                        <div className="h-full bg-moss" style={{ width: `${Math.min(a.ctr * 4, 100)}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                  <p className="text-xs text-ink-soft">Thanh hiển thị theo thang 0–25% để dễ so sánh.</p>
-                </div>
-              )}
-            </Panel>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-6">
-            <Panel title="Sản phẩm được quan tâm nhiều nhất">
-              {dash?.topProducts?.length === 0 ? (
-                <p className="text-sm text-ink-soft">Chưa có dữ liệu tương tác.</p>
-              ) : (
-                <ol className="space-y-2 text-sm">
-                  {dash?.topProducts?.map((p, i) => (
-                    <li key={p.id} className="flex justify-between gap-4">
-                      <span>{i + 1}. {p.name}</span>
-                      <span className="text-ink-soft shrink-0">{p.interactions} lượt</span>
-                    </li>
-                  ))}
-                </ol>
-              )}
-              <div className="flex flex-wrap gap-2 mt-5">
-                {dash?.ordersByStatus?.map((s) => (
-                  <span key={s.status} className="text-xs border border-stone-dark rounded-full px-3 py-1">
-                    {statusLabels[s.status]}: {s.count}
-                  </span>
-                ))}
-              </div>
-            </Panel>
-
-            <Panel
-              title="Mô hình Machine Learning (FastAPI)"
-              action={
-                <button
-                  onClick={handleRetrain}
-                  disabled={running || isMlWakingUp}
-                  className="flex items-center gap-2 text-sm px-3 py-1.5 bg-ink text-ivory rounded-sm hover:bg-ink-soft disabled:opacity-60 transition-colors"
-                >
-                  <Brain size={15} /> {running ? 'Đang huấn luyện...' : 'Huấn luyện lại'}
-                </button>
-              }
-            >
-              {isMlWakingUp ? (
-                <div className="p-4 bg-amber-50 border border-amber-200 rounded-sm space-y-2">
-                  <div className="flex items-center gap-2 text-amber-800 font-medium text-sm">
-                    <Loader2 size={16} className="animate-spin text-amber-600" />
-                    <span>Dịch vụ ML đang thức dậy (Render Cold-Start)...</span>
-                  </div>
-                  <p className="text-xs text-amber-700 leading-relaxed">
-                    Render miễn phí tự động đưa container vào trạng thái ngủ khi không có truy cập. Hệ thống đang tự động gửi yêu cầu kết nối lại, trang sẽ tự chuyển sang sẵn sàng ngay khi service phản hồi.
-                  </p>
-                </div>
-              ) : mlError ? (
-                <div className="p-4 bg-stone-light/50 border border-stone rounded-sm space-y-2">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm text-clay flex items-center gap-1.5">
-                      <AlertCircle size={15} /> {mlError}
-                    </p>
-                    <button
-                      onClick={loadMl}
-                      className="text-xs text-ink font-medium underline hover:text-clay"
-                    >
-                      Thử lại ngay
-                    </button>
-                  </div>
-                </div>
-              ) : !ml ? (
-                <p className="text-sm text-ink-soft">Đang kiểm tra kết nối ML service...</p>
-              ) : (
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                  <dt className="text-ink-soft">Trạng thái kết nối</dt>
-                  <dd>
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-moss/10 text-moss">
-                      <Check size={12} /> Hoạt động (Online)
-                    </span>
-                  </dd>
-                  <dt className="text-ink-soft">Nguồn dữ liệu</dt>
-                  <dd>{summary.source || '—'}</dd>
-                  <dt className="text-ink-soft">Tương tác thật</dt>
-                  <dd>{summary.n_real ?? '—'} ({summary.n_real_users ?? 0} người dùng)</dd>
-                  <dt className="text-ink-soft">Dữ liệu giả lập (nền)</dt>
-                  <dd>{summary.n_synthetic ?? '—'}</dd>
-                  <dt className="text-ink-soft">RMSE / MAE (5-fold)</dt>
-                  <dd>{metrics.rmse_cv_mean?.toFixed(3)} / {metrics.mae_cv_mean?.toFixed(3)}</dd>
-                  <dt className="text-ink-soft">Huấn luyện lúc</dt>
-                  <dd>{summary.trained_at ? new Date(summary.trained_at).toLocaleString('vi-VN') : '—'}</dd>
-                </dl>
-              )}
-            </Panel>
-          </div>
-        </div>
+        <Dashboard
+          dash={dash}
+          ml={ml}
+          mlError={mlError}
+          isMlWakingUp={isMlWakingUp}
+          onRefreshMl={loadMl}
+          onRetrain={handleRetrain}
+          running={running}
+        />
       )}
 
       {/* ========================================================= */}

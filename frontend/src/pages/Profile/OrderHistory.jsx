@@ -51,7 +51,8 @@ const STATUS_CONFIG = {
 const PAYMENT_LABELS = {
   cod: 'Thanh toán khi nhận hàng (COD)',
   vnpay: 'Cổng VNPAY (ATM/QR/Visa)',
-  bank: 'Chuyển khoản ngân hàng',
+  bank: 'Chuyển khoản VietQR',
+  vietqr: 'Chuyển khoản VietQR (Timo Bank)',
   wallet: 'Ví điện tử',
 }
 

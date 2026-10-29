@@ -1,38 +1,124 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-ink: #17181a;
-  --color-ink-soft: #3a3b3d;
-  --color-ivory: #f6f3ec;
-  --color-paper: #fbfaf7;
-  --color-stone: #e4dfd3;
-  --color-stone-dark: #cdc6b3;
-  --color-clay: #a8462f;
-  --color-clay-dark: #8a3a27;
-  --color-moss: #4b5b45;
-  --color-gold: #b99456;
+  --color-ink: #0f172a;
+  --color-ink-soft: #64748b;
+  --color-ivory: #fafbfc;
+  --color-paper: #ffffff;
+  --color-stone: #f1f5f9;
+  --color-stone-dark: #cbd5e1;
+  --color-clay: #1e3a8a;
+  --color-clay-dark: #172554;
+  --color-moss: #10b981;
+  --color-gold: #f59e0b;
 
   --font-display: 'Fraunces', serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
+  
   body {
     font-family: var(--font-sans);
     background-color: var(--color-ivory);
     color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
-  h1, h2, h3, h4, .font-display {
+
+  html.dark {
+    color-scheme: dark;
+    --color-ink: #f8fafc;
+    --color-ink-soft: #94a3b8;
+    --color-ivory: #0b0f19;
+    --color-paper: #111827;
+    --color-stone: #1e293b;
+    --color-stone-dark: #334155;
+    --color-clay: #60a5fa;
+    --color-clay-dark: #93c5fd;
+    --color-gold: #fbbf24;
+  }
+
+  html.dark body {
+    background-color: #0b0f19;
+    color: #f8fafc;
+  }
+
+  .font-display {
     font-family: var(--font-display);
   }
+  
   *:focus-visible {
     outline: 2px solid var(--color-clay);
     outline-offset: 2px;
   }
+}
+
+/* Luxury Dark Mode Global Theme Enhancements */
+html.dark header,
+html.dark .bg-white\/95 {
+  background-color: rgba(15, 23, 42, 0.92) !important;
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+html.dark .bg-white {
+  background-color: #111827;
+}
+
+html.dark .bg-stone-50 {
+  background-color: #0f172a;
+}
+
+html.dark .bg-stone-100 {
+  background-color: #1e293b;
+}
+
+html.dark .bg-stone-200 {
+  background-color: #334155;
+}
+
+html.dark .border-stone-200,
+html.dark .border-stone-200\/80,
+html.dark .border-stone-300 {
+  border-color: #1e293b;
+}
+
+html.dark .text-stone-900 {
+  color: #f8fafc;
+}
+
+html.dark .text-stone-800 {
+  color: #f1f5f9;
+}
+
+html.dark .text-stone-700 {
+  color: #cbd5e1;
+}
+
+html.dark .text-stone-600 {
+  color: #94a3b8;
+}
+
+html.dark .text-stone-500 {
+  color: #64748b;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  color: #f8fafc;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b;
 }
 
 @layer utilities {
