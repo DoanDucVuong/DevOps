@@ -95,9 +95,7 @@ echo "=== Dung lượng sau khi dọn dẹp ===" && df -h /`,
   {
     title: 'Cấu hình Public IP cho Frontend & Khởi chạy Docker Compose Microservices',
     command: `cd ${CONFIG.PROJECT_DIR} && \
-EC2_IP=$(curl -s http://checkip.amazonaws.com || curl -s https://api.ipify.org || echo "localhost") && \
-echo "EC2 Public IP: $EC2_IP" && \
-export VITE_API_URL="http://$EC2_IP:4000/api" && \
+export VITE_API_URL="/api" && \
 sudo docker compose down || true && \
 sudo -E docker compose up -d --build`,
   },
@@ -109,8 +107,8 @@ sudo docker compose ps && \
 echo "--- Đợi 5 giây kiểm tra phản hồi ---" && \
 sleep 5 && \
 curl -I -s http://localhost:80 | head -n 1 || echo "Frontend HTTP check failed" && \
-curl -I -s http://localhost:4000/health | head -n 1 || echo "Backend HTTP check failed" && \
-curl -I -s http://localhost:8001/health | head -n 1 || echo "ML Service HTTP check failed"`,
+curl -I -s http://localhost:80/health | head -n 1 || echo "Backend (via Nginx Port 80) check failed" && \
+curl -I -s http://localhost:4000/health | head -n 1 || echo "Backend direct HTTP check failed"`,
   },
 ];
 
@@ -186,8 +184,9 @@ async function runAutoDeploy() {
     console.log(`${colors.bold}${colors.green}Địa chỉ truy cập dịch vụ:${colors.reset}`);
     console.log(`  🌐 Website Bán hàng:       http://${CONFIG.HOST_IP}`);
     console.log(`  ⚙️  Trang Quản trị Admin:   http://${CONFIG.HOST_IP}/admin (admin@sttn.vn / admin123)`);
-    console.log(`  🔌 Backend API:            http://${CONFIG.HOST_IP}:4000/health`);
-    console.log(`  🧠 AI ML Recommendation:   http://${CONFIG.HOST_IP}:8001/health`);
+    console.log(`  🔌 Backend API Health:     http://${CONFIG.HOST_IP}/health`);
+    console.log(`  🧠 AI ML Health:           http://${CONFIG.HOST_IP}/ml/health`);
+    console.log(`  ℹ️  (Tất cả dịch vụ đã được Nginx định tuyến qua Cổng 80, không lo bị chặn bởi AWS Security Group)`);
     console.log('\n==============================================================================');
 
   } catch (error) {

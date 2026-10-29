@@ -7,7 +7,7 @@ let rawUrl = import.meta.env.VITE_API_URL
 // - Nếu chạy trong Docker/Production (truy cập qua IP hoặc domain): dùng relative '/api' qua Nginx proxy
 if (typeof window !== 'undefined') {
   const isLocalDev = window.location.port === '5173' || window.location.port === '3000'
-  if (!isLocalDev && (!rawUrl || rawUrl.includes('localhost') || rawUrl.includes('127.0.0.1'))) {
+  if (!isLocalDev && (!rawUrl || rawUrl.includes('localhost') || rawUrl.includes('127.0.0.1') || rawUrl.includes(':4000'))) {
     rawUrl = '/api'
   }
 }
