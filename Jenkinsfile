@@ -141,7 +141,7 @@ pipeline {
                     curl -s -o /dev/null -w "ML Service HTTP status: %{http_code}\\n" http://host.docker.internal:8001/health || curl -s -o /dev/null -w "ML Service HTTP status: %{http_code}\\n" http://localhost:8001/health || true
 
                     echo "--- Kiểm tra Frontend Web ---"
-                    curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://host.docker.internal:3000 || curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://localhost:3000 || true
+                    curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://host.docker.internal:80 || curl -s -o /dev/null -w "Frontend HTTP status: %{http_code}\\n" http://localhost:80 || true
                 '''
             }
         }
@@ -155,7 +155,7 @@ pipeline {
         success {
             echo "=========================================================="
             echo ">>> JENKINS PIPELINE THÀNH CÔNG: DỰ ÁN ĐÃ ĐƯỢC TRIỂN KHAI! <<<"
-            echo "Frontend:   http://localhost:3000"
+            echo "Frontend:   http://localhost:80"
             echo "Backend:    http://localhost:4000"
             echo "ML Service: http://localhost:8001"
             echo "=========================================================="

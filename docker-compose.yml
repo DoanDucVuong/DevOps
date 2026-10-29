@@ -35,7 +35,7 @@ services:
       - DATABASE_URL=
     volumes:
       # Ánh xạ Volume bền vững cho SQLite sttn.db và các file seed
-      - ./backend/src/db:/app/src/db
+      - backend-db:/app/src/db
     networks:
       - app-network
     depends_on:
@@ -56,8 +56,8 @@ services:
       - INTERNAL_API_KEY=${INTERNAL_API_KEY:-dev-internal-key}
     volumes:
       # Lưu trữ các file weights và mô hình đã huấn luyện
-      - ./ml-service/models:/app/models
-      - ./ml-service/data:/app/data
+      - ml-models:/app/models
+      - ml-data:/app/data
     networks:
       - app-network
     restart: always
@@ -65,3 +65,8 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  backend-db:
+  ml-models:
+  ml-data:
