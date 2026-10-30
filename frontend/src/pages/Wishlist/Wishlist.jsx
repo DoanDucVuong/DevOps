@@ -48,7 +48,7 @@ export default function Wishlist() {
       <h1 className="font-display text-3xl mb-8">Yêu thích ({items.length})</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
         {items.map((product) => (
-          <div key={product.id} className="group">
+          <div key={product.id} className="group flex flex-col h-full">
             <div className="relative aspect-[3/4] overflow-hidden bg-stone rounded-sm mb-3">
               <Link to={`/products/${product.id}`}>
                 <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
@@ -61,16 +61,18 @@ export default function Wishlist() {
                 <X size={16} />
               </button>
             </div>
-            <Link to={`/products/${product.id}`} className="text-sm font-medium line-clamp-2 mb-1 block">
+            <Link to={`/products/${product.id}`} className="text-sm font-medium line-clamp-2 min-h-[2.5rem] mb-1 block">
               {product.name}
             </Link>
-            <p className="text-sm font-semibold mb-3">{formatCurrency(product.price)}</p>
-            <button
-              onClick={() => moveToCart(product)}
-              className="w-full flex items-center justify-center gap-2 py-2 border border-ink text-sm rounded-sm hover:bg-ink hover:text-ivory transition-colors"
-            >
-              <ShoppingBag size={14} /> Thêm vào giỏ
-            </button>
+            <div className="mt-auto pt-2">
+              <p className="text-sm font-semibold mb-3">{formatCurrency(product.price)}</p>
+              <button
+                onClick={() => moveToCart(product)}
+                className="w-full flex items-center justify-center gap-2 py-2 border border-ink text-sm rounded-sm hover:bg-ink hover:text-ivory transition-colors"
+              >
+                <ShoppingBag size={14} /> Thêm vào giỏ
+              </button>
+            </div>
           </div>
         ))}
       </div>

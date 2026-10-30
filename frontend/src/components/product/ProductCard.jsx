@@ -46,7 +46,7 @@ export default function ProductCard({ product }) {
   const availableColors = product.colors || []
 
   return (
-    <Link to={`/products/${product.id}`} className="group block select-none">
+    <Link to={`/products/${product.id}`} className="group flex flex-col h-full select-none">
       {/* Khung ảnh chính bo tròn cao cấp */}
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-stone-100 dark:bg-slate-900 mb-3 border border-stone-200/70 dark:border-slate-800 shadow-2xs group-hover:shadow-md group-hover:border-stone-300 dark:group-hover:border-slate-700 transition-all duration-300">
         <img
@@ -102,7 +102,7 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Thông tin mô tả sản phẩm */}
-      <div className="space-y-1">
+      <div className="flex flex-col flex-1 space-y-1">
         <div className="flex items-center justify-between text-[11px] text-stone-400 font-medium">
           <span>{product.gender ? `Đồ ${product.gender}` : 'Thời trang Maison'}</span>
           {Number(product.sold_count || 0) > 0 && (
@@ -111,44 +111,46 @@ export default function ProductCard({ product }) {
         </div>
 
         <h3
-          className="text-sm font-semibold text-stone-900 dark:text-stone-100 group-hover:text-blue-900 dark:group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug"
+          className="text-sm font-semibold text-stone-900 dark:text-stone-100 group-hover:text-blue-900 dark:group-hover:text-blue-400 transition-colors line-clamp-2 min-h-[2.5rem] leading-snug"
           title={product.name}
         >
           {product.name}
         </h3>
 
-        {/* Giá tiền */}
-        <div className="flex items-baseline gap-2 pt-0.5">
-          <span className="text-base font-bold text-blue-950 dark:text-blue-400 tracking-tight">
-            {formatCurrency(product.price)}
-          </span>
-          {oldPrice > product.price && (
-            <span className="text-xs text-stone-400 line-through font-normal">
-              {formatCurrency(oldPrice)}
+        {/* Cụm Giá tiền & Tùy chọn màu được đẩy sát đáy thẻ */}
+        <div className="mt-auto pt-1">
+          <div className="flex items-baseline gap-2">
+            <span className="text-base font-bold text-blue-950 dark:text-blue-400 tracking-tight">
+              {formatCurrency(product.price)}
             </span>
-          )}
-        </div>
-
-        {/* Xem trước dải màu sắc (Color dots preview) */}
-        {availableColors.length > 0 && (
-          <div className="flex items-center gap-1.5 pt-1">
-            {availableColors.slice(0, 4).map((cId) => {
-              const hex = colorData.find((c) => c.id === cId)?.hex || '#17181a'
-              return (
-                <span
-                  key={cId}
-                  className="w-2.5 h-2.5 rounded-full border border-stone-300 shrink-0"
-                  style={{ backgroundColor: hex }}
-                />
-              )
-            })}
-            {availableColors.length > 4 && (
-              <span className="text-[10px] text-stone-400 font-medium leading-none">
-                +{availableColors.length - 4}
+            {oldPrice > product.price && (
+              <span className="text-xs text-stone-400 line-through font-normal">
+                {formatCurrency(oldPrice)}
               </span>
             )}
           </div>
-        )}
+
+          {/* Xem trước dải màu sắc (Color dots preview) */}
+          {availableColors.length > 0 && (
+            <div className="flex items-center gap-1.5 pt-1.5">
+              {availableColors.slice(0, 4).map((cId) => {
+                const hex = colorData.find((c) => c.id === cId)?.hex || '#17181a'
+                return (
+                  <span
+                    key={cId}
+                    className="w-2.5 h-2.5 rounded-full border border-stone-300 dark:border-slate-600 shrink-0"
+                    style={{ backgroundColor: hex }}
+                  />
+                )
+              })}
+              {availableColors.length > 4 && (
+                <span className="text-[10px] text-stone-400 font-medium leading-none">
+                  +{availableColors.length - 4}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </Link>
   )

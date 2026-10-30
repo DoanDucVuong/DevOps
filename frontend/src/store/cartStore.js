@@ -36,6 +36,7 @@ export const useCartStore = create(
       },
 
       clearCart: () => set({ items: [], appliedVoucher: null }),
+      setCart: (items) => set({ items: Array.isArray(items) ? items : [] }),
 
       totalItems: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
       totalPrice: () => get().items.reduce((sum, i) => sum + i.quantity * i.price, 0),

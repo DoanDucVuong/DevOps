@@ -18,6 +18,8 @@ export const useWishlistStore = create(
       isWished: (productId) => get().productIds.includes(productId),
       remove: (productId) =>
         set({ productIds: get().productIds.filter((id) => id !== productId) }),
+      clearWishlist: () => set({ productIds: [] }),
+      setWishlist: (productIds) => set({ productIds: Array.isArray(productIds) ? productIds : [] }),
     }),
     { name: 'tmdtwed-wishlist' }
   )
